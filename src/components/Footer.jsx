@@ -128,30 +128,6 @@ const Footer = () => {
             </div>
           </motion.div>
         </motion.div>
-
-        {/* Copyright */}
-        <motion.div 
-          variants={fadeIn('up', 0.8)}
-          className="border-t border-gray-200 mt-12 pt-8"
-        >
-          <motion.div 
-            variants={fadeIn('up', 0.9)}
-            className="flex flex-col md:flex-row justify-between items-center gap-4"
-          >
-            <motion.p 
-              variants={fadeIn('right', 1.0)}
-              className="text-gray-600 text-sm"
-            >
-              Copyright © {new Date().getFullYear()} codetutorbd.com
-            </motion.p>
-            <motion.p 
-              variants={fadeIn('left', 1.0)}
-              className="text-gray-600 text-sm"
-            >
-              Created by Md Al Mamun
-            </motion.p>
-          </motion.div>
-        </motion.div>
       </div>
     </motion.footer>
   )
