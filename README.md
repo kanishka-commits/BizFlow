@@ -2,6 +2,11 @@
 
 BizFlow is a responsive business landing page built with React and Tailwind CSS. It features smooth animations using Framer Motion and interactive sliders powered by Swiper.js. Designed with modular components and a modern UI, it's suitable for startups, agencies, and business websites.
 
+<p>
+  🚀 <strong><a href="https://biz-flow-alpha.vercel.app" target="_blank">Live Preview</a></strong>
+</p>
+
+
 ## Project Overview
 
 This project provides a clean implementation of:
@@ -44,13 +49,5 @@ We welcome open-source contributions to improve BizFlow.
 6. Open a pull request with a clear explanation of your changes.
 
 All pull requests will be reviewed and merged if they align with the project goals.
-
-## Connect
-
-For feedback, discussion, or collaboration:
-
-GitHub: https://github.com/adityadomle  
-LinkedIn: https://www.linkedin.com/in/adityadomle  
-Twitter (X): https://twitter.com/domleaditya
 
 
