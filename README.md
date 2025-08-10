@@ -1,5 +1,6 @@
 # ⚡ _BizFlow_  
 *BizFlow* is a **modern, React-based business workflow dashboard** designed for simplicity and style 💼✨. Built with **React + TailwindCSS**, it delivers a responsive, smooth, and visually appealing UI for managing tasks, tracking metrics, and organizing workflows with ease. Whether you’re a business owner, freelancer, or student, *BizFlow* makes work feel lighter, cleaner, and more enjoyable 🚀.  
+
 ![BizFlow Screenshot](public/Screenshot%202025-08-10%20101620.png)  
 
 ## ❔ _Getting Started_  
