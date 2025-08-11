@@ -65,6 +65,7 @@ function App() {
 
           {/* Footer always visible */}
           <Footer />
+           <ScrollToTop />
         </div>
       </main>
     </Router>
