@@ -1,9 +1,25 @@
-import React from 'react'
-import { motion } from "framer-motion";
+import React, { useState } from 'react'
+import { motion, AnimatePresence } from "framer-motion";
 import { fadeIn, textVariant } from "../utils/motion";
 import heroImage from '../assets/hero-image.png'
 
 const Hero = () => {
+  const [email, setEmail] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleSend = () => {
+    if (!email) {
+      alert("Please enter an email address.");
+      return;
+    }
+
+    console.log("Email to send:", email);
+
+    setShowPopup(true);
+    setTimeout(() => setShowPopup(false), 3000); 
+    setEmail(""); 
+  };
+
   return (
     <section id="home" className="flex flex-col md:flex-row justify-between items-center px-4 sm:px-6 lg:px-8 pt-44 pb-16 container mx-auto">
       {/* Left Column */}
@@ -44,17 +60,36 @@ const Hero = () => {
           variants={fadeIn('up', 0.5)}
           initial="hidden"
           whileInView="show"
-          className="flex gap-3 max-w-md"
+          className="flex gap-3 max-w-md relative"
         >
-          {/* Email Form */}
+          
           <input
             type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="Email address"
-            className="flex-1 px-6 py-4 border border-gray-200 rounded-xl focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition-all text-gray-600"
+            className="flex-1 px-6 py-4 border border-gray-200 rounded-xl focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100  transition-all text-gray-600"
           />
-          <button className="bg-blue-600 text-white px-8 py-4 rounded-xl hover:bg-blue-700 cursor-pointer transition-all hover:shadow-lg hover:shadow-blue-100 active:scale-95">
+          <button
+           onClick={handleSend}
+           className="bg-blue-600 text-white px-8 py-4 rounded-xl hover:bg-blue-700 cursor-pointer transition-all hover:shadow-lg hover:shadow-blue-100 active:scale-95">
             →
           </button>
+          {/* Popup Message */}
+          <AnimatePresence>
+            {showPopup && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+                className="absolute -bottom-12 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg text-sm"
+                
+              >
+                ✅ Email Sent!
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
       </div>
 
@@ -74,7 +109,7 @@ const Hero = () => {
         </div>
       </motion.div>
     </section>
-  )
-}
+  );
+};
 
 export default Hero
