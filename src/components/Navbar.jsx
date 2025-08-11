@@ -47,16 +47,24 @@ const Navbar = () => {
         {/* Logo */}
         <motion.div 
           variants={fadeIn('right', 0.3)}
-          className="flex items-center gap-1 cursor-pointer"
+          className="flex items-center gap-3 cursor-pointer"
         >
-          <motion.div 
-            whileHover={{ scale: 1.1 }}
-            className="w-4 h-4 bg-blue-600 rounded-full opacity-75 hover:opacity-100 transition-opacity"
-          ></motion.div>
-          <motion.div 
-            whileHover={{ scale: 1.1 }}
-            className="w-4 h-4 bg-red-500 rounded-full -ml-2 hover:opacity-75 transition-opacity"
-          ></motion.div>
+          <div className="flex items-center gap-1">
+            <motion.div 
+              whileHover={{ scale: 1.1 }}
+              className="w-4 h-4 bg-blue-600 rounded-full opacity-75 hover:opacity-100 transition-opacity"
+            ></motion.div>
+            <motion.div 
+              whileHover={{ scale: 1.1 }}
+              className="w-4 h-4 bg-red-500 rounded-full -ml-2 hover:opacity-75 transition-opacity"
+            ></motion.div>
+          </div>
+          <motion.span 
+            whileHover={{ scale: 1.02 }}
+            className="text-xl font-bold text-gray-800 hover:text-blue-600 transition-colors"
+          >
+            BizFlow
+          </motion.span>
         </motion.div>
 
         {/* Mobile Menu Button */}
