@@ -51,10 +51,12 @@ const NewsletterSection = () => {
                 <motion.input
                   variants={fadeIn('right', 0.7)}
                   type="email"
+                  aria-label="Email address"
                   placeholder="Enter your email address"
                   className="w-full sm:w-auto md:w-80 px-4 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-l-xl sm:rounded-r-none focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
                 />
                 <motion.button 
+                  type="submit"
                   variants={fadeIn('left', 0.7)}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
