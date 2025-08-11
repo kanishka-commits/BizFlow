@@ -112,7 +112,7 @@ const Navbar = () => {
         >
           <motion.div 
             variants={fadeIn('down', 0.3)}
-            className="container mx-auto px-4 space-y-4"
+            className="container mx-auto px-4 space-y-6"
           >
             {navLinks.map((link, index) => (
               <motion.a
