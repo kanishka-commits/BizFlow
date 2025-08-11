@@ -1,12 +1,20 @@
-import React,{useEffect} from "react";
-import { motion } from "framer-motion";
+import {useEffect, useState} from "react";
+import { motion,  AnimatePresence } from "framer-motion";
 import { fadeIn, textVariant } from "../utils/motion";
 
 
 const Partner = () => {
-    useEffect(() => {
+  const [showPopup, setShowPopup] = useState(false);
+
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setShowPopup(true);
+    setTimeout(() => setShowPopup(false), 3000); // hide after 3s
+  };
 
   return (
     <motion.section
@@ -29,6 +37,7 @@ const Partner = () => {
         Join hands with us to grow together. Fill out the form below, and our team will reach out soon!
       </motion.p>
       <motion.form
+        onSubmit={handleSubmit}
         variants={fadeIn("up", 0.5)}
         className="bg-white shadow-lg rounded-lg p-8 max-w-xl mx-auto space-y-6"
       >
@@ -69,8 +78,23 @@ const Partner = () => {
             rows="4"
           />
         </div>
+         {/* Popup Above Submit Button */}
+        <AnimatePresence>
+          {showPopup && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              transition={{ duration: 0.3 }}
+              className="bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg text-center"
+            >
+              ✅ Message Sent!
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <motion.button
+          type="submit"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"

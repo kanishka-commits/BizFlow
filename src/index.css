@@ -9,3 +9,29 @@ html {
 .section-container {
   @apply  px-4 sm:px-6 lg:px-8 py-16 container mx-auto;
 }
+
+/* Custom bounce animation for scroll to top button 
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-8px);
+  }
+  60% {
+    transform: translateY(4px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+*/
+/* Responsive adjustments for mobile 
+@media (max-width: 600px) {
+  .scroll-to-top-btn {
+    bottom: 20px;
+    right: 15px;
+    padding: 12px 16px;
+    font-size: 18px;
+  }
+}*/
