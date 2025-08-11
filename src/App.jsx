@@ -1,3 +1,4 @@
+
 import React from "react";
 import "./App.css";
 
@@ -20,9 +21,11 @@ import Partner from "./pages/Partner";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+
 function App() {
   return (
     <Router>
+
       <main className="relative min-h-screen overflow-x-hidden scroll-smooth">
         {/* Background Gradient Blob */}
         <div className="absolute -top-28 -left-28 w-[500px] h-[500px] bg-gradient-to-tr from-indigo-500/20 to-pink-500/20 rounded-full blur-[80px] -z-10"></div>
@@ -32,11 +35,13 @@ function App() {
           <Navbar />
 
           {/* Routes */}
+
           <Routes>
             <Route
               path="/"
               element={
                 <>
+
                   <section id="home">
                     <Hero />
                   </section>
@@ -57,19 +62,21 @@ function App() {
                   <section id="newsletter">
                     <NewsletterSection />
                   </section>
+
                 </>
               }
             />
             <Route path="/partner" element={<Partner />} />
           </Routes>
 
-          {/* Footer always visible */}
           <Footer />
            <ScrollToTop />
         </div>
       </main>
     </Router>
+
   );
 }
 
 export default App;
+

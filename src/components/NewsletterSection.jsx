@@ -70,6 +70,7 @@ const NewsletterSection = () => {
                 <motion.input
                   variants={fadeIn('right', 0.7)}
                   type="email"
+                  aria-label="Email address"
                   placeholder="Enter your email address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}

@@ -61,7 +61,9 @@ const Hero = () => {
           variants={fadeIn('up', 0.5)}
           initial="hidden"
           whileInView="show"
+
           className="flex gap-3 max-w-md relative -mt-1"
+
         >
           
           <input
