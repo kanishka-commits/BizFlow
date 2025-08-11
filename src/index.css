@@ -3,6 +3,11 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 100px;
+  background-color: #fff5d7;
+}
+
+body {
+  background-color: #fff5d7;
 }
 
 /* customize container here using tailwindcss */
