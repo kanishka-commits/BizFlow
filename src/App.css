@@ -12,8 +12,7 @@
   }
   
   .animate-marquee {
-    animation: marquee 25s linear infinite;
-    will-change: auto;
+    animation: marquee 15s linear infinite;
   }
 
   .testimonials-swiper {

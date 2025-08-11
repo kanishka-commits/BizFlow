@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { HiMenu, HiX } from 'react-icons/hi'
 import { motion } from "framer-motion";
-import { fadeIn} from "../utils/motion";
+import { fadeIn } from "../utils/motion";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -45,12 +45,13 @@ const Navbar = () => {
             BizFlow
           </motion.span>
         </motion.div>
-        
+
         {/* Mobile Menu Button */}
         <motion.button 
           variants={fadeIn('left', 0.3)}
-          className="md:hidden p-2"
+          className="md:hidden p-2 cursor-pointer"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
         >
           {isMenuOpen ? (
             <HiX className="h-6 w-6" />
@@ -70,8 +71,8 @@ const Navbar = () => {
               variants={fadeIn('down', 0.1 * (index + 1))}
               href={link.href}
               onClick={() => setActiveLink(link.href)}
-              className={`text-sm font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all
-                ${activeLink === link.href ? 'text-blue-600 after:w-full  ' : 'text-gray-600 hover:text-gray-900'}`}
+              className={`text-sm font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all cursor-pointer
+                ${activeLink === link.href ? 'text-blue-600 after:w-full' : 'text-gray-600 hover:text-gray-900'}`}
             >
               {link.label}
             </motion.a>
@@ -79,14 +80,15 @@ const Navbar = () => {
         </motion.div>
 
         {/* CTA Button */}
-        <motion.button 
+        <motion.a
+          href="#newsletter"
           variants={fadeIn('left', 0.3)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="hidden md:block bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-sm font-medium transition-all hover:shadow-lg hover:shadow-blue-100"
+          className="hidden md:inline-block bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-sm font-medium transition-all hover:shadow-lg hover:shadow-blue-100 cursor-pointer"
         >
-          <a href="#newsletter">Get in touch</a>
-        </motion.button>
+          Get in touch
+        </motion.a>
       </div>
 
       {/* Mobile Menu */}
@@ -110,20 +112,21 @@ const Navbar = () => {
                   setActiveLink(link.href);
                   setIsMenuOpen(false);
                 }}
-                className={`block text-sm font-medium py-2
+                className={`block text-sm font-medium py-2 cursor-pointer
                   ${activeLink === link.href ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'}`}
               >
                 {link.label}
               </motion.a>
             ))}
-            <motion.button 
+            <motion.a
+              href="#newsletter"
               variants={fadeIn('up', 0.4)}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="w-full bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-sm font-medium transition-all hover:shadow-lg hover:shadow-blue-100"
+              className="block w-full text-center bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-sm font-medium transition-all hover:shadow-lg hover:shadow-blue-100 cursor-pointer"
             >
               Get in touch
-            </motion.button>
+            </motion.a>
           </motion.div>
         </motion.div>
       )}
@@ -131,4 +134,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default Navbar;
