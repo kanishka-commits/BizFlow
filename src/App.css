@@ -2,48 +2,40 @@
   color: red;
 }
 
-/* Continuous marquee animation */
 @keyframes marquee {
-  0% {
-    transform: translateX(0%);
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
   }
-  100% {
-    transform: translateX(-50%); /* only half, because we'll duplicate the icons */
+  
+  .animate-marquee {
+    animation: marquee 15s linear infinite;
   }
-}
 
-.animate-marquee {
-  display: inline-flex;
-  min-width: max-content;
-  animation: marquee 10s linear infinite; /* faster movement */
-}
+  .testimonials-swiper {
+    padding: 20px 0;
+  }
+  
+  .testimonials-swiper .swiper-slide {
+    height: auto;
+  }
+  
+  /* Hide default Swiper navigation buttons */
+  .testimonials-swiper .swiper-button-next::after,
+  .testimonials-swiper .swiper-button-prev::after {
+    display: none;
+  }
 
-.animate-marquee:hover {
-  animation-play-state: paused; /* pause on hover */
-}
-
-/* Swiper styles */
-.testimonials-swiper {
-  padding: 20px 0;
-}
-
-.testimonials-swiper .swiper-slide {
-  height: auto;
-}
-
-/* Hide default Swiper navigation buttons */
-.testimonials-swiper .swiper-button-next::after,
-.testimonials-swiper .swiper-button-prev::after {
-  display: none;
-}
-
-.swiper-button-next,
-.swiper-button-prev {
-  display: none;
-}
-
-.swiper-button-next-custom.swiper-button-disabled,
-.swiper-button-prev-custom.swiper-button-disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
+  .swiper-button-next,
+            .swiper-button-prev {
+              display: none;
+            }
+            
+            .swiper-button-next-custom.swiper-button-disabled,
+            .swiper-button-prev-custom.swiper-button-disabled {
+              opacity: 0.5;
+              cursor: not-allowed;
+            }
