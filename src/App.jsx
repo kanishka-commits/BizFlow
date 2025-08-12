@@ -32,37 +32,53 @@ function App() {
   }, []);
 
   return (
-    <Router> 
-      <main className="relative min-h-screen overflow-x-hidden">
+    <Router>
+      <main className="relative min-h-screen overflow-x-hidden scroll-smooth">
+        {/* Background Gradient Blob */}
         <div className="absolute -top-28 -left-28 w-[500px] h-[500px] bg-gradient-to-tr from-indigo-500/20 to-pink-500/20 rounded-full blur-[80px] -z-10"></div>
+
         <div className="overflow-hidden">
+          {/* Navbar always visible */}
           <Navbar />
+
+          {/* Routes */}
           <Routes>
             <Route
               path="/"
               element={
                 <>
-                  <Hero />
-                  <CompanyLogo />
-                  <PurposeSection />
-                  <FeaturesSection />
-                  <ScheduleSection />
-                  <MonitorSection />
-                  <PricingSection />
-                  <ServicesSection />
-                  <TestimonialsSection />
-                  <NewsletterSection />
+                  <section id="home">
+                    <Hero />
+                  </section>
+                  <section id="about">
+                    <CompanyLogo />
+                    <PurposeSection />
+                    <FeaturesSection />
+                  </section>
+                  <section id="services">
+                    <ScheduleSection />
+                    <MonitorSection />
+                    <PricingSection />
+                    <ServicesSection />
+                  </section>
+                  <section id="testimonials">
+                    <TestimonialsSection />
+                  </section>
+                  <section id="newsletter">
+                    <NewsletterSection />
+                  </section>
                 </>
               }
             />
             <Route path="/partner" element={<Partner />} />
             <Route path="/analytics" element={<AnalyticsDashboard />} />
           </Routes>
+
           <Footer />
         </div>
       </main>
     </Router>
-  )
+  );
 }
 
 export default App
