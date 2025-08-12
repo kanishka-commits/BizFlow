@@ -1,9 +1,66 @@
-# ⚡ _BizFlow_  
-*BizFlow* is a **modern, React-based business workflow dashboard** designed for simplicity and style 💼✨. Built with **React + TailwindCSS**, it delivers a responsive, smooth, and visually appealing UI for managing tasks, tracking metrics, and organizing workflows with ease. Whether you’re a business owner, freelancer, or student, *BizFlow* makes work feel lighter, cleaner, and more enjoyable 🚀.  
+# ⚡ **BizFlow**  
+*BizFlow* is a **modern, React-based business workflow dashboard** designed for simplicity, performance, and style 💼✨.  
+Built with **React + TailwindCSS** (and Framer Motion for animations), it offers a **responsive, smooth, and visually appealing UI** for managing tasks, tracking metrics, and organizing workflows with ease.  
+
+Whether you’re a **business owner, freelancer, or student**, *BizFlow* makes work feel lighter, cleaner, and more enjoyable 🚀.  
 
 ![BizFlow Screenshot](public/Screenshot%202025-08-10%20101620.png)  
 
-## ❔ _Getting Started_  
+---
+
+## 🛠 **Tech Stack**
+- **Frontend:** React (Vite)
+- **Styling:** TailwindCSS
+- **Animations:** Framer Motion
+- **Linting:** ESLint
+- **Deployment:** Vercel
+
+---
+
+## 🌟 **Features**
+✅ Responsive and mobile-friendly  
+✅ Modular & reusable components  
+✅ Smooth animations and transitions  
+✅ Clean and modern UI  
+✅ Easy to customize (colors, layouts, themes)  
+✅ Frontend-only — connect to any backend API  
+
+---
+
+## 📂 **Project Structure**  
+
+```bash
+BIZFLOW
+├── public
+│   ├── fav-cion.png
+│   ├── Screenshot 2025-08-10 101620.png
+│   └── vite.svg
+│
+├── src
+│   ├── assets/          # Images, icons, static files
+│   ├── components/      # Reusable UI components
+│   ├── utils/           # Helper functions
+│   ├── App.css
+│   ├── App.jsx          # Main app component
+│   ├── index.css
+│   └── main.jsx         # Entry point
+│
+├── .gitignore
+├── CONTRIBUTING.md
+├── eslint.config.js
+├── index.html
+├── package-lock.json
+├── package.json
+├── README.md
+├── vercel.json
+└── vite.config.js
+```
+
+---
+
+
+## 🚀 Getting Started ##
+
 1. **Clone the repository** 📂  
 ```bash
 git clone https://github.com/adityadomle/BizFlow.git
@@ -14,60 +71,62 @@ cd BizFlow
 npm install
 npm run dev
 ```
-## 🔥 _Project Structure_
+
+## 👥 Contributing ##
+
+We welcome and encourage community contributions!
+Whether it’s UI enhancements, new features, or bug fixes — your input is valuable.
+
+**Steps to contribute:**
+
+1️⃣ Fork the repository.
+
+2️⃣  Create a new branch:
+
 ```bash
-/src              # Main source code
-/components       # Reusable UI components (cards, charts, tables, etc.)
-/pages            # Main page layouts
-/styles           # TailwindCSS config & global styles
-/assets           # Images, icons, and static assets
-/hooks            # Custom hooks for state and logic
-/utils            # Helper functions
+git checkout -b feature/your-feature-name
 ```
-## 👥 _Contributing_
 
-We welcome and encourage community contributions. Whether it’s UI enhancement, new feature, or bug fix — your input is valuable..
+3️⃣  Commit your changes:
 
-### _How to Contribute?_
+```bash
+git commit -m "feat: add your feature description"
+```
 
-1. Fork the repository.
-   
-3. Create a new feature branch:
+4️⃣  Push to your fork:
 
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
-   
-4. Make your changes and commit:
+```bash
+git push origin feature/your-feature-name
+```
 
-   ```bash
-   git commit -m "feat:add-your-feature-description"
-   ```
-   
-5. Push to your fork:
+5️⃣ Open a Pull Request with a clear explanation of your changes.
 
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-   
-6. Open a _pull request_ with a clear explanation of your changes.
+## 📜 Code of Conduct
 
-## ⁉️ _Frequently Asked Questions (FAQ)_
-> *Q1: Is BizFlow backend-connected?*
+Please read our [Code of Conduct](https://github.com/adityadomle/BizFlow/blob/main/CODE_OF_CONDUCT.md) to understand the expected behavior in this community.
 
-No — _BizFlow_ is frontend-only, focusing on beautiful UI/UX. You can connect it to any backend API you want.
-> *Q2: Can I customize the design?*
 
-Absolutely! It’s built with _TailwindCSS_ and _Framer Motion_,_ making it super easy to change colors, layouts, _animations_, and add smooth, interactive transitions.
+---
 
-> *Q3: Is it mobile-friendly?*
 
-Yes, it is fully responsive and delivers a smooth experience across all devices.
+## 🏆 Contribution Levels
 
-## :octocat: _License_
 
-This project is licensed under the MIT License.
+> **Note:** The scoring system applies only to GSSOC contributors.
 
-## 💚 _Maintainers_
+🟢 **Level 1** (4 points) - Bug fixes, documentation, minor improvements  
+🟡 **Level 2** (7 points) - Features, refactoring, moderate complexity  
+🔴 **Level 3** (10 points) - Complex features, architecture changes  
 
-Developed and maintained by [_Aditya Domle_](https://www.linkedin.com/in/adityadomle/) and the _open source community_.
+---
+
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/adityadomle/BizFlow/blob/main/LICENSE) file for details.
+
+---
+
+
+## 💚 Maintainers ##
+Developed & maintained by **Aditya Domle** and the **open-source community.**
