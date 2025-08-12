@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from "framer-motion";
 import { Link } from 'react-router-dom';
 import { fadeIn, textVariant } from "../utils/motion";
+import { Link } from 'react-router-dom'; 
 
 // Variants for staggered animation
 const containerVariants = {
@@ -95,24 +96,25 @@ const FeaturesSection = () => {
         ))}
       </motion.div>
 
-      {/* Button */}
-      {/* Button */}
-      <motion.div
-  whileHover={{ scale: 1.05 }}
-  whileTap={{ scale: 0.95 }}
-  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-  className="mt-12 flex justify-center"
->
-  <Link
-    to="/partner"
-    className="bg-blue-600 text-white px-8 py-3 cursor-pointer rounded-full hover:bg-blue-700 transition-colors
-               relative focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-50"
-    aria-label="Become a Partner"
+      <motion.div 
+        variants={fadeIn('up', 0.7)}
+        className="text-center mt-12"
+      >
+        <Link 
+    to="/partner" 
+    className="inline-block bg-blue-600 text-white cursor-pointer px-8 py-3 rounded-full font-medium hover:bg-blue-700 transition-colors relative"
   >
-    Become a Partner
+    <motion.div
+      variants={fadeIn('up', 0.8)}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      className="relative"
+    >
+      Become a Partner
+      <div className="absolute -z-10 w-full h-full rounded-full bg-blue-600/30 blur-xl top-0 left-0"></div>
+    </motion.div>
   </Link>
-</motion.div>
-
+      </motion.div>
 
     </motion.section>
   );

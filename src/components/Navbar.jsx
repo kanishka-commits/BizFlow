@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { HiMenu, HiX } from 'react-icons/hi'
 import { motion } from "framer-motion";
 import { fadeIn } from "../utils/motion";
@@ -14,6 +14,26 @@ const Navbar = () => {
     { href: "#testimonials", label: "Testimonials" },
   ]
 
+  // Scroll spy logic
+  useEffect(() => {
+    const sections = document.querySelectorAll("section[id]");
+    const options = { threshold: 0.6 }; // Section is considered active if 60% visible
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActiveLink(`#${entry.target.id}`);
+        }
+      });
+    }, options);
+
+    sections.forEach(section => observer.observe(section));
+
+    return () => {
+      sections.forEach(section => observer.unobserve(section));
+    };
+  }, []);
+
   return (
     <motion.nav 
       variants={fadeIn('down', 0.2)}
@@ -23,6 +43,7 @@ const Navbar = () => {
       className="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-sm z-50 border-b border-gray-100 shadow-sm"
     >
       <div className="w-full flex justify-between items-center container mx-auto px-4 sm:px-6 lg:px-8 md:h-20 h-16">
+        
         {/* Logo */}
         <motion.div 
           variants={fadeIn('right', 0.3)}
@@ -71,7 +92,9 @@ const Navbar = () => {
               variants={fadeIn('down', 0.1 * (index + 1))}
               href={link.href}
               onClick={() => setActiveLink(link.href)}
-              className={`text-sm font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all cursor-pointer
+
+              className={`text-sm font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all
+
                 ${activeLink === link.href ? 'text-blue-600 after:w-full' : 'text-gray-600 hover:text-gray-900'}`}
             >
               {link.label}
@@ -101,7 +124,7 @@ const Navbar = () => {
         >
           <motion.div 
             variants={fadeIn('down', 0.3)}
-            className="container mx-auto px-4 space-y-4"
+            className="container mx-auto px-4 space-y-6"
           >
             {navLinks.map((link, index) => (
               <motion.a
@@ -134,4 +157,5 @@ const Navbar = () => {
   )
 }
 
-export default Navbar;
+
+export default Navbar
