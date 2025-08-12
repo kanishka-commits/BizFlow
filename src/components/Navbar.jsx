@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { HiMenu, HiX } from 'react-icons/hi'
 import { motion } from "framer-motion";
 import { fadeIn} from "../utils/motion";
+import { trackButtonClick } from '../utils/analytics';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -12,6 +13,7 @@ const Navbar = () => {
     { href: "#about", label: "About Us" },
     { href: "#services", label: "Our Service" },
     { href: "#testimonials", label: "Testimonials" },
+    { href: "/analytics", label: "Analytics" },
   ]
 
   return (
@@ -74,6 +76,7 @@ const Navbar = () => {
           variants={fadeIn('left', 0.3)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          onClick={() => trackButtonClick('Navbar CTA Button')}
           className="hidden md:block bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-sm font-medium transition-all hover:shadow-lg hover:shadow-blue-100"
         >
           <a href="#newsletter">Get in touch</a>
@@ -111,6 +114,7 @@ const Navbar = () => {
               variants={fadeIn('up', 0.4)}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
+              onClick={() => trackButtonClick('Mobile Navbar CTA Button')}
               className="w-full bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-sm font-medium transition-all hover:shadow-lg hover:shadow-blue-100"
             >
               Get in touch

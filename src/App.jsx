@@ -12,9 +12,25 @@ import TestimonialsSection from './components/TestimonialsSection'
 import NewsletterSection from './components/NewsletterSection'
 import Footer from './components/Footer'
 import Partner from './pages/Partner'
+import AnalyticsDashboard from './components/AnalyticsDashboard'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import useScrollTracking from './utils/useScrollTracking'
+import useTimeTracking from './utils/useTimeTracking'
+import { trackPageView } from './utils/analytics'
+import { useEffect } from 'react'
 
 function App() {
+  // Initialize analytics tracking hooks
+  useScrollTracking();
+  useTimeTracking();
+
+  // Track page views on route changes
+  useEffect(() => {
+    const currentPath = window.location.pathname;
+    const pageName = currentPath === '/' ? 'Home' : currentPath.charAt(1).toUpperCase() + currentPath.slice(2);
+    trackPageView(pageName);
+  }, []);
+
   return (
     <Router> 
       <main className="relative min-h-screen overflow-x-hidden">
@@ -40,6 +56,7 @@ function App() {
               }
             />
             <Route path="/partner" element={<Partner />} />
+            <Route path="/analytics" element={<AnalyticsDashboard />} />
           </Routes>
           <Footer />
         </div>
