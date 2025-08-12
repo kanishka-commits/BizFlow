@@ -1,23 +1,31 @@
-import './App.css'
-import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import CompanyLogo from './components/CompanyLogo'
-import PurposeSection from './components/PurposeSection'
-import FeaturesSection from './components/FeaturesSection'
-import ScheduleSection from './components/ScheduleSection'
-import MonitorSection from './components/MonitorSection'
-import PricingSection from './components/PricingSection'
-import ServicesSection from './components/ServicesSection'
-import TestimonialsSection from './components/TestimonialsSection'
-import NewsletterSection from './components/NewsletterSection'
-import Footer from './components/Footer'
-import Partner from './pages/Partner'
-import AnalyticsDashboard from './components/AnalyticsDashboard'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import useScrollTracking from './utils/useScrollTracking'
-import useTimeTracking from './utils/useTimeTracking'
-import { trackPageView } from './utils/analytics'
-import { useEffect } from 'react'
+import React from "react";
+import "./App.css";
+
+// Components
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import CompanyLogo from "./components/CompanyLogo";
+import PurposeSection from "./components/PurposeSection";
+import FeaturesSection from "./components/FeaturesSection";
+import ScheduleSection from "./components/ScheduleSection";
+import MonitorSection from "./components/MonitorSection";
+import PricingSection from "./components/PricingSection";
+import ServicesSection from "./components/ServicesSection";
+import TestimonialsSection from "./components/TestimonialsSection";
+import NewsletterSection from "./components/NewsletterSection";
+import Footer from "./components/Footer";
+
+// Pages
+import Partner from "./pages/Partner";
+import AnalyticsDashboard from "./components/AnalyticsDashboard";
+
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+// Analytics hooks and utils
+import useScrollTracking from './utils/useScrollTracking';
+import useTimeTracking from './utils/useTimeTracking';
+import { trackPageView } from './utils/analytics';
+import { useEffect } from "react";
 
 function App() {
   // Initialize analytics tracking hooks
@@ -81,4 +89,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
