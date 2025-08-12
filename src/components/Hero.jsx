@@ -17,8 +17,8 @@ const Hero = () => {
     console.log("Email to send:", email);
 
     setShowPopup(true);
-    setTimeout(() => setShowPopup(false), 3000); 
-    setEmail(""); 
+    setTimeout(() => setShowPopup(false), 3000);
+    setEmail("");
   };
 
   return (
@@ -33,7 +33,7 @@ const Hero = () => {
           </div>
         </motion.div>
 
-        <motion.h1 
+        <motion.h1
           variants={textVariant(0.3)}
           initial="hidden"
           whileInView="show"
@@ -48,7 +48,8 @@ const Hero = () => {
           <span className="inline-block ml-2 animate-pulse">⏰</span>
         </motion.h1>
 
-        <motion.p 
+
+        <motion.p
           variants={fadeIn('up', 0.4)}
           initial="hidden"
           whileInView="show"
@@ -57,7 +58,7 @@ const Hero = () => {
           Get the most accurate leads, sales people training and conversions, tools and more — all within the same one billing.
         </motion.p>
 
-        <motion.div 
+        <motion.div
           variants={fadeIn('up', 0.5)}
           initial="hidden"
           whileInView="show"
@@ -70,7 +71,7 @@ const Hero = () => {
             placeholder="Email address"
             className="flex-1 px-6 py-4 border border-gray-200 rounded-xl focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100  transition-all text-gray-600"
           />
-          <button 
+          <button
             onClick={() => {
               trackButtonClick('Hero Newsletter Button');
               trackNewsletterSignup('hero_section');
@@ -98,7 +99,7 @@ const Hero = () => {
       </div>
 
       {/* Right Column - Images */}
-      <motion.div 
+      <motion.div
         variants={fadeIn('left', 0.5)}
         initial="hidden"
         whileInView="show"
@@ -116,4 +117,4 @@ const Hero = () => {
   );
 };
 
-export default Hero
+export default Hero;
