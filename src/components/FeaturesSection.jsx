@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from "framer-motion";
-import { Link } from 'react-router-dom'; // keep this import!
+import { Link } from 'react-router-dom';
 import { fadeIn, textVariant } from "../utils/motion";
 
 // Variants for staggered animation
@@ -118,4 +118,4 @@ const FeaturesSection = () => {
   );
 };
 
-export default FeaturesSection;
+export default FeaturesSection
