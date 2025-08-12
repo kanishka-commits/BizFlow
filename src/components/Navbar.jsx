@@ -2,16 +2,16 @@ import React, { useState, useEffect } from 'react'
 import { HiMenu, HiX } from 'react-icons/hi'
 import { motion } from "framer-motion";
 import { fadeIn } from "../utils/motion";
-
+import { HashLink } from 'react-router-hash-link';
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [activeLink, setActiveLink] = useState('#home')
 
   const navLinks = [
     { href: "/", label: "Home" },
-    { href: "#about", label: "About Us" },
-    { href: "#services", label: "Our Services" },
-    { href: "#testimonials", label: "Testimonials" },
+    { href: "/#about", label: "About Us" },
+    { href: "/#services", label: "Our Services" },
+    { href: "/#testimonials", label: "Testimonials" },
   ]
 
   // Scroll spy logic
@@ -87,19 +87,18 @@ const Navbar = () => {
           className="hidden md:flex items-center gap-10"
         >
           {navLinks.map((link, index) => (
-            <motion.a 
-              key={index}
-              variants={fadeIn('down', 0.1 * (index + 1))}
-              href={link.href}
-              onClick={() => setActiveLink(link.href)}
-
-              className={`text-sm font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all
-
-                ${activeLink === link.href ? 'text-blue-600 after:w-full' : 'text-gray-600 hover:text-gray-900'}`}
-            >
-              {link.label}
-            </motion.a>
-          ))}
+            // REPLACE <motion.a> with <HashLink> and use the "to" prop
+              <HashLink 
+                key={index}
+                smooth // This enables smooth scrolling
+                to={link.href} // The href from array now goes into the "to" prop
+                onClick={() => setActiveLink(link.href)}
+                className={`text-sm font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all
+                  ${activeLink === link.href ? 'text-blue-600 after:w-full' : 'text-gray-600 hover:text-gray-900'}`}
+              >
+                {link.label}
+              </HashLink>
+        ))}
         </motion.div>
 
         {/* CTA Button */}
@@ -127,19 +126,20 @@ const Navbar = () => {
             className="container mx-auto px-4 space-y-6"
           >
             {navLinks.map((link, index) => (
-              <motion.a
+              // REPLACE <motion.a> with <HashLink> and use the "to" prop
+              <HashLink
                 key={index}
-                variants={fadeIn('right', 0.1 * (index + 1))}
-                href={link.href}
+                smooth // Add smooth scrolling
+                to={link.href} // Use the "to" prop
                 onClick={() => {
                   setActiveLink(link.href);
-                  setIsMenuOpen(false);
+                  setIsMenuOpen(false); // This keeps the menu closing on click
                 }}
                 className={`block text-sm font-medium py-2 cursor-pointer
                   ${activeLink === link.href ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'}`}
-              >
+                >
                 {link.label}
-              </motion.a>
+              </HashLink>
             ))}
             <motion.a
               href="#newsletter"
