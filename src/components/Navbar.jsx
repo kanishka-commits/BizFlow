@@ -74,7 +74,7 @@ const Navbar = () => {
           variants={fadeIn('left', 0.3)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="hidden md:block bg-purple-500 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-sm font-medium transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-105 hover:shadow-blue-100"
+          className="hidden md:block bg-purple-400 text-white px-6 py-2.5 rounded-lg hover:bg-purple-300 text-sm font-medium transition-all duration-300 ease-in-out hover:bg-purple-250 hover:shadow-lg hover:scale-105 hover:shadow-[0_0_15px_#e9d5ff]"
         >
           <a href="#newsletter">Get in touch</a>
         </motion.button>
@@ -111,7 +111,7 @@ const Navbar = () => {
               variants={fadeIn('up', 0.4)}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="w-full bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-sm font-medium transition-all hover:shadow-lg hover:shadow-blue-100"
+              className="w-full bg-purple-500 text-white px-6 py-2.5 rounded-lg transition-all duration-300 ease-in-out hover:bg-purple-400 hover:scale-105 hover:shadow-[0_0_15px_#a855f7] text-sm font-medium"
             >
               Get in touch
             </motion.button>
