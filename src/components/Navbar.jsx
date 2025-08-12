@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { HiMenu, HiX } from 'react-icons/hi'
 import { motion } from "framer-motion";
-import { fadeIn} from "../utils/motion";
+import { fadeIn } from "../utils/motion";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -10,9 +10,29 @@ const Navbar = () => {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "#about", label: "About Us" },
-    { href: "#services", label: "Our Service" },
+    { href: "#services", label: "Our Services" },
     { href: "#testimonials", label: "Testimonials" },
   ]
+
+  // Scroll spy logic
+  useEffect(() => {
+    const sections = document.querySelectorAll("section[id]");
+    const options = { threshold: 0.6 }; // Section is considered active if 60% visible
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActiveLink(`#${entry.target.id}`);
+        }
+      });
+    }, options);
+
+    sections.forEach(section => observer.observe(section));
+
+    return () => {
+      sections.forEach(section => observer.unobserve(section));
+    };
+  }, []);
 
   return (
     <motion.nav 
@@ -23,25 +43,36 @@ const Navbar = () => {
       className="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-sm z-50 border-b border-gray-100 shadow-sm"
     >
       <div className="w-full flex justify-between items-center container mx-auto px-4 sm:px-6 lg:px-8 md:h-20 h-16">
+        
         {/* Logo */}
         <motion.div 
           variants={fadeIn('right', 0.3)}
-          className="flex items-center gap-1 cursor-pointer"
+          className="flex items-center gap-3 cursor-pointer"
         >
-          <motion.div 
-            whileHover={{ scale: 1.1 }}
-            className="w-4 h-4 bg-blue-600 rounded-full opacity-75 hover:opacity-100 transition-opacity"
-          ></motion.div>
-          <motion.div 
-            whileHover={{ scale: 1.1 }}
-            className="w-4 h-4 bg-red-500 rounded-full -ml-2 hover:opacity-75 transition-opacity"
-          ></motion.div>
+          <div className="flex items-center gap-1">
+            <motion.div 
+              whileHover={{ scale: 1.1 }}
+              className="w-4 h-4 bg-blue-600 rounded-full opacity-75 hover:opacity-100 transition-opacity"
+            ></motion.div>
+            <motion.div 
+              whileHover={{ scale: 1.1 }}
+              className="w-4 h-4 bg-red-500 rounded-full -ml-2 hover:opacity-75 transition-opacity"
+            ></motion.div>
+          </div>
+          <motion.span 
+            whileHover={{ scale: 1.02 }}
+            className="text-xl font-bold text-gray-800 hover:text-blue-600 transition-colors"
+          >
+            BizFlow
+          </motion.span>
         </motion.div>
+
         {/* Mobile Menu Button */}
         <motion.button 
           variants={fadeIn('left', 0.3)}
-          className="md:hidden p-2"
+          className="md:hidden p-2 cursor-pointer"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
         >
           {isMenuOpen ? (
             <HiX className="h-6 w-6" />
@@ -61,8 +92,10 @@ const Navbar = () => {
               variants={fadeIn('down', 0.1 * (index + 1))}
               href={link.href}
               onClick={() => setActiveLink(link.href)}
+
               className={`text-sm font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all
-                ${activeLink === link.href ? 'text-blue-600 after:w-full  ' : 'text-gray-600 hover:text-gray-900'}`}
+
+                ${activeLink === link.href ? 'text-blue-600 after:w-full' : 'text-gray-600 hover:text-gray-900'}`}
             >
               {link.label}
             </motion.a>
@@ -70,14 +103,15 @@ const Navbar = () => {
         </motion.div>
 
         {/* CTA Button */}
-        <motion.button 
+        <motion.a
+          href="#newsletter"
           variants={fadeIn('left', 0.3)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className="hidden md:block bg-purple-400 text-white px-6 py-2.5 rounded-lg hover:bg-purple-300 text-sm font-medium transition-all duration-300 ease-in-out hover:bg-purple-250 hover:shadow-lg hover:scale-105 hover:shadow-[0_0_15px_#e9d5ff]"
         >
-          <a href="#newsletter">Get in touch</a>
-        </motion.button>
+          Get in touch
+        </motion.a>
       </div>
 
       {/* Mobile Menu */}
@@ -90,7 +124,7 @@ const Navbar = () => {
         >
           <motion.div 
             variants={fadeIn('down', 0.3)}
-            className="container mx-auto px-4 space-y-4"
+            className="container mx-auto px-4 space-y-6"
           >
             {navLinks.map((link, index) => (
               <motion.a
@@ -101,25 +135,27 @@ const Navbar = () => {
                   setActiveLink(link.href);
                   setIsMenuOpen(false);
                 }}
-                className={`block text-sm font-medium py-2
+                className={`block text-sm font-medium py-2 cursor-pointer
                   ${activeLink === link.href ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'}`}
               >
                 {link.label}
               </motion.a>
             ))}
-            <motion.button 
+            <motion.a
+              href="#newsletter"
               variants={fadeIn('up', 0.4)}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className="w-full bg-purple-500 text-white px-6 py-2.5 rounded-lg transition-all duration-300 ease-in-out hover:bg-purple-400 hover:scale-105 hover:shadow-[0_0_15px_#a855f7] text-sm font-medium"
             >
               Get in touch
-            </motion.button>
+            </motion.a>
           </motion.div>
         </motion.div>
       )}
     </motion.nav>
   )
 }
+
 
 export default Navbar
