@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { HiMenu, HiX } from 'react-icons/hi'
 import { motion } from "framer-motion";
-import { fadeIn} from "../utils/motion";
+import { fadeIn } from "../utils/motion";
 import { trackButtonClick } from '../utils/analytics';
 
 const Navbar = () => {
@@ -94,8 +94,7 @@ const Navbar = () => {
               variants={fadeIn('down', 0.1 * (index + 1))}
               href={link.href}
               onClick={() => setActiveLink(link.href)}
-              className={`text-sm font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all
-                ${activeLink === link.href ? 'text-blue-600 after:w-full' : 'text-gray-600 hover:text-gray-900'}`}
+              className={`text-sm font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all ${activeLink === link.href ? 'text-blue-600 after:w-full' : 'text-gray-600 hover:text-gray-900'}`}
             >
               {link.label}
             </motion.a>
@@ -156,5 +155,6 @@ const Navbar = () => {
     </motion.nav>
   )
 }
+
 
 export default Navbar

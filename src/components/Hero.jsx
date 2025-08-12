@@ -49,7 +49,7 @@ const Hero = () => {
         </motion.h1>
 
 
-        <motion.p
+        <motion.p 
           variants={fadeIn('up', 0.4)}
           initial="hidden"
           whileInView="show"
@@ -118,3 +118,4 @@ const Hero = () => {
 };
 
 export default Hero;
+
