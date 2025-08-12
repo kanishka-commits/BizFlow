@@ -74,7 +74,7 @@ const Navbar = () => {
           variants={fadeIn('left', 0.3)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="hidden md:block bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-sm font-medium transition-all hover:shadow-lg hover:shadow-blue-100"
+          className="hidden md:block bg-purple-500 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-sm font-medium transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-105 hover:shadow-blue-100"
         >
           <a href="#newsletter">Get in touch</a>
         </motion.button>
