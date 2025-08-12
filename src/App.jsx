@@ -15,7 +15,7 @@ import ServicesSection from "./components/ServicesSection";
 import TestimonialsSection from "./components/TestimonialsSection";
 import NewsletterSection from "./components/NewsletterSection";
 import Footer from "./components/Footer";
-
+import ScrollToTop from "./components/ScrollToTop";
 // Pages
 import Partner from "./pages/Partner";
 

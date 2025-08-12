@@ -2,7 +2,6 @@ import React from 'react';
 import { motion } from "framer-motion";
 import { Link } from 'react-router-dom';
 import { fadeIn, textVariant } from "../utils/motion";
-import { Link } from 'react-router-dom'; 
 
 // Variants for staggered animation
 const containerVariants = {
