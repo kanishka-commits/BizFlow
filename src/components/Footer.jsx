@@ -6,7 +6,7 @@ import { fadeIn, textVariant } from "../utils/motion";
 const Footer = () => {
   const footerLinks = {
     company: [
-      { name: 'About', href: '#' },
+      { name: 'About', href: '#about' },
       { name: 'Terms of Use', href: '#' },
       { name: 'Privacy Policy', href: '#' },
       { name: 'How it Works', href: '#' },
@@ -18,7 +18,7 @@ const Footer = () => {
       { name: 'Quick Chat', href: '#' },
     ],
     support: [
-      { name: 'FAQ', href: '#' },
+      { name: 'FAQs', href: '#' },
       { name: 'Policy', href: '#' },
       { name: 'Business', href: '#' },
     ],
