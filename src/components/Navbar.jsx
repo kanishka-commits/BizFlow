@@ -3,6 +3,7 @@ import { HiMenu, HiX } from 'react-icons/hi'
 import { motion } from "framer-motion";
 import { fadeIn } from "../utils/motion";
 import { trackButtonClick } from '../utils/analytics';
+import { HashLink } from 'react-router-hash-link';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -10,9 +11,9 @@ const Navbar = () => {
 
   const navLinks = [
     { href: "/", label: "Home" },
-    { href: "#about", label: "About Us" },
-    { href: "#services", label: "Our Services" },
-    { href: "#testimonials", label: "Testimonials" },
+    { href: "/#about", label: "About Us" },
+    { href: "/#services", label: "Our Services" },
+    { href: "/#testimonials", label: "Testimonials" },
     { href: "/analytics", label: "Analytics" },
   ]
 
@@ -89,15 +90,15 @@ const Navbar = () => {
           className="hidden md:flex items-center gap-10"
         >
           {navLinks.map((link, index) => (
-            <motion.a 
+            <HashLink 
               key={index}
-              variants={fadeIn('down', 0.1 * (index + 1))}
-              href={link.href}
+              smooth
+              to={link.href}
               onClick={() => setActiveLink(link.href)}
               className={`text-sm font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all ${activeLink === link.href ? 'text-blue-600 after:w-full' : 'text-gray-600 hover:text-gray-900'}`}
             >
               {link.label}
-            </motion.a>
+            </HashLink>
           ))}
         </motion.div>
 
@@ -126,10 +127,10 @@ const Navbar = () => {
             className="container mx-auto px-4 space-y-6"
           >
             {navLinks.map((link, index) => (
-              <motion.a
+              <HashLink
                 key={index}
-                variants={fadeIn('right', 0.1 * (index + 1))}
-                href={link.href}
+                smooth
+                to={link.href}
                 onClick={() => {
                   setActiveLink(link.href);
                   setIsMenuOpen(false);
@@ -138,7 +139,7 @@ const Navbar = () => {
                   ${activeLink === link.href ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'}`}
               >
                 {link.label}
-              </motion.a>
+              </HashLink>
             ))}
             <motion.button
               variants={fadeIn('up', 0.4)}
@@ -155,6 +156,5 @@ const Navbar = () => {
     </motion.nav>
   )
 }
-
 
 export default Navbar
