@@ -16,6 +16,7 @@ import NewsletterSection from "./components/NewsletterSection";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import NotFound from "./components/NotFound";
+import UserTourGuide from "./components/UserTourGuide";
 
 // Pages
 import Partner from "./pages/Partner";
@@ -86,7 +87,8 @@ function App() {
           </Routes>
 
           <Footer />
-           <ScrollToTop />
+          <ScrollToTop />
+          <UserTourGuide />
         </div>
       </main>
     </Router>

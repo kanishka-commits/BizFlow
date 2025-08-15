@@ -39,6 +39,7 @@ const Navbar = () => {
   }, []);
 
   return (
+
     <motion.nav
       variants={fadeIn("down", 0.2)}
       initial="hidden"
