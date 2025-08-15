@@ -16,6 +16,7 @@ const Navbar = () => {
     { href: "/#services", label: "Our Services" },
     { href: "/#testimonials", label: "Testimonials" },
     { href: "/analytics", label: "Analytics" },
+    { href: "/contact", label: "Contact" },
   ];
 
   // Scroll spy logic
