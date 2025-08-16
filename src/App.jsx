@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 
 // Components
@@ -16,20 +16,19 @@ import NewsletterSection from "./components/NewsletterSection";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import NotFound from "./components/NotFound";
-import UserTourGuide from "./components/UserTourGuide";
+import Contact from "./components/Contact";
+import AnalyticsDashboard from "./components/AnalyticsDashboard";
 
 // Pages
 import Partner from "./pages/Partner";
-import AnalyticsDashboard from "./components/AnalyticsDashboard";
 
+// Router
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // Analytics hooks and utils
-import useScrollTracking from './utils/useScrollTracking';
-import useTimeTracking from './utils/useTimeTracking';
-import { trackPageView } from './utils/analytics';
-import { useEffect } from "react";
-import Contact from "./components/Contact";
+import useScrollTracking from "./utils/useScrollTracking";
+import useTimeTracking from "./utils/useTimeTracking";
+import { trackPageView } from "./utils/analytics";
 
 function App() {
   // Initialize analytics tracking hooks
@@ -39,7 +38,10 @@ function App() {
   // Track page views on route changes
   useEffect(() => {
     const currentPath = window.location.pathname;
-    const pageName = currentPath === '/' ? 'Home' : currentPath.charAt(1).toUpperCase() + currentPath.slice(2);
+    const pageName =
+      currentPath === "/"
+        ? "Home"
+        : currentPath.charAt(1).toUpperCase() + currentPath.slice(2);
     trackPageView(pageName);
   }, []);
 
@@ -85,14 +87,12 @@ function App() {
             <Route path="/partner" element={<Partner />} />
             <Route path="/analytics" element={<AnalyticsDashboard />} />
             <Route path="/contact" element={<Contact />} />
-
-
             <Route path="*" element={<NotFound />} />
           </Routes>
 
+          {/* Footer + ScrollToTop must be outside Routes */}
           <Footer />
           <ScrollToTop />
-          <UserTourGuide />
         </div>
       </main>
     </Router>
