@@ -33,9 +33,11 @@ import { trackPageView } from "./utils/analytics";
 // Component to handle hash navigation
 function HashNavigation() {
   const location = useLocation();
+  const previousHash = React.useRef(location.hash);
   
   useEffect(() => {
-    if (location.hash) {
+    // Only scroll if hash actually changed (not on initial load)
+    if (location.hash && location.hash !== previousHash.current) {
       const element = document.querySelector(location.hash);
       if (element) {
         setTimeout(() => {
@@ -43,6 +45,9 @@ function HashNavigation() {
         }, 100);
       }
     }
+    
+    // Update the previous hash
+    previousHash.current = location.hash;
   }, [location]);
 
   return null;
