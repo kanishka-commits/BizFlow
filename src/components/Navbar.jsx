@@ -1,15 +1,19 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { HiMenu, HiX } from "react-icons/hi";
+import { HiSun, HiMoon } from "react-icons/hi";
 import { motion } from "framer-motion";
 import { fadeIn } from "../utils/motion";
 import { trackButtonClick } from "../utils/analytics";
 import { HashLink } from "react-router-hash-link";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("/#home");
+  const { isDarkMode, toggleTheme } = useTheme();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const navLinks = [
     { href: "/#home", label: "Home" },
@@ -21,16 +25,9 @@ const Navbar = () => {
     { href: "/contributors", label: "Contributors" },
   ];
 
-  // Reset activeLink to home when on home page
-  useEffect(() => {
-    if (window.location.pathname === "/") {
-      setActiveLink("/#home");
-    }
-  }, [window.location.pathname]);
-
   // Handle route changes to update activeLink
   useEffect(() => {
-    const currentPath = window.location.pathname;
+    const currentPath = location.pathname;
     if (currentPath === "/") {
       setActiveLink("/#home");
     } else if (currentPath === "/analytics") {
@@ -40,11 +37,11 @@ const Navbar = () => {
     } else if (currentPath === "/partner") {
       setActiveLink("/partner");
     }
-  }, [window.location.pathname]);
+  }, [location.pathname]);
 
-  // Scroll spy logic - only track sections when on home page
+  // Scroll spy logic - track sections when on home page
   useEffect(() => {
-    if (window.location.pathname !== "/") return;
+    if (location.pathname !== "/") return;
 
     const sections = document.querySelectorAll("section[id]");
     const options = { threshold: 0.6 };
@@ -52,7 +49,10 @@ const Navbar = () => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          // Keep it as "/#home" to maintain the highlight under Home
+          const sectionId = entry.target.id;
+          if (sectionId) {
+            setActiveLink(`/#${sectionId}`);
+          }
         }
       });
     }, options);
@@ -61,7 +61,7 @@ const Navbar = () => {
     return () => {
       sections.forEach((section) => observer.unobserve(section));
     };
-  }, []);
+  }, [location.pathname]);
 
   return (
     <motion.nav
@@ -69,7 +69,11 @@ const Navbar = () => {
       initial="hidden"
       whileInView="show"
       viewport={{ once: true }}
-      className="fixed top-0 inset-x-0 bg-white/90 backdrop-blur-sm z-50 border-b border-gray-100 shadow-sm"
+      className={`fixed top-0 inset-x-0 z-50 border-b shadow-sm transition-colors duration-300 ${
+        isDarkMode 
+          ? "bg-gray-900/90 backdrop-blur-sm border-gray-700" 
+          : "bg-white/90 backdrop-blur-sm border-gray-100"
+      }`}
     >
       <div className="w-full flex justify-between items-center container mx-auto px-4 sm:px-6 lg:px-8 md:h-20 h-16">
         {/* Logo */}
@@ -89,7 +93,11 @@ const Navbar = () => {
           </div>
           <motion.span
             whileHover={{ scale: 1.02 }}
-            className="text-4xl font-bold text-gray-800 hover:text-blue-600 transition-colors"
+            className={`text-4xl font-bold transition-colors ${
+              isDarkMode 
+                ? "text-white hover:text-blue-400" 
+                : "text-gray-800 hover:text-blue-600"
+            }`}
           >
             BizFlow
           </motion.span>
@@ -98,7 +106,9 @@ const Navbar = () => {
         {/* Mobile Menu Button */}
         <motion.button
           variants={fadeIn("left", 0.3)}
-          className="md:hidden p-2 cursor-pointer"
+          className={`md:hidden p-2 cursor-pointer transition-colors ${
+            isDarkMode ? "text-white hover:text-gray-300" : "text-gray-600 hover:text-gray-900"
+          }`}
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         >
@@ -117,16 +127,18 @@ const Navbar = () => {
                   key={index}
                   onClick={() => {
                     setActiveLink(link.href);
-                    if (window.location.pathname !== "/") {
+                    if (location.pathname !== "/") {
                       navigate("/#home");
                     } else {
                       document.getElementById("home")?.scrollIntoView({ behavior: "smooth" });
                     }
                   }}
-                  className={`text-base sm:text-xl md:text-xl lg:text-xl xl:text-base font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all cursor-pointer ${
+                  className={`text-base sm:text-xl md:text-xl lg:text-xl xl:text-base font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all cursor-pointer transition-colors ${
                     activeLink === link.href
                       ? "text-blue-600 after:w-full"
-                      : "text-gray-600 hover:text-gray-900"
+                      : isDarkMode 
+                        ? "text-gray-300 hover:text-white" 
+                        : "text-gray-600 hover:text-gray-900"
                   }`}
                 >
                   {link.label}
@@ -140,14 +152,16 @@ const Navbar = () => {
                 smooth
                 to={link.href}
                 onClick={() => {
-                  if (window.location.pathname !== "/") {
+                  if (location.pathname !== "/") {
                     setActiveLink(link.href);
                   }
                 }}
-                className={`text-base sm:text-xl md:text-xl lg:text-xl xl:text-base font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all ${
+                className={`text-base sm:text-xl md:text-xl lg:text-xl xl:text-base font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all transition-colors ${
                   activeLink === link.href
                     ? "text-blue-600 after:w-full"
-                    : "text-gray-600 hover:text-gray-900"
+                    : isDarkMode 
+                      ? "text-gray-300 hover:text-white" 
+                      : "text-gray-600 hover:text-gray-900"
                 }`}
               >
                 {link.label}
@@ -157,10 +171,12 @@ const Navbar = () => {
                 key={index}
                 to={link.href}
                 onClick={() => setActiveLink(link.href)}
-                className={`text-base sm:text-xl md:text-xl lg:text-xl xl:text-base font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all ${
-                  window.location.pathname === link.href
+                className={`text-base sm:text-xl md:text-xl lg:text-xl xl:text-base font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all transition-colors ${
+                  location.pathname === link.href
                     ? "text-blue-600 after:w-full"
-                    : "text-gray-600 hover:text-gray-900"
+                    : isDarkMode 
+                      ? "text-gray-300 hover:text-white" 
+                      : "text-gray-600 hover:text-gray-900"
                 }`}
               >
                 {link.label}
@@ -169,23 +185,47 @@ const Navbar = () => {
           })}
         </motion.div>
 
-        {/* CTA Button */}
-        <motion.button
+        {/* CTA Button and Theme Toggle */}
+        <motion.div
           variants={fadeIn("left", 0.3)}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => {
-            trackButtonClick("Navbar CTA Button");
-            if (window.location.pathname !== "/") {
-              navigate("/#newsletter");
-            } else {
-              document.getElementById("newsletter")?.scrollIntoView({ behavior: "smooth" });
-            }
-          }}
-          className="hidden md:block bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-base font-medium transition-all hover:shadow-lg hover:shadow-blue-100 cursor-pointer"
+          className="hidden md:flex items-center gap-3"
         >
-          Get in touch
-        </motion.button>
+          {/* Get in Touch Button */}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => {
+              trackButtonClick("Navbar CTA Button");
+              if (location.pathname !== "/") {
+                navigate("/#newsletter");
+              } else {
+                document.getElementById("newsletter")?.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
+            className="bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-base font-medium transition-all hover:shadow-lg hover:shadow-blue-100 cursor-pointer"
+          >
+            Get in touch
+          </motion.button>
+
+          {/* Theme Toggle Button */}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={toggleTheme}
+            className={`p-2.5 rounded-lg transition-all cursor-pointer ${
+              isDarkMode 
+                ? "bg-gray-700 hover:bg-gray-600 text-yellow-400 hover:text-yellow-300" 
+                : "bg-blue-100 hover:bg-blue-200 text-blue-600 hover:text-blue-700"
+            }`}
+            aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+          >
+            {isDarkMode ? (
+              <HiSun className="h-5 w-5" />
+            ) : (
+              <HiMoon className="h-5 w-5" />
+            )}
+          </motion.button>
+        </motion.div>
       </div>
 
       {/* Mobile Menu */}
@@ -194,7 +234,11 @@ const Navbar = () => {
           variants={fadeIn("down", 0.2)}
           initial="hidden"
           animate="show"
-          className="md:hidden bg-white border-t border-gray-100 py-4"
+          className={`md:hidden border-t py-4 transition-colors duration-300 ${
+            isDarkMode 
+              ? "bg-gray-900 border-gray-700" 
+              : "bg-white border-gray-100"
+          }`}
         >
           <motion.div
             variants={fadeIn("down", 0.3)}
@@ -208,16 +252,18 @@ const Navbar = () => {
                     onClick={() => {
                       setActiveLink(link.href);
                       setIsMenuOpen(false);
-                      if (window.location.pathname !== "/") {
+                      if (location.pathname !== "/") {
                         navigate("/#home");
                       } else {
                         document.getElementById("home")?.scrollIntoView({ behavior: "smooth" });
                       }
                     }}
-                    className={`block text-base sm:text-lg md:text-lg lg:text-lg xl:text-xl font-medium py-2 cursor-pointer w-full text-left ${
+                    className={`block text-base sm:text-lg md:text-lg lg:text-lg xl:text-xl font-medium py-2 cursor-pointer w-full text-left transition-colors ${
                       activeLink === link.href
                         ? "text-blue-600"
-                        : "text-gray-600 hover:text-gray-900"
+                        : isDarkMode 
+                          ? "text-gray-300 hover:text-white" 
+                          : "text-gray-600 hover:text-gray-900"
                     }`}
                   >
                     {link.label}
@@ -231,15 +277,17 @@ const Navbar = () => {
                   smooth
                   to={link.href}
                   onClick={() => {
-                    if (window.location.pathname !== "/") {
+                    if (location.pathname !== "/") {
                       setActiveLink(link.href);
                     }
                     setIsMenuOpen(false);
                   }}
-                  className={`block text-base sm:text-lg md:text-lg lg:text-lg xl:text-xl font-medium py-2 cursor-pointer ${
+                  className={`block text-base sm:text-lg md:text-lg lg:text-lg xl:text-xl font-medium py-2 cursor-pointer transition-colors ${
                     activeLink === link.href
                       ? "text-blue-600"
-                      : "text-gray-600 hover:text-gray-900"
+                      : isDarkMode 
+                        ? "text-gray-300 hover:text-white" 
+                        : "text-gray-600 hover:text-gray-900"
                   }`}
                 >
                   {link.label}
@@ -252,10 +300,12 @@ const Navbar = () => {
                     setActiveLink(link.href);
                     setIsMenuOpen(false);
                   }}
-                  className={`block text-base sm:text-lg md:text-lg lg:text-lg xl:text-xl font-medium py-2 cursor-pointer ${
-                    window.location.pathname === link.href
+                  className={`block text-base sm:text-lg md:text-lg lg:text-lg xl:text-xl font-medium py-2 cursor-pointer transition-colors ${
+                    location.pathname === link.href
                       ? "text-blue-600"
-                      : "text-gray-600 hover:text-gray-900"
+                      : isDarkMode 
+                        ? "text-gray-300 hover:text-white" 
+                        : "text-gray-600 hover:text-gray-900"
                   }`}
                 >
                   {link.label}
@@ -269,7 +319,7 @@ const Navbar = () => {
               whileTap={{ scale: 0.98 }}
               onClick={() => {
                 trackButtonClick("Mobile Navbar CTA Button");
-                if (window.location.pathname !== "/") {
+                if (location.pathname !== "/") {
                   navigate("/#newsletter");
                 } else {
                   document.getElementById("newsletter")?.scrollIntoView({ behavior: "smooth" });

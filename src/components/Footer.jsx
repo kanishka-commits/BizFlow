@@ -2,8 +2,11 @@ import React from 'react'
 import { FaFacebookF, FaTwitter, FaLinkedinIn, FaGithub } from 'react-icons/fa'
 import { motion } from "framer-motion";
 import { fadeIn, textVariant } from "../utils/motion";
+import { useTheme } from "../context/ThemeContext";
 
 const Footer = () => {
+  const { isDarkMode } = useTheme();
+  
   const footerLinks = {
     company: [
       { name: 'About', href: '/#about' },
@@ -33,7 +36,9 @@ const Footer = () => {
       variants={fadeIn('up', 0.2)}
       initial="hidden"
       whileInView="show"
-      className="bg-gray-50"
+      className={`transition-colors duration-300 ${
+        isDarkMode ? "bg-gray-800" : "bg-gray-50"
+      }`}
     >
       <div className="section-container">
         <motion.div
@@ -51,11 +56,17 @@ const Footer = () => {
             >
               <div className="w-4 h-4 bg-blue-600 rounded-full opacity-75"></div>
               <div className="w-4 h-4 bg-red-500 rounded-full -ml-2"></div>
-              <span className="text-xl font-medium ml-1">The Next Design</span>
+              <span className={`text-xl font-medium ml-1 transition-colors ${
+                isDarkMode ? "text-white" : "text-gray-900"
+              }`}>
+                The Next Design
+              </span>
             </motion.div>
             <motion.p
               variants={fadeIn('up', 0.6)}
-              className="text-gray-600 mb-6"
+              className={`mb-6 transition-colors ${
+                isDarkMode ? "text-gray-300" : "text-gray-600"
+              }`}
             >
               The copy warned the Little Blind Text, that where it came from it would have been rewritten a thousand times.
             </motion.p>
@@ -69,7 +80,11 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
-                className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 hover:bg-neutral-900 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  isDarkMode 
+                    ? "bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white" 
+                    : "bg-gray-200 text-gray-600 hover:bg-neutral-900 hover:text-white"
+                }`}
               >
                 <FaGithub className="w-5 h-5" />
               </motion.a>
@@ -79,7 +94,11 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
-                className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-600 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  isDarkMode 
+                    ? "bg-gray-700 text-gray-300 hover:bg-blue-600 hover:text-white" 
+                    : "bg-gray-200 text-gray-600 hover:bg-blue-600 hover:text-white"
+                }`}
               >
                 <FaFacebookF className="w-5 h-5" />
               </motion.a>
@@ -89,7 +108,11 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Twitter"
-                className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 hover:bg-sky-500 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+                  isDarkMode 
+                    ? "bg-gray-700 text-gray-300 hover:bg-sky-500 hover:text-white" 
+                    : "bg-gray-200 text-gray-600 hover:bg-sky-500 hover:text-white"
+                }`}
               >
                 <FaTwitter className="w-5 h-5" />
               </motion.a>
@@ -99,7 +122,11 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
-                className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-700 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-blue-700"
+                className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-blue-700 ${
+                  isDarkMode 
+                    ? "bg-gray-700 text-gray-300 hover:bg-blue-700 hover:text-white" 
+                    : "bg-gray-200 text-gray-600 hover:bg-blue-700 hover:text-white"
+                }`}
               >
                 <FaLinkedinIn className="w-5 h-5" />
               </motion.a>
@@ -135,7 +162,11 @@ const Footer = () => {
                         <motion.a
                           whileHover={{ x: 5 }}
                           href={link.href}
-                          className="text-gray-600 hover:text-gray-900 transition-colors focus:outline-none focus:ring-1 focus:ring-gray-400 rounded"
+                          className={`text-gray-600 hover:text-gray-900 transition-colors focus:outline-none focus:ring-1 focus:ring-gray-400 rounded transition-colors ${
+                            isDarkMode 
+                              ? "hover:text-gray-300" 
+                              : "hover:text-gray-900"
+                          }`}
                         >
                           {link.name}
                         </motion.a>
