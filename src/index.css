@@ -1,20 +1,51 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 @import "tailwindcss";
 
-@layer base {
-  html, body {
-    @apply scroll-smooth scroll-pt-[100px] min-h-screen;
+/* Theme variables */
+:root {
+  --font-roboto: 'Roboto', sans-serif;
+  --color-primary: #2563eb;
+}
+
+/* Base styles */
+html, body {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+  min-height: 100vh;
+}
+
+/* Customize container */
+.section-container {
+  @apply px-4 sm:px-6 lg:px-8 py-16 container mx-auto;
+}
+
+/* Continuous Carousel Animation */
+@keyframes scroll {
+  from {
+    transform: translateX(0);
   }
-  body {
-    background-image:
-      radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.2), transparent 50%),
-      radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.15), transparent 50%),
-      linear-gradient(135deg, rgba(148, 244, 192, 0.40), rgba(201, 247, 250, 0.30), rgba(150, 228, 252, 0.40));
-    background-blend-mode: overlay;
+  to {
+    transform: translateX(-50%);
   }
 }
 
-@layer components {
-  .section-container {
-    @apply px-4 sm:px-6 lg:px-8 py-16 container mx-auto;
-  }
+.animate-scroll {
+  animation: scroll 30s linear infinite;
+  width: max-content;
+}
+
+/* Slide cards */
+.slide {
+  min-width: 325px !important;
+  width: 325px !important;
+  height: 375px !important;
+  margin: 0 25px !important;
+  flex-shrink: 0 !important;
+}
+
+.slide > div {
+  width: 100% !important;
+  height: 100% !important;
+  min-width: unset !important;
 }

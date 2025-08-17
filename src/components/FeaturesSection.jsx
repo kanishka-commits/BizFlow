@@ -95,13 +95,14 @@ const FeaturesSection = () => {
         ))}
       </motion.div>
 
+      {/* Call to Action */}
       <motion.div 
         variants={fadeIn('up', 0.7)}
         className="text-center mt-12"
       >
         <Link 
           to="/partner" 
-          className="inline-block bg-blue-600 text-white cursor-pointer px-8 py-3 rounded-full font-medium hover:bg-blue-700 transition-colors relative"
+          className="inline-block bg-orange-200 text-gray-800 cursor-pointer px-8 py-3 rounded-full font-medium transition-all duration-300 ease-in-out hover:bg-orange-300 hover:scale-105 hover:shadow-[0_0_15px_#fed7aa] relative"
         >
           <motion.div
             variants={fadeIn('up', 0.8)}
@@ -110,7 +111,7 @@ const FeaturesSection = () => {
             className="relative"
           >
             Become a Partner
-            <div className="absolute -z-10 w-full h-full rounded-full bg-blue-600/30 blur-xl top-0 left-0"></div>
+            <div className="absolute -z-10 w-full h-full rounded-full blur-xl top-0 left-0"></div>
           </motion.div>
         </Link>
       </motion.div>
@@ -118,4 +119,4 @@ const FeaturesSection = () => {
   );
 };
 
-export default FeaturesSection
+export default FeaturesSection;

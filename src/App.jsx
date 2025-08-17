@@ -15,17 +15,41 @@ import TestimonialsSection from "./components/TestimonialsSection";
 import NewsletterSection from "./components/NewsletterSection";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
+import NotFound from "./components/NotFound";
+import Contact from "./components/Contact";
+import AnalyticsDashboard from "./components/AnalyticsDashboard";
 
 // Pages
 import Partner from "./pages/Partner";
-import AnalyticsDashboard from "./components/AnalyticsDashboard";
+import Contibutors from "./pages/Contibutors";
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// Router
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 
-// Analytics hooks and utils
-import useScrollTracking from './utils/useScrollTracking';
-import useTimeTracking from './utils/useTimeTracking';
-import { trackPageView } from './utils/analytics';
+// Analytics hooks
+import useScrollTracking from "./utils/useScrollTracking";
+import useTimeTracking from "./utils/useTimeTracking";
+import { trackPageView } from "./utils/analytics";
+
+// Hash Navigation component
+function HashNavigation() {
+  const location = useLocation();
+  const previousHash = React.useRef(location.hash);
+
+  useEffect(() => {
+    if (location.hash && location.hash !== previousHash.current) {
+      const element = document.querySelector(location.hash);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+      }
+    }
+    previousHash.current = location.hash;
+  }, [location]);
+
+  return null;
+}
 
 function App() {
   // Initialize analytics tracking hooks
@@ -35,7 +59,10 @@ function App() {
   // Track page views on route changes
   useEffect(() => {
     const currentPath = window.location.pathname;
-    const pageName = currentPath === '/' ? 'Home' : currentPath.charAt(1).toUpperCase() + currentPath.slice(2);
+    const pageName =
+      currentPath === "/"
+        ? "Home"
+        : currentPath.charAt(1).toUpperCase() + currentPath.slice(2);
     trackPageView(pageName);
   }, []);
 
@@ -46,18 +73,17 @@ function App() {
         <div className="absolute -top-28 -left-28 w-[500px] h-[500px] bg-gradient-to-tr from-indigo-500/20 to-pink-500/20 rounded-full blur-[80px] -z-10"></div>
 
         <div className="overflow-hidden">
-          {/* Navbar always visible */}
           <Navbar />
 
-          {/* Routes */}
+          {/* Hash Navigation Handler */}
+          <HashNavigation />
+
           <Routes>
             <Route
               path="/"
               element={
                 <>
-                  <section id="home">
-                    <Hero />
-                  </section>
+                  <section id="home"><Hero /></section>
                   <section id="about">
                     <CompanyLogo />
                     <PurposeSection />
@@ -69,17 +95,16 @@ function App() {
                     <PricingSection />
                     <ServicesSection />
                   </section>
-                  <section id="testimonials">
-                    <TestimonialsSection />
-                  </section>
-                  <section id="newsletter">
-                    <NewsletterSection />
-                  </section>
+                  <section id="testimonials"><TestimonialsSection /></section>
+                  <section id="newsletter"><NewsletterSection /></section>
                 </>
               }
             />
             <Route path="/partner" element={<Partner />} />
             <Route path="/analytics" element={<AnalyticsDashboard />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/contributors" element={<Contibutors />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
 
           <Footer />
