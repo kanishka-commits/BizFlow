@@ -18,7 +18,7 @@ const Navbar = () => {
     { href: "/#testimonials", label: "Testimonials" },
     { href: "/analytics", label: "Analytics" },
     { href: "/contact", label: "Contact" },
-    { href: "/contributors", label: "Contributors"}
+    { href: "/contributors", label: "Contributors" },
   ];
 
   // Reset activeLink to home when on home page
@@ -44,34 +44,26 @@ const Navbar = () => {
 
   // Scroll spy logic - only track sections when on home page
   useEffect(() => {
-    // Only track sections when we're on the home page
-    if (window.location.pathname !== "/") {
-      return;
-    }
+    if (window.location.pathname !== "/") return;
 
     const sections = document.querySelectorAll("section[id]");
-    const options = { threshold: 0.6 }; // Section is considered active if 60% visible
+    const options = { threshold: 0.6 };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          // Don't update activeLink for hash sections when on home page
-          // Keep it as "/#home" to maintain the blue highlighter under Home
+          // Keep it as "/#home" to maintain the highlight under Home
         }
       });
     }, options);
 
     sections.forEach((section) => observer.observe(section));
-
     return () => {
       sections.forEach((section) => observer.unobserve(section));
     };
   }, []);
 
-
-
   return (
-
     <motion.nav
       variants={fadeIn("down", 0.2)}
       initial="hidden"
@@ -97,7 +89,7 @@ const Navbar = () => {
           </div>
           <motion.span
             whileHover={{ scale: 1.02 }}
-            className="text-xl font-bold text-gray-800 hover:text-blue-600 transition-colors"
+            className="text-4xl font-bold text-gray-800 hover:text-blue-600 transition-colors"
           >
             BizFlow
           </motion.span>
@@ -110,11 +102,7 @@ const Navbar = () => {
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         >
-          {isMenuOpen ? (
-            <HiX className="h-6 w-6" />
-          ) : (
-            <HiMenu className="h-6 w-6" />
-          )}
+          {isMenuOpen ? <HiX className="h-6 w-6" /> : <HiMenu className="h-6 w-6" />}
         </motion.button>
 
         {/* Navigation Links - Desktop */}
@@ -123,7 +111,6 @@ const Navbar = () => {
           className="hidden md:flex items-center gap-10"
         >
           {navLinks.map((link, index) => {
-            // Special handling for Home link
             if (link.href === "/#home") {
               return (
                 <button
@@ -131,14 +118,12 @@ const Navbar = () => {
                   onClick={() => {
                     setActiveLink(link.href);
                     if (window.location.pathname !== "/") {
-                      // If not on home page, navigate there first
                       navigate("/#home");
                     } else {
-                      // If already on home page, scroll to top
                       document.getElementById("home")?.scrollIntoView({ behavior: "smooth" });
                     }
                   }}
-                  className={`text-sm font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all cursor-pointer ${
+                  className={`text-base sm:text-xl md:text-xl lg:text-xl xl:text-base font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all cursor-pointer ${
                     activeLink === link.href
                       ? "text-blue-600 after:w-full"
                       : "text-gray-600 hover:text-gray-900"
@@ -148,40 +133,39 @@ const Navbar = () => {
                 </button>
               );
             }
-            
-                         return link.href.includes("/#") ? (
-               <HashLink
-                 key={index}
-                 smooth
-                 to={link.href}
-                 onClick={() => {
-                   // Only update activeLink for section navigation if we're NOT on home page
-                   if (window.location.pathname !== "/") {
-                     setActiveLink(link.href);
-                   }
-                 }}
-                 className={`text-sm font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all ${
-                   activeLink === link.href
-                     ? "text-blue-600 after:w-full"
-                     : "text-gray-600 hover:text-gray-900"
-                 }`}
-               >
-                 {link.label}
-               </HashLink>
-             ) : (
-               <Link
-                 key={index}
-                 to={link.href}
-                 onClick={() => setActiveLink(link.href)}
-                 className={`text-sm font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all ${
-                   window.location.pathname === link.href
-                     ? "text-blue-600 after:w-full"
-                     : "text-gray-600 hover:text-gray-900"
-                 }`}
-               >
-                 {link.label}
-               </Link>
-             );
+
+            return link.href.includes("/#") ? (
+              <HashLink
+                key={index}
+                smooth
+                to={link.href}
+                onClick={() => {
+                  if (window.location.pathname !== "/") {
+                    setActiveLink(link.href);
+                  }
+                }}
+                className={`text-base sm:text-xl md:text-xl lg:text-xl xl:text-base font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all ${
+                  activeLink === link.href
+                    ? "text-blue-600 after:w-full"
+                    : "text-gray-600 hover:text-gray-900"
+                }`}
+              >
+                {link.label}
+              </HashLink>
+            ) : (
+              <Link
+                key={index}
+                to={link.href}
+                onClick={() => setActiveLink(link.href)}
+                className={`text-base sm:text-xl md:text-xl lg:text-xl xl:text-base font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all ${
+                  window.location.pathname === link.href
+                    ? "text-blue-600 after:w-full"
+                    : "text-gray-600 hover:text-gray-900"
+                }`}
+              >
+                {link.label}
+              </Link>
+            );
           })}
         </motion.div>
 
@@ -192,15 +176,13 @@ const Navbar = () => {
           whileTap={{ scale: 0.95 }}
           onClick={() => {
             trackButtonClick("Navbar CTA Button");
-            // If we're not on the home page, navigate there first
             if (window.location.pathname !== "/") {
               navigate("/#newsletter");
             } else {
-              // If we're already on home page, scroll to newsletter section
               document.getElementById("newsletter")?.scrollIntoView({ behavior: "smooth" });
             }
           }}
-          className="hidden md:block bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-sm font-medium transition-all hover:shadow-lg hover:shadow-blue-100 cursor-pointer"
+          className="hidden md:block bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-base font-medium transition-all hover:shadow-lg hover:shadow-blue-100 cursor-pointer"
         >
           Get in touch
         </motion.button>
@@ -219,7 +201,6 @@ const Navbar = () => {
             className="container mx-auto px-4 space-y-6"
           >
             {navLinks.map((link, index) => {
-              // Special handling for Home link
               if (link.href === "/#home") {
                 return (
                   <button
@@ -228,14 +209,12 @@ const Navbar = () => {
                       setActiveLink(link.href);
                       setIsMenuOpen(false);
                       if (window.location.pathname !== "/") {
-                        // If not on home page, navigate there first
                         navigate("/#home");
                       } else {
-                        // If already on home page, scroll to top
                         document.getElementById("home")?.scrollIntoView({ behavior: "smooth" });
                       }
                     }}
-                    className={`block text-sm font-medium py-2 cursor-pointer w-full text-left ${
+                    className={`block text-base sm:text-lg md:text-lg lg:text-lg xl:text-xl font-medium py-2 cursor-pointer w-full text-left ${
                       activeLink === link.href
                         ? "text-blue-600"
                         : "text-gray-600 hover:text-gray-900"
@@ -245,63 +224,59 @@ const Navbar = () => {
                   </button>
                 );
               }
-              
-                             return link.href.includes("/#") ? (
-                 <HashLink
-                   key={index}
-                   smooth
-                   to={link.href}
-                   onClick={() => {
-                     // Only update activeLink for section navigation if we're NOT on home page
-                     if (window.location.pathname !== "/") {
-                       setActiveLink(link.href);
-                     }
-                     setIsMenuOpen(false);
-                   }}
-                   className={`block text-sm font-medium py-2 cursor-pointer
-                   ${
-                     activeLink === link.href
-                       ? "text-blue-600"
-                       : "text-gray-600 hover:text-gray-900"
-                   }`}
-                 >
-                   {link.label}
-                 </HashLink>
-               ) : (
-                 <Link
-                   key={index}
-                   to={link.href}
-                   onClick={() => {
-                     setActiveLink(link.href);
-                     setIsMenuOpen(false);
-                   }}
-                   className={`block text-sm font-medium py-2 cursor-pointer
-                     ${
-                       window.location.pathname === link.href
-                         ? "text-blue-600"
-                         : "text-gray-600 hover:text-gray-900"
-                     }`}
-                 >
-                   {link.label}
-                 </Link>
-               );
+
+              return link.href.includes("/#") ? (
+                <HashLink
+                  key={index}
+                  smooth
+                  to={link.href}
+                  onClick={() => {
+                    if (window.location.pathname !== "/") {
+                      setActiveLink(link.href);
+                    }
+                    setIsMenuOpen(false);
+                  }}
+                  className={`block text-base sm:text-lg md:text-lg lg:text-lg xl:text-xl font-medium py-2 cursor-pointer ${
+                    activeLink === link.href
+                      ? "text-blue-600"
+                      : "text-gray-600 hover:text-gray-900"
+                  }`}
+                >
+                  {link.label}
+                </HashLink>
+              ) : (
+                <Link
+                  key={index}
+                  to={link.href}
+                  onClick={() => {
+                    setActiveLink(link.href);
+                    setIsMenuOpen(false);
+                  }}
+                  className={`block text-base sm:text-lg md:text-lg lg:text-lg xl:text-xl font-medium py-2 cursor-pointer ${
+                    window.location.pathname === link.href
+                      ? "text-blue-600"
+                      : "text-gray-600 hover:text-gray-900"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
             })}
+
             <motion.button
               variants={fadeIn("up", 0.4)}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => {
                 trackButtonClick("Mobile Navbar CTA Button");
-                // If we're not on the home page, navigate there first
                 if (window.location.pathname !== "/") {
                   navigate("/#newsletter");
                 } else {
-                  // If we're already on home page, scroll to newsletter section
                   document.getElementById("newsletter")?.scrollIntoView({ behavior: "smooth" });
                 }
                 setIsMenuOpen(false);
               }}
-              className="w-full bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-sm font-medium transition-all hover:shadow-lg hover:shadow-blue-100 cursor-pointer"
+              className="w-full bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-base font-medium transition-all hover:shadow-lg hover:shadow-blue-100 cursor-pointer"
             >
               Get in touch
             </motion.button>
