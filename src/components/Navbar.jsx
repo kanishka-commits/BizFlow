@@ -75,7 +75,7 @@ const Navbar = () => {
           : "bg-white/90 backdrop-blur-sm border-gray-100"
       }`}
     >
-      <div className="w-full flex justify-between items-center container mx-auto px-4 sm:px-6 lg:px-8 md:h-20 h-16">
+      <div className="w-full flex justify-between items-center container mx-auto px-4 sm:px-6 lg:px-8 lg:h-20 h-16">
         {/* Logo */}
         <motion.div
           variants={fadeIn("right", 0.3)}
@@ -118,7 +118,7 @@ const Navbar = () => {
         {/* Navigation Links - Desktop */}
         <motion.div
           variants={fadeIn("down", 0.3)}
-          className="hidden md:flex items-center gap-10"
+          className="hidden lg:flex items-center lg:gap-6 xl:gap-10"
         >
           {navLinks.map((link, index) => {
             if (link.href === "/#home") {

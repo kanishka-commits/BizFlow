@@ -76,10 +76,10 @@ const Footer = () => {
             >
               <motion.a
                 whileHover={{ scale: 1.1 }}
-                href="https://github.com/adityadomle/BizFlow"
+                href="https://github.com/adityadomle"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Facebook"
+                aria-label="GitHub"
                 className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                   isDarkMode 
                     ? "bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white" 
@@ -90,7 +90,7 @@ const Footer = () => {
               </motion.a>
               <motion.a
                 whileHover={{ scale: 1.1 }}
-                href="#"
+                href="#" // Not yet available
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
@@ -104,7 +104,7 @@ const Footer = () => {
               </motion.a>
               <motion.a
                 whileHover={{ scale: 1.1 }}
-                href='https://twitter.com/bizflow'
+                href="https://x.com/domleaditya" // currently, ID doesn't exist
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Twitter"
@@ -118,7 +118,7 @@ const Footer = () => {
               </motion.a>
               <motion.a
                 whileHover={{ scale: 1.1 }}
-                href="https://linkedin.com/company/bizflow"
+                href="https://www.linkedin.com/in/adityadomle?"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"

@@ -55,9 +55,18 @@ html, body {
   }
 }
 
+.animate-scroll:hover {
+  animation-play-state: paused; /* pause when hovering over carousel */
+}
+
 .animate-scroll {
   animation: scroll 30s linear infinite;
   width: max-content;
+}
+
+/* Pause when React adds the "paused" class (click/tap) */
+.animate-scroll.paused {
+  animation-play-state: paused;
 }
 
 /* Slide cards */
