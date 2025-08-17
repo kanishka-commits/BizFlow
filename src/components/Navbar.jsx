@@ -4,36 +4,60 @@ import { motion } from "framer-motion";
 import { fadeIn } from "../utils/motion";
 import { trackButtonClick } from "../utils/analytics";
 import { HashLink } from "react-router-hash-link";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeLink, setActiveLink] = useState("#home");
+  const [activeLink, setActiveLink] = useState("/#home");
+  const navigate = useNavigate();
 
   const navLinks = [
-    { href: "/", label: "Home" },
+    { href: "/#home", label: "Home" },
     { href: "/#about", label: "About Us" },
     { href: "/#services", label: "Our Services" },
     { href: "/#testimonials", label: "Testimonials" },
     { href: "/analytics", label: "Analytics" },
     { href: "/contact", label: "Contact" },
+    { href: "/contributors", label: "Contributors" },
   ];
 
-  // Scroll spy logic
+  // Reset activeLink to home when on home page
   useEffect(() => {
+    if (window.location.pathname === "/") {
+      setActiveLink("/#home");
+    }
+  }, [window.location.pathname]);
+
+  // Handle route changes to update activeLink
+  useEffect(() => {
+    const currentPath = window.location.pathname;
+    if (currentPath === "/") {
+      setActiveLink("/#home");
+    } else if (currentPath === "/analytics") {
+      setActiveLink("/analytics");
+    } else if (currentPath === "/contact") {
+      setActiveLink("/contact");
+    } else if (currentPath === "/partner") {
+      setActiveLink("/partner");
+    }
+  }, [window.location.pathname]);
+
+  // Scroll spy logic - only track sections when on home page
+  useEffect(() => {
+    if (window.location.pathname !== "/") return;
+
     const sections = document.querySelectorAll("section[id]");
     const options = { threshold: 0.6 };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          setActiveLink(`#${entry.target.id}`);
+          // Keep it as "/#home" to maintain the highlight under Home
         }
       });
     }, options);
 
     sections.forEach((section) => observer.observe(section));
-
     return () => {
       sections.forEach((section) => observer.unobserve(section));
     };
@@ -45,7 +69,7 @@ const Navbar = () => {
       initial="hidden"
       whileInView="show"
       viewport={{ once: true }}
-      className="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-sm z-50 border-b border-gray-100 shadow-sm"
+      className="fixed top-0 inset-x-0 bg-white/90 backdrop-blur-sm z-50 border-b border-gray-100 shadow-sm"
     >
       <div className="w-full flex justify-between items-center container mx-auto px-4 sm:px-6 lg:px-8 md:h-20 h-16">
         {/* Logo */}
@@ -86,13 +110,40 @@ const Navbar = () => {
           variants={fadeIn("down", 0.3)}
           className="hidden md:flex items-center gap-10"
         >
-          {navLinks.map((link, index) =>
-            link.href.includes("/#") ? (
+          {navLinks.map((link, index) => {
+            if (link.href === "/#home") {
+              return (
+                <button
+                  key={index}
+                  onClick={() => {
+                    setActiveLink(link.href);
+                    if (window.location.pathname !== "/") {
+                      navigate("/#home");
+                    } else {
+                      document.getElementById("home")?.scrollIntoView({ behavior: "smooth" });
+                    }
+                  }}
+                  className={`text-base sm:text-xl md:text-xl lg:text-xl xl:text-base font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all cursor-pointer ${
+                    activeLink === link.href
+                      ? "text-blue-600 after:w-full"
+                      : "text-gray-600 hover:text-gray-900"
+                  }`}
+                >
+                  {link.label}
+                </button>
+              );
+            }
+
+            return link.href.includes("/#") ? (
               <HashLink
                 key={index}
                 smooth
                 to={link.href}
-                onClick={() => setActiveLink(link.href)}
+                onClick={() => {
+                  if (window.location.pathname !== "/") {
+                    setActiveLink(link.href);
+                  }
+                }}
                 className={`text-base sm:text-xl md:text-xl lg:text-xl xl:text-base font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all ${
                   activeLink === link.href
                     ? "text-blue-600 after:w-full"
@@ -106,7 +157,7 @@ const Navbar = () => {
                 key={index}
                 to={link.href}
                 onClick={() => setActiveLink(link.href)}
-                className={` text-base sm:text-xl md:text-xl lg:text-xl xl:text-base font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all ${
+                className={`text-base sm:text-xl md:text-xl lg:text-xl xl:text-base font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all ${
                   window.location.pathname === link.href
                     ? "text-blue-600 after:w-full"
                     : "text-gray-600 hover:text-gray-900"
@@ -114,8 +165,8 @@ const Navbar = () => {
               >
                 {link.label}
               </Link>
-            )
-          )}
+            );
+          })}
         </motion.div>
 
         {/* CTA Button */}
@@ -123,10 +174,17 @@ const Navbar = () => {
           variants={fadeIn("left", 0.3)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          onClick={() => trackButtonClick("Navbar CTA Button")}
-          className="hidden md:block bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-base font-medium transition-all hover:shadow-lg hover:shadow-blue-100"
+          onClick={() => {
+            trackButtonClick("Navbar CTA Button");
+            if (window.location.pathname !== "/") {
+              navigate("/#newsletter");
+            } else {
+              document.getElementById("newsletter")?.scrollIntoView({ behavior: "smooth" });
+            }
+          }}
+          className="hidden md:block bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-base font-medium transition-all hover:shadow-lg hover:shadow-blue-100 cursor-pointer"
         >
-          <a href="#newsletter">Get in touch</a>
+          Get in touch
         </motion.button>
       </div>
 
@@ -138,19 +196,50 @@ const Navbar = () => {
           animate="show"
           className="md:hidden bg-white border-t border-gray-100 py-4"
         >
-          <motion.div variants={fadeIn("down", 0.3)} className="container mx-auto px-4 space-y-6">
-            {navLinks.map((link, index) =>
-              link.href.includes("/#") ? (
+          <motion.div
+            variants={fadeIn("down", 0.3)}
+            className="container mx-auto px-4 space-y-6"
+          >
+            {navLinks.map((link, index) => {
+              if (link.href === "/#home") {
+                return (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      setActiveLink(link.href);
+                      setIsMenuOpen(false);
+                      if (window.location.pathname !== "/") {
+                        navigate("/#home");
+                      } else {
+                        document.getElementById("home")?.scrollIntoView({ behavior: "smooth" });
+                      }
+                    }}
+                    className={`block text-base sm:text-lg md:text-lg lg:text-lg xl:text-xl font-medium py-2 cursor-pointer w-full text-left ${
+                      activeLink === link.href
+                        ? "text-blue-600"
+                        : "text-gray-600 hover:text-gray-900"
+                    }`}
+                  >
+                    {link.label}
+                  </button>
+                );
+              }
+
+              return link.href.includes("/#") ? (
                 <HashLink
                   key={index}
                   smooth
                   to={link.href}
                   onClick={() => {
-                    setActiveLink(link.href);
+                    if (window.location.pathname !== "/") {
+                      setActiveLink(link.href);
+                    }
                     setIsMenuOpen(false);
                   }}
                   className={`block text-base sm:text-lg md:text-lg lg:text-lg xl:text-xl font-medium py-2 cursor-pointer ${
-                    activeLink === link.href ? "text-blue-600" : "text-gray-600 hover:text-gray-900"
+                    activeLink === link.href
+                      ? "text-blue-600"
+                      : "text-gray-600 hover:text-gray-900"
                   }`}
                 >
                   {link.label}
@@ -163,7 +252,7 @@ const Navbar = () => {
                     setActiveLink(link.href);
                     setIsMenuOpen(false);
                   }}
-                  className={`block text-base sm:text-lg md:text-lg lg:text-lg xl:text-base font-medium py-2 cursor-pointer ${
+                  className={`block text-base sm:text-lg md:text-lg lg:text-lg xl:text-xl font-medium py-2 cursor-pointer ${
                     window.location.pathname === link.href
                       ? "text-blue-600"
                       : "text-gray-600 hover:text-gray-900"
@@ -171,16 +260,25 @@ const Navbar = () => {
                 >
                   {link.label}
                 </Link>
-              )
-            )}
+              );
+            })}
+
             <motion.button
               variants={fadeIn("up", 0.4)}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => trackButtonClick("Mobile Navbar CTA Button")}
-              className="w-full bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-sm font-medium transition-all hover:shadow-lg hover:shadow-blue-100"
+              onClick={() => {
+                trackButtonClick("Mobile Navbar CTA Button");
+                if (window.location.pathname !== "/") {
+                  navigate("/#newsletter");
+                } else {
+                  document.getElementById("newsletter")?.scrollIntoView({ behavior: "smooth" });
+                }
+                setIsMenuOpen(false);
+              }}
+              className="w-full bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-base font-medium transition-all hover:shadow-lg hover:shadow-blue-100 cursor-pointer"
             >
-              <a href="#newsletter">Get in touch</a>
+              Get in touch
             </motion.button>
           </motion.div>
         </motion.div>
