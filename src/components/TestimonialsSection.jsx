@@ -1,24 +1,26 @@
 import { motion } from "framer-motion";
 import { fadeIn, textVariant } from "../utils/motion";
+import { useState } from "react";
+
 
 const testimonials = [
   {
     id: 1,
     name: "Robin Ayala Doe", 
     image: "https://randomuser.me/api/portraits/men/77.jpg",
-    text: "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast.",
+    text: "The services deserves an applaud!",
   },
   {
     id: 2,
     name: "John De marli",
     image: "https://randomuser.me/api/portraits/women/90.jpg", 
-    text: "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove.",
+    text: "Amazing work. Looking forward to work more with you.",
   },
   {
     id: 3,
     name: "Rowhan Smith",
     image: "https://randomuser.me/api/portraits/men/90.jpg",
-    text: "When she reached the first hills of the Mountains, she had a last view back on the of her hometown Bookmarksgrove, the headline.",
+    text: "The best thing about them is they do exactly what they promised!",
   },
   {
     id: 4,
@@ -101,6 +103,8 @@ const testimonials = [
 ];
 
 const TestimonialsSection = () => {
+    const [paused, setPaused] = useState(false);
+
   return (
     <section id="testimonials" className="py-16 px-4 max-w-7xl mx-auto">
       <motion.div 
@@ -126,7 +130,10 @@ const TestimonialsSection = () => {
         className="relative"
       >
         <div className="overflow-hidden w-full">
-          <div className="flex animate-scroll">
+         <div className={`flex animate-scroll ${paused ? "paused" : ""}`}
+           onClick={() => setPaused((p) => !p)} // toggle pause on click/tap
+         >
+
             {/* Original slides */}
             {testimonials.map((testimonial, index) => (
               <div key={`original-${testimonial.id}`} className="slide">
@@ -230,3 +237,4 @@ const TestimonialsSection = () => {
 };
 
 export default TestimonialsSection;
+
