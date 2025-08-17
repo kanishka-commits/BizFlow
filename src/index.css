@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 @layer base {
   html, body {
     @apply scroll-smooth scroll-pt-[100px] min-h-screen;
@@ -10,7 +12,6 @@
     background-blend-mode: overlay;
   }
 }
-
 
 @layer components {
   .section-container {
