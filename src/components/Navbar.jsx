@@ -79,7 +79,7 @@ const Navbar = () => {
       viewport={{ once: true }}
       className="fixed top-0 inset-x-0 bg-white/90 backdrop-blur-sm z-50 border-b border-gray-100 shadow-sm"
     >
-      <div className="w-full flex justify-between items-center container mx-auto px-4 sm:px-6 lg:px-8 md:h-20 h-16">
+      <div className="w-full flex justify-between items-center container mx-auto px-4 sm:px-6 lg:px-8 lg:h-20 h-16">
         {/* Logo */}
         <motion.div
           variants={fadeIn("right", 0.3)}
@@ -106,7 +106,7 @@ const Navbar = () => {
         {/* Mobile Menu Button */}
         <motion.button
           variants={fadeIn("left", 0.3)}
-          className="md:hidden p-2 cursor-pointer"
+          className="lg:hidden p-2 cursor-pointer"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         >
@@ -120,7 +120,7 @@ const Navbar = () => {
         {/* Navigation Links - Desktop */}
         <motion.div
           variants={fadeIn("down", 0.3)}
-          className="hidden md:flex items-center gap-10"
+          className="hidden lg:flex items-center lg:gap-6 xl:gap-10"
         >
           {navLinks.map((link, index) => {
             // Special handling for Home link
@@ -200,7 +200,7 @@ const Navbar = () => {
               document.getElementById("newsletter")?.scrollIntoView({ behavior: "smooth" });
             }
           }}
-          className="hidden md:block bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-sm font-medium transition-all hover:shadow-lg hover:shadow-blue-100 cursor-pointer"
+          className="hidden lg:block bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-sm font-medium transition-all hover:shadow-lg hover:shadow-blue-100 cursor-pointer"
         >
           Get in touch
         </motion.button>
@@ -212,7 +212,7 @@ const Navbar = () => {
           variants={fadeIn("down", 0.2)}
           initial="hidden"
           animate="show"
-          className="md:hidden bg-white border-t border-gray-100 py-4"
+          className="lg:hidden bg-white border-t border-gray-100 py-4"
         >
           <motion.div
             variants={fadeIn("down", 0.3)}
