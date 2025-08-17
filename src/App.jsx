@@ -29,6 +29,8 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import useScrollTracking from "./utils/useScrollTracking";
 import useTimeTracking from "./utils/useTimeTracking";
 import { trackPageView } from "./utils/analytics";
+import Contibutors from "./pages/Contibutors";
+
 
 // Component to handle hash navigation
 function HashNavigation() {
@@ -113,6 +115,8 @@ function App() {
             <Route path="/partner" element={<Partner />} />
             <Route path="/analytics" element={<AnalyticsDashboard />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/contributors" element={<Contibutors />} />
+
             <Route path="*" element={<NotFound />} />
           </Routes>
 
