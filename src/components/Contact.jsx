@@ -417,7 +417,7 @@ const Contact = () => {
                   </div>
                 </div>
                 <p className="text-xs text-gray-500 mt-4">
-                  * All times are in Pacific Standard Time (PST)
+                  * All times are in Indian Standard Time (IST)
                 </p>
               </div>
 
