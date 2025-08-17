@@ -99,7 +99,20 @@ const Navbar = () => {
             whileHover={{ scale: 1.02 }}
             className="text-xl font-bold text-gray-800 hover:text-blue-600 transition-colors"
           >
-            BizFlow
+            <button
+              onClick={() => {
+                    if (window.location.pathname !== "/") {
+                      // If not on home page, navigate there first
+                      navigate("/#home");
+                    } else {
+                      // If already on home page, scroll to top
+                      document.getElementById("home")?.scrollIntoView({ behavior: "smooth" });
+                    }
+                  }}
+                  >
+              BizFlow
+            </button>
+            
           </motion.span>
         </motion.div>
 
