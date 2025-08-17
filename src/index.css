@@ -1,19 +1,23 @@
+/* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 @import "tailwindcss";
 
-@theme{
+/* Theme variables */
+:root {
   --font-roboto: 'Roboto', sans-serif;
   --color-primary: #2563eb;
 }
 
-html {
+/* Base styles */
+html, body {
   scroll-behavior: smooth;
   scroll-padding-top: 100px;
-  }
+  min-height: 100vh;
+}
 
-  /* customize container here using tailwindcss */
+/* Customize container */
 .section-container {
-  @apply  px-4 sm:px-6 lg:px-8 py-16 container mx-auto;
+  @apply px-4 sm:px-6 lg:px-8 py-16 container mx-auto;
 }
 
 /* Continuous Carousel Animation */
@@ -31,6 +35,7 @@ html {
   width: max-content;
 }
 
+/* Slide cards */
 .slide {
   min-width: 325px !important;
   width: 325px !important;
@@ -39,7 +44,6 @@ html {
   flex-shrink: 0 !important;
 }
 
-/* Override any Tailwind classes that might interfere */
 .slide > div {
   width: 100% !important;
   height: 100% !important;
