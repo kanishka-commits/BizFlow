@@ -8,20 +8,25 @@ import { useTheme } from "../context/ThemeContext";
 const Hero = () => {
   const [email, setEmail] = useState("");
   const [showPopup, setShowPopup] = useState(false);
+  const [error, setError] = useState("");
   const { isDarkMode } = useTheme();
 
   const handleSend = () => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!email) {
-      alert("Please enter an email address.");
+        if (!email) {
+      setError("Please enter an email address.");
+      setTimeout(() => setError(""), 2000);
       return;
     }
 
     if (!emailPattern.test(email)) {
-      alert("Please enter a valid email address.");
+      setError("Please enter a valid email address.");
+      setTimeout(() => setError(""), 2000);
       return;
     }
+
+    setError("");
 
     console.log("Email to send:", email);
 
@@ -113,6 +118,22 @@ const Hero = () => {
           >
             →
           </button>
+
+           {/* Error Message */}
+            <AnimatePresence>
+             {error && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+                className="absolute -bottom-20 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg text-sm"
+              >
+                ⚠️ Invalid mail
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           {/* Popup Message */}
           <AnimatePresence>
             {showPopup && (
@@ -150,4 +171,3 @@ const Hero = () => {
 };
 
 export default Hero;
-
