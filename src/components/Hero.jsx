@@ -3,24 +3,28 @@ import { motion, AnimatePresence } from "framer-motion";
 import { fadeIn, textVariant } from "../utils/motion";
 import heroImage from "../assets/hero-image.png";
 import { trackButtonClick, trackNewsletterSignup } from "../utils/analytics";
+import { FiAlertCircle } from "react-icons/fi";
 
 const Hero = () => {
   const [email, setEmail] = useState("");
+  const [error,setError]=useState("");
   const [showPopup, setShowPopup] = useState(false);
 
   const handleSend = () => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!email) {
-      alert("Please enter an email address.");
+      setError("Please enter an email address.");
+      setTimeout(() => setError(""), 2000);
       return;
     }
 
     if (!emailPattern.test(email)) {
-      alert("Please enter a valid email address.");
+      setError("Please enter a valid email address.");
+      setTimeout(() => setError(""), 2000);
       return;
     }
-
+   setError("");
     console.log("Email to send:", email);
 
     setShowPopup(true);
@@ -74,44 +78,67 @@ const Hero = () => {
           tools and more — all within the same one billing.
         </motion.p>
 
-        <motion.div
-          variants={fadeIn("up", 0.5)}
-          initial="hidden"
-          whileInView="show"
-          className="flex gap-3 max-w-md relative -mt-1"
-        >
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email address"
-            className="flex-1 px-6 py-4 border border-gray-200 rounded-xl focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100  transition-all text-gray-600"
-          />
-          <button
-            onClick={() => {
-              trackButtonClick("Hero Newsletter Button");
-              trackNewsletterSignup("hero_section");
-              handleSend();
-            }}
-            className="bg-blue-600 text-white px-8 py-4 rounded-xl hover:bg-blue-700 cursor-pointer transition-all hover:shadow-lg hover:shadow-blue-100 active:scale-95"
-          >
-            →
-          </button>
-          {/* Popup Message */}
-          <AnimatePresence>
-            {showPopup && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
-                className="absolute -bottom-12 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg text-sm"
-              >
-                ✅ Email Sent!
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
+     
+
+
+      <motion.div
+  variants={fadeIn("up", 0.5)}
+  initial="hidden"
+  whileInView="show"
+  className="max-w-md relative -mt-1 w-full"
+>
+  {/* Input + Button side by side */}
+  <div className="flex gap-3">
+    <input
+      type="email"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      placeholder="Email address"
+      className="flex-1 px-6 py-4 border border-gray-200 rounded-xl focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition-all text-gray-600"
+    />
+    <button
+      onClick={() => {
+        trackButtonClick("Hero Newsletter Button");
+        trackNewsletterSignup("hero_section");
+        handleSend();
+      }}
+      className="bg-blue-600 text-white px-8 py-4 rounded-xl hover:bg-blue-700 cursor-pointer transition-all hover:shadow-lg hover:shadow-blue-100 active:scale-95"
+    >
+      →
+    </button>
+  </div>
+
+  {/* Error Message below input, centered */}
+        <AnimatePresence>
+    {error && (
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ duration: 0.3 }}
+        className="absolute -bottom-20 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg text-sm"
+      >
+        ⚠️ Invalid mail
+      </motion.div>
+    )}
+  </AnimatePresence>
+
+  {/* Success Popup (unchanged) */}
+  <AnimatePresence>
+    {showPopup && (
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ duration: 0.3 }}
+        className="absolute -bottom-20 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg text-sm"
+      >
+        ✅ Email Sent!
+      </motion.div>
+    )}
+  </AnimatePresence>
+</motion.div>
+
       </div>
 
       {/* Right Column - Images */}
