@@ -24,6 +24,8 @@ import AnalyticsDashboard from "./components/AnalyticsDashboard";
 // Pages
 import Partner from "./pages/Partner";
 import Contibutors from "./pages/Contibutors";
+import SupportCareer from "./pages/SupportCareer";
+import Faqs from "./pages/Faqs";
 
 // Router
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -56,7 +58,7 @@ function HashNavigation() {
 function AppContent() {
   const { isDarkMode } = useTheme();
   const location = useLocation();
-  
+
   // Initialize analytics tracking hooks
   useScrollTracking();
   useTimeTracking();
@@ -75,16 +77,14 @@ function AppContent() {
     <main className="relative min-h-screen overflow-x-hidden scroll-smooth transition-colors duration-300">
       {/* Background Gradients (fixed across the site, non-intrusive) */}
       <div className="pointer-events-none fixed inset-0 z-0">
-        <div className={`absolute -top-28 -left-28 w-[500px] h-[500px] rounded-full blur-[80px] ${
-          isDarkMode
+        <div className={`absolute -top-28 -left-28 w-[500px] h-[500px] rounded-full blur-[80px] ${isDarkMode
             ? "bg-gradient-to-tr from-indigo-500/10 to-pink-500/10"
             : "bg-gradient-to-tr from-indigo-500/20 to-pink-500/20"
-        }`}></div>
-        <div className={`absolute -bottom-32 -right-32 w-[600px] h-[600px] rounded-full blur-[100px] ${
-          isDarkMode
+          }`}></div>
+        <div className={`absolute -bottom-32 -right-32 w-[600px] h-[600px] rounded-full blur-[100px] ${isDarkMode
             ? "bg-gradient-to-tr from-blue-500/10 to-purple-500/10"
             : "bg-gradient-to-tr from-blue-500/20 to-purple-500/20"
-        }`}></div>
+          }`}></div>
       </div>
 
       <div className="relative z-10 overflow-hidden">
@@ -119,6 +119,8 @@ function AppContent() {
           <Route path="/analytics" element={<AnalyticsDashboard />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/contributors" element={<Contibutors />} />
+          <Route path="/support-career" element={<SupportCareer />} />
+          <Route path="/faqs" element={<Faqs />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
 
