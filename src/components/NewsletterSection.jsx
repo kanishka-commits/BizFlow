@@ -7,9 +7,9 @@ const NewsletterSection = () => {
   const [email, setEmail] = useState('')
   const [showPopup, setShowPopup] = useState(false)
   const [error, setError] = useState('')
+  const [registeredEmails, setRegisteredEmails] = useState([]) // store registered emails
 
   const validateEmail = (email) => {
-    // simple regex for valid email
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     return regex.test(email)
   }
@@ -27,6 +27,14 @@ const NewsletterSection = () => {
       return
     }
 
+    // Check if email already exists
+    if (registeredEmails.includes(email.toLowerCase())) {
+      setError('⚠ This email is already registered.')
+      return
+    }
+
+    // If new email, add it
+    setRegisteredEmails([...registeredEmails, email.toLowerCase()])
     setError('')
     console.log('Email submitted:', email)
 
@@ -80,7 +88,6 @@ const NewsletterSection = () => {
                 onSubmit={handleSubmit}
                 className="flex flex-col sm:flex-row gap-4 sm:gap-0 relative"
               >
-
                 <motion.input
                   variants={fadeIn('right', 0.7)}
                   type="email"
@@ -125,9 +132,9 @@ const NewsletterSection = () => {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
                       transition={{ duration: 0.3 }}
-                      className="absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg"
+                      className="absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg"
                     >
-                      ✅ Email Sent! 
+                      ✅ Thank you for Subscribing!
                     </motion.div>
                   )}
                 </AnimatePresence>
