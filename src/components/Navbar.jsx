@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { HiMenu, HiX } from "react-icons/hi";
 import { HiSun, HiMoon } from "react-icons/hi";
 import { motion } from "framer-motion";
@@ -14,6 +14,7 @@ const Navbar = () => {
   const { isDarkMode, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
+  const userScroll = useRef(false); // Ref to track user click-scrolls
 
   const navLinks = [
     { href: "/#home", label: "Home" },
@@ -25,34 +26,33 @@ const Navbar = () => {
     { href: "/contributors", label: "Contributors" },
   ];
 
-  // Handle route changes to update activeLink
+  // This effect now correctly handles PAGE changes without conflicting with the scroll spy.
   useEffect(() => {
     const currentPath = location.pathname;
     if (currentPath === "/") {
       setActiveLink("/#home");
-    } else if (currentPath === "/analytics") {
-      setActiveLink("/analytics");
-    } else if (currentPath === "/contact") {
-      setActiveLink("/contact");
-    } else if (currentPath === "/partner") {
-      setActiveLink("/partner");
+    } else {
+      const activeNav = navLinks.find(link => link.href === currentPath);
+      if (activeNav) {
+        setActiveLink(activeNav.href);
+      }
     }
   }, [location.pathname]);
 
-  // Scroll spy logic - track sections when on home page
+  // This effect now correctly handles scroll spying on the homepage and ignores clicks.
   useEffect(() => {
     if (location.pathname !== "/") return;
 
     const sections = document.querySelectorAll("section[id]");
-    const options = { threshold: 0.6 };
+    if (sections.length === 0) return;
+    const options = { rootMargin: "-40% 0px -60% 0px", threshold: 0 };
 
     const observer = new IntersectionObserver((entries) => {
+      if (userScroll.current) return; // Ignore observer if a click-scroll is happening
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          const sectionId = entry.target.id;
-          if (sectionId) {
-            setActiveLink(`/#${sectionId}`);
-          }
+          const id = entry.target.getAttribute("id");
+          setActiveLink(`/#${id}`);
         }
       });
     }, options);
@@ -63,6 +63,15 @@ const Navbar = () => {
     };
   }, [location.pathname]);
 
+  // New click handler to prevent scroll-spy flickering.
+  const handleHashLinkClick = (href) => {
+    setActiveLink(href);
+    setIsMenuOpen(false);
+    userScroll.current = true;
+    setTimeout(() => {
+      userScroll.current = false;
+    }, 1000); // Ignore scroll spy for 1 second
+  };
   return (
     <motion.nav
       variants={fadeIn("down", 0.2)}
@@ -120,21 +129,22 @@ const Navbar = () => {
           variants={fadeIn("down", 0.3)}
           className="hidden lg:flex items-center lg:gap-6 xl:gap-10"
         >
-          {navLinks.map((link, index) => {
+          {navLinks.map((link) => {
+            const isActive = activeLink === link.href;
             if (link.href === "/#home") {
               return (
                 <button
-                  key={index}
+                  key={link.href}
                   onClick={() => {
-                    setActiveLink(link.href);
+                    handleHashLinkClick(link.href);
                     if (location.pathname !== "/") {
                       navigate("/#home");
                     } else {
                       document.getElementById("home")?.scrollIntoView({ behavior: "smooth" });
                     }
                   }}
-                  className={`text-base sm:text-xl md:text-xl lg:text-xl xl:text-base font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all cursor-pointer transition-colors ${
-                    activeLink === link.href
+                  className={`text-base font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all cursor-pointer transition-colors ${
+                    isActive
                       ? "text-blue-600 after:w-full"
                       : isDarkMode 
                         ? "text-gray-300 hover:text-white" 
@@ -148,16 +158,12 @@ const Navbar = () => {
 
             return link.href.includes("/#") ? (
               <HashLink
-                key={index}
+                key={link.href}
                 smooth
                 to={link.href}
-                onClick={() => {
-                  if (location.pathname !== "/") {
-                    setActiveLink(link.href);
-                  }
-                }}
-                className={`text-base sm:text-xl md:text-xl lg:text-xl xl:text-base font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all transition-colors ${
-                  activeLink === link.href
+                onClick={() => handleHashLinkClick(link.href)} // **UPDATED**
+                className={`text-base font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all transition-colors ${
+                  isActive
                     ? "text-blue-600 after:w-full"
                     : isDarkMode 
                       ? "text-gray-300 hover:text-white" 
@@ -168,10 +174,10 @@ const Navbar = () => {
               </HashLink>
             ) : (
               <Link
-                key={index}
+                key={link.href}
                 to={link.href}
                 onClick={() => setActiveLink(link.href)}
-                className={`text-base sm:text-xl md:text-xl lg:text-xl xl:text-base font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all transition-colors ${
+                className={`text-base font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all transition-colors ${
                   location.pathname === link.href
                     ? "text-blue-600 after:w-full"
                     : isDarkMode 
@@ -244,22 +250,22 @@ const Navbar = () => {
             variants={fadeIn("down", 0.3)}
             className="container mx-auto px-4 space-y-6"
           >
-            {navLinks.map((link, index) => {
+            {navLinks.map((link) => {
+              const isActive = activeLink === link.href;
               if (link.href === "/#home") {
                 return (
                   <button
-                    key={index}
+                    key={link.href}
                     onClick={() => {
-                      setActiveLink(link.href);
-                      setIsMenuOpen(false);
+                      handleHashLinkClick(link.href); // **UPDATED**
                       if (location.pathname !== "/") {
                         navigate("/#home");
                       } else {
                         document.getElementById("home")?.scrollIntoView({ behavior: "smooth" });
                       }
                     }}
-                    className={`block text-base sm:text-lg md:text-lg lg:text-lg xl:text-xl font-medium py-2 cursor-pointer w-full text-left transition-colors ${
-                      activeLink === link.href
+                    className={`block text-base font-medium py-2 cursor-pointer w-full text-left transition-colors ${
+                      isActive
                         ? "text-blue-600"
                         : isDarkMode 
                           ? "text-gray-300 hover:text-white" 
@@ -273,17 +279,12 @@ const Navbar = () => {
 
               return link.href.includes("/#") ? (
                 <HashLink
-                  key={index}
+                  key={link.href}
                   smooth
                   to={link.href}
-                  onClick={() => {
-                    if (location.pathname !== "/") {
-                      setActiveLink(link.href);
-                    }
-                    setIsMenuOpen(false);
-                  }}
-                  className={`block text-base sm:text-lg md:text-lg lg:text-lg xl:text-xl font-medium py-2 cursor-pointer transition-colors ${
-                    activeLink === link.href
+                  onClick={() => handleHashLinkClick(link.href)} // **UPDATED**
+                  className={`block text-base font-medium py-2 cursor-pointer transition-colors ${
+                    isActive
                       ? "text-blue-600"
                       : isDarkMode 
                         ? "text-gray-300 hover:text-white" 
@@ -294,13 +295,13 @@ const Navbar = () => {
                 </HashLink>
               ) : (
                 <Link
-                  key={index}
+                  key={link.href}
                   to={link.href}
                   onClick={() => {
                     setActiveLink(link.href);
                     setIsMenuOpen(false);
                   }}
-                  className={`block text-base sm:text-lg md:text-lg lg:text-lg xl:text-xl font-medium py-2 cursor-pointer transition-colors ${
+                  className={`block text-base font-medium py-2 cursor-pointer transition-colors ${
                     location.pathname === link.href
                       ? "text-blue-600"
                       : isDarkMode 
@@ -312,19 +313,18 @@ const Navbar = () => {
                 </Link>
               );
             })}
-
             <motion.button
               variants={fadeIn("up", 0.4)}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => {
                 trackButtonClick("Mobile Navbar CTA Button");
+                setIsMenuOpen(false);
                 if (location.pathname !== "/") {
                   navigate("/#newsletter");
                 } else {
                   document.getElementById("newsletter")?.scrollIntoView({ behavior: "smooth" });
                 }
-                setIsMenuOpen(false);
               }}
               className="w-full bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-base font-medium transition-all hover:shadow-lg hover:shadow-blue-100 cursor-pointer"
             >
