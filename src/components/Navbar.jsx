@@ -196,6 +196,7 @@ const Navbar = () => {
           variants={fadeIn("left", 0.3)}
           className="hidden md:flex items-center gap-3"
         >
+          {/* Get in Touch Button */}
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -211,6 +212,8 @@ const Navbar = () => {
           >
             Get in touch
           </motion.button>
+
+          {/* Theme Toggle Button */}
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
