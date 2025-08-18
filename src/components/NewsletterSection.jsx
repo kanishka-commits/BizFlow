@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { HiArrowRight } from 'react-icons/hi'
 import { motion, AnimatePresence } from "framer-motion";
 import { fadeIn, textVariant } from "../utils/motion";
@@ -74,7 +74,8 @@ const NewsletterSection = () => {
                   placeholder="Enter your email address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full sm:w-auto md:w-80 px-4 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-l-xl sm:rounded-r-none focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
+                  className="w-full sm:w-auto md:w-80 px-4 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-l-xl sm:rounded-r-none focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-800 placeholder-gray-500"
+                  style={{ backgroundColor: 'white' }}
                 />
                 <motion.button
                   type="submit"

@@ -1,17 +1,16 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { HiMenu, HiX } from "react-icons/hi";
+import { HiSun, HiMoon } from "react-icons/hi";
 import { motion } from "framer-motion";
 import { fadeIn } from "../utils/motion";
 import { trackButtonClick } from "../utils/analytics";
 import { HashLink } from "react-router-hash-link";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("/#home");
-  const location = useLocation();
   const navigate = useNavigate();
-  const userScroll = useRef(false); // Ref to track user click-scrolls
 
   const navLinks = [
     { href: "/#home", label: "Home" },
@@ -23,9 +22,16 @@ const Navbar = () => {
     { href: "/contributors", label: "Contributors" },
   ];
 
-  // Handles active link for PAGE changes
+  // Reset activeLink to home when on home page
   useEffect(() => {
-    const currentPath = location.pathname;
+    if (window.location.pathname === "/") {
+      setActiveLink("/#home");
+    }
+  }, [window.location.pathname]);
+
+  // Handle route changes to update activeLink
+  useEffect(() => {
+    const currentPath = window.location.pathname;
     if (currentPath === "/") {
       setActiveLink("/#home");
     } else {
@@ -36,7 +42,7 @@ const Navbar = () => {
     }
   }, [location.pathname]);
 
-  // Handles scroll spy ONLY on the homepage
+  // Scroll spy logic - only track sections when on home page
   useEffect(() => {
     if (location.pathname !== "/") return;
 
@@ -51,8 +57,7 @@ const Navbar = () => {
 
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          const id = entry.target.getAttribute("id");
-          setActiveLink(`/#${id}`);
+          // Keep it as "/#home" to maintain the highlight under Home
         }
       });
     }, options);
@@ -82,7 +87,11 @@ const Navbar = () => {
       initial="hidden"
       whileInView="show"
       viewport={{ once: true }}
-      className="fixed top-0 inset-x-0 bg-white/90 backdrop-blur-sm z-50 border-b border-gray-100 shadow-sm"
+      className={`fixed top-0 inset-x-0 z-50 border-b shadow-sm transition-colors duration-300 ${
+        isDarkMode 
+          ? "bg-gray-900/90 backdrop-blur-sm border-gray-700" 
+          : "bg-white/90 backdrop-blur-sm border-gray-100"
+      }`}
     >
       <div className="w-full flex justify-between items-center container mx-auto px-4 sm:px-6 lg:px-8 lg:h-20 h-16">
         {/* Logo */}
@@ -102,7 +111,11 @@ const Navbar = () => {
           </div>
           <motion.span
             whileHover={{ scale: 1.02 }}
-            className="text-4xl font-bold text-gray-800 hover:text-blue-600 transition-colors"
+            className={`text-4xl font-bold transition-colors ${
+              isDarkMode 
+                ? "text-white hover:text-blue-400" 
+                : "text-gray-800 hover:text-blue-600"
+            }`}
           >
             BizFlow
           </motion.span>
@@ -111,7 +124,9 @@ const Navbar = () => {
         {/* Mobile Menu Button */}
         <motion.button
           variants={fadeIn("left", 0.3)}
-          className="lg:hidden p-2 cursor-pointer"
+          className={`md:hidden p-2 cursor-pointer transition-colors ${
+            isDarkMode ? "text-white hover:text-gray-300" : "text-gray-600 hover:text-gray-900"
+          }`}
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         >
@@ -130,15 +145,17 @@ const Navbar = () => {
                 <button
                   key={index}
                   onClick={() => {
-                    handleHashLinkClick(link.href);
-                    if (location.pathname !== "/") {
+                    setActiveLink(link.href);
+                    if (window.location.pathname !== "/") {
                       navigate("/#home");
                     } else {
                       document.getElementById("home")?.scrollIntoView({ behavior: "smooth" });
                     }
                   }}
-                  className={`text-base font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all cursor-pointer ${
-                    isActive ? "text-blue-600 after:w-full" : "text-gray-600 hover:text-gray-900"
+                  className={`text-base sm:text-xl md:text-xl lg:text-xl xl:text-base font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all cursor-pointer ${
+                    activeLink === link.href
+                      ? "text-blue-600 after:w-full"
+                      : "text-gray-600 hover:text-gray-900"
                   }`}
                 >
                   {link.label}
@@ -151,9 +168,15 @@ const Navbar = () => {
                 key={index}
                 smooth
                 to={link.href}
-                onClick={() => handleHashLinkClick(link.href)}
-                className={`text-base font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all ${
-                  isActive ? "text-blue-600 after:w-full" : "text-gray-600 hover:text-gray-900"
+                onClick={() => {
+                  if (window.location.pathname !== "/") {
+                    setActiveLink(link.href);
+                  }
+                }}
+                className={`text-base sm:text-xl md:text-xl lg:text-xl xl:text-base font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all ${
+                  activeLink === link.href
+                    ? "text-blue-600 after:w-full"
+                    : "text-gray-600 hover:text-gray-900"
                 }`}
               >
                 {link.label}
@@ -163,8 +186,10 @@ const Navbar = () => {
                 key={index}
                 to={link.href}
                 onClick={() => setActiveLink(link.href)}
-                className={`text-base font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all ${
-                  location.pathname === link.href ? "text-blue-600 after:w-full" : "text-gray-600 hover:text-gray-900"
+                className={`text-base sm:text-xl md:text-xl lg:text-xl xl:text-base font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all ${
+                  window.location.pathname === link.href
+                    ? "text-blue-600 after:w-full"
+                    : "text-gray-600 hover:text-gray-900"
                 }`}
               >
                 {link.label}
@@ -173,14 +198,14 @@ const Navbar = () => {
           })}
         </motion.div>
 
-        {/* CTA Button */}
-        <motion.button
+        {/* CTA Button and Theme Toggle */}
+        <motion.div
           variants={fadeIn("left", 0.3)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => {
             trackButtonClick("Navbar CTA Button");
-            if (location.pathname !== "/") {
+            if (window.location.pathname !== "/") {
               navigate("/#newsletter");
             } else {
               document.getElementById("newsletter")?.scrollIntoView({ behavior: "smooth" });
@@ -198,7 +223,11 @@ const Navbar = () => {
           variants={fadeIn("down", 0.2)}
           initial="hidden"
           animate="show"
-          className="lg:hidden bg-white border-t border-gray-100 py-4"
+          className={`md:hidden border-t py-4 transition-colors duration-300 ${
+            isDarkMode 
+              ? "bg-gray-900 border-gray-700" 
+              : "bg-white border-gray-100"
+          }`}
         >
           <div
             variants={fadeIn("down", 0.3)}
@@ -211,15 +240,18 @@ const Navbar = () => {
                   <button
                     key={index}
                     onClick={() => {
-                      handleHashLinkClick(link.href);
-                      if (location.pathname !== "/") {
+                      setActiveLink(link.href);
+                      setIsMenuOpen(false);
+                      if (window.location.pathname !== "/") {
                         navigate("/#home");
                       } else {
                         document.getElementById("home")?.scrollIntoView({ behavior: "smooth" });
                       }
                     }}
-                    className={`block text-base font-medium py-2 cursor-pointer w-full text-left ${
-                      isActive ? "text-blue-600" : "text-gray-600 hover:text-gray-900"
+                    className={`block text-base sm:text-lg md:text-lg lg:text-lg xl:text-xl font-medium py-2 cursor-pointer w-full text-left ${
+                      activeLink === link.href
+                        ? "text-blue-600"
+                        : "text-gray-600 hover:text-gray-900"
                     }`}
                   >
                     {link.label}
@@ -232,9 +264,16 @@ const Navbar = () => {
                   key={index}
                   smooth
                   to={link.href}
-                  onClick={() => handleHashLinkClick(link.href)}
-                  className={`block text-base font-medium py-2 cursor-pointer ${
-                    isActive ? "text-blue-600" : "text-gray-600 hover:text-gray-900"
+                  onClick={() => {
+                    if (window.location.pathname !== "/") {
+                      setActiveLink(link.href);
+                    }
+                    setIsMenuOpen(false);
+                  }}
+                  className={`block text-base sm:text-lg md:text-lg lg:text-lg xl:text-xl font-medium py-2 cursor-pointer ${
+                    activeLink === link.href
+                      ? "text-blue-600"
+                      : "text-gray-600 hover:text-gray-900"
                   }`}
                 >
                   {link.label}
@@ -247,8 +286,10 @@ const Navbar = () => {
                     setActiveLink(link.href);
                     setIsMenuOpen(false);
                   }}
-                  className={`block text-base font-medium py-2 cursor-pointer ${
-                    location.pathname === link.href ? "text-blue-600" : "text-gray-600 hover:text-gray-900"
+                  className={`block text-base sm:text-lg md:text-lg lg:text-lg xl:text-xl font-medium py-2 cursor-pointer ${
+                    window.location.pathname === link.href
+                      ? "text-blue-600"
+                      : "text-gray-600 hover:text-gray-900"
                   }`}
                 >
                   {link.label}
@@ -262,8 +303,7 @@ const Navbar = () => {
               whileTap={{ scale: 0.98 }}
               onClick={() => {
                 trackButtonClick("Mobile Navbar CTA Button");
-                setIsMenuOpen(false);
-                if (location.pathname !== "/") {
+                if (window.location.pathname !== "/") {
                   navigate("/#newsletter");
                 } else {
                   document.getElementById("newsletter")?.scrollIntoView({ behavior: "smooth" });
