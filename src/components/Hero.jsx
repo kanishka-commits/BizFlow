@@ -14,7 +14,7 @@ const Hero = () => {
   const handleSend = () => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        if (!email) {
+    if (!email) {
       setError("Please enter an email address.");
       setTimeout(() => setError(""), 2000);
       return;
@@ -49,15 +49,21 @@ const Hero = () => {
           whileInView="show"
         >
           {/* Star badge */}
-          <div className={`flex items-center gap-2 w-fit px-4 py-2 rounded-full hover:bg-gray-100 transition-colors cursor-pointer group ${
-            isDarkMode ? "bg-gray-800 hover:bg-gray-700" : "bg-gray-50 hover:bg-gray-100"
-          }`}>
+          <div
+            className={`flex items-center gap-2 w-fit px-4 py-2 rounded-full hover:bg-gray-100 transition-colors cursor-pointer group ${
+              isDarkMode
+                ? "bg-gray-800 hover:bg-gray-700"
+                : "bg-gray-50 hover:bg-gray-100"
+            }`}
+          >
             <span className="text-blue-600 group-hover:scale-110 transition-transform">
               ★
             </span>
-            <span className={`text-sm font-medium transition-colors ${
-              isDarkMode ? "text-gray-300" : "text-gray-700"
-            }`}>
+            <span
+              className={`text-sm font-medium transition-colors ${
+                isDarkMode ? "text-gray-300" : "text-gray-700"
+              }`}
+            >
               Jump start your growth
             </span>
           </div>
@@ -95,16 +101,16 @@ const Hero = () => {
           variants={fadeIn("up", 0.5)}
           initial="hidden"
           whileInView="show"
-          className="flex gap-3 max-w-md relative -mt-1"
+          className="flex flex-wrap gap-3 max-w-md relative -mt-1"
         >
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email address"
-            className={`flex-1 px-6 py-4 border rounded-xl focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition-all ${
-              isDarkMode 
-                ? "border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:ring-blue-900" 
+            className={`flex-1 px-6 py-2 min-[440px]:py-4  border rounded-xl focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition-all ${
+              isDarkMode
+                ? "border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:ring-blue-900"
                 : "border-gray-200 bg-white text-gray-600 placeholder-gray-500 focus:ring-blue-100"
             }`}
           />
@@ -114,14 +120,14 @@ const Hero = () => {
               trackNewsletterSignup("hero_section");
               handleSend();
             }}
-            className="bg-blue-600 text-white px-8 py-4 rounded-xl hover:bg-blue-700 cursor-pointer transition-all hover:shadow-lg hover:shadow-blue-100 active:scale-95"
+            className="bg-blue-600 text-white px-8 min-[440px]:py-4 py-2 rounded-xl hover:bg-blue-700 cursor-pointer transition-all hover:shadow-lg hover:shadow-blue-100 active:scale-95"
           >
             →
           </button>
 
-           {/* Error Message */}
-            <AnimatePresence>
-             {error && (
+          {/* Error Message */}
+          <AnimatePresence>
+            {error && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
