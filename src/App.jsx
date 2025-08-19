@@ -56,8 +56,8 @@ function HashNavigation() {
 }
 
 function AppContent() {
-  const { isDarkMode } = useTheme();
-  const location = useLocation();
+   const { isDarkMode } = useTheme();
+   const location = useLocation();
 
   // Initialize analytics tracking hooks
   useScrollTracking();
@@ -129,7 +129,7 @@ function AppContent() {
       </div>
     </main>
   );
-}
+ }
 
 function App() {
   return (
