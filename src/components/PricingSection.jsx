@@ -8,8 +8,8 @@ const PricingCard = ({ name, price, features, animation }) => (
     variants={animation}
     className="rounded-lg bg-gradient-to-r from-pink-200 to-blue-100 p-8 shadow-lg"
   >
-    <h3 className="text-xl text-gray-600 mb-4">{name}</h3>
-    <p className="text-3xl font-bold mb-6">${price}/mo</p>
+    <h3 className="text-xl  text-gray-900 mb-4">{name}</h3>
+    <p className="text-3xl text-black font-bold mb-6">${price}/mo</p>
     <ul className="list-disc list-inside pl-5 text-gray-700 space-y-2 mb-6">
       {features.map((feat) => (
         <li key={feat} className="flex items-start">
@@ -94,8 +94,9 @@ const PricingSection = () => {
               variants={fadeIn('up', 1.3)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-pink-200 text-gray-600 px-6 py-3 rounded-lg transition duration-300 hover:bg-pink-300 hover:shadow-lg cursor-pointer"
-            >
+              className="bg-pink-200 text-gray-900 px-6 py-3 rounded-lg transition duration-300 hover:bg-pink-300 hover:shadow-lg cursor-pointer"
+                
+          >
               Get Started
             </motion.button>
           </motion.div>
