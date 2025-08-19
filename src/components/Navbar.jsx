@@ -73,17 +73,21 @@ const Navbar = () => {
     }, 1000); // Ignore scroll spy for 1 second
   };
   return (
-    <motion.nav
-      variants={fadeIn("down", 0.2)}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true }}
-      className={`fixed top-0 inset-x-0 z-50 border-b shadow-sm transition-colors duration-300 ${
-        isDarkMode 
-          ? "bg-gray-900/90 backdrop-blur-sm border-gray-700" 
-          : "bg-white/90 backdrop-blur-sm border-gray-100"
-      }`}
-    >
+
+  <motion.nav
+  role="navigation"
+  aria-label="Main Navigation"
+  variants={fadeIn("down", 0.2)}
+  initial="hidden"
+  whileInView="show"
+  viewport={{ once: true }}
+  className={`fixed top-0 inset-x-0 z-50 border-b shadow-sm backdrop-blur-md transition-colors duration-300 ${
+    isDarkMode 
+      ? "bg-gray-900/90 border-gray-700" 
+      : "bg-white/90 border-gray-100"
+  }`}
+>
+
       <div className="w-full flex justify-between items-center container mx-auto px-4 sm:px-6 lg:px-8 lg:h-20 h-16">
         {/* Logo */}
         <motion.div
