@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { fadeIn, textVariant } from '../utils/motion';
 import { CheckIcon } from '@heroicons/react/24/solid'; // Adjust import if needed
+import { toast } from 'react-toastify';
 
 const PricingCard = ({ name, price, features, animation }) => (
   <motion.div
@@ -26,6 +27,20 @@ const PricingSection = () => {
   const [productCount, setProductCount] = useState(1);
   const starterPrice = Math.round(4000 * (productCount / 50));
   const businessPrice = Math.round(7500 * (productCount / 50));
+
+  // handle Start button
+  const handleStartButton = () => {
+    try {
+      // implement functionality
+    } 
+    catch (error) {
+      // throw error
+      toast.error("Something went wrong!")
+    }
+    finally{
+      toast.info("⚒️ This feature is coming soon ! Stay tuned for updates.")
+    }
+  }
 
   const plans = [
     {
@@ -95,7 +110,7 @@ const PricingSection = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="bg-pink-200 text-gray-900 px-6 py-3 rounded-lg transition duration-300 hover:bg-pink-300 hover:shadow-lg cursor-pointer"
-                
+              onClick={handleStartButton}
           >
               Get Started
             </motion.button>
