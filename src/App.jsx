@@ -37,6 +37,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import useScrollTracking from "./utils/useScrollTracking";
 import useTimeTracking from "./utils/useTimeTracking";
 import { trackPageView } from "./utils/analytics";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import TermsOfUsePage from "./pages/TermsOfUsePage";
 
 // Hash Navigation component
 function HashNavigation() {
@@ -125,6 +127,8 @@ function AppContent() {
           <Route path="/support-career" element={<SupportCareer />} />
           <Route path="/faqs" element={<Faqs />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicyPage/>} />
+          <Route path="/terms-of-use" element={<TermsOfUsePage/>} />
         </Routes>
 
         {/* Toast conatiner for message */}
