@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import PropTypes from 'prop-types';   // ✅ Added
 import { fadeIn, textVariant } from '../utils/motion';
 import { CheckIcon } from '@heroicons/react/24/solid'; // Adjust import if needed
-import { toast } from 'react-toastify';
 
 const PricingCard = ({ name, price, features, animation }) => (
   <motion.div
     variants={animation}
     className="rounded-lg bg-gradient-to-r from-pink-200 to-blue-100 p-8 shadow-lg"
   >
-    <h3 className="text-xl  text-black mb-4">{name}</h3>
+    <h3 className="text-xl  text-gray-900 mb-4">{name}</h3>
     <p className="text-3xl text-black font-bold mb-6">${price}/mo</p>
     <ul className="list-disc list-inside pl-5 text-gray-700 space-y-2 mb-6">
       {features.map((feat) => (
@@ -23,24 +23,18 @@ const PricingCard = ({ name, price, features, animation }) => (
   </motion.div>
 );
 
+// ✅ Prop validation
+PricingCard.propTypes = {
+  name: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  features: PropTypes.arrayOf(PropTypes.string).isRequired,
+  animation: PropTypes.object.isRequired,
+};
+
 const PricingSection = () => {
   const [productCount, setProductCount] = useState(1);
   const starterPrice = Math.round(4000 * (productCount / 50));
   const businessPrice = Math.round(7500 * (productCount / 50));
-
-  // handle Start button
-  const handleStartButton = () => {
-    try {
-      // implement functionality
-    } 
-    catch (error) {
-      // throw error
-      toast.error("Something went wrong!")
-    }
-    finally{
-      toast.info("⚒️ This feature is coming soon ! Stay tuned for updates.")
-    }
-  }
 
   const plans = [
     {
@@ -109,9 +103,8 @@ const PricingSection = () => {
               variants={fadeIn('up', 1.3)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-pink-200 text-black px-6 py-3 rounded-lg transition duration-300 hover:bg-pink-300 hover:shadow-lg cursor-pointer"
-              onClick={handleStartButton}
-          >
+              className="bg-pink-200 text-gray-900 px-6 py-3 rounded-lg transition duration-300 hover:bg-pink-300 hover:shadow-lg cursor-pointer"
+            >
               Get Started
             </motion.button>
           </motion.div>
