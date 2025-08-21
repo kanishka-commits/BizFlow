@@ -89,7 +89,7 @@ const PurposeSection = () => {
                 whileHover={{ y: -4, scale: 1.005 }}
                 transition={{ type: "spring", stiffness: 220, damping: 18 }}
                 className={`relative flex items-start space-x-4 p-5 rounded-xl border
-                            transition-all duration-300
+                            transition-all ease-in-out duration-10
                             ${
                               isDarkMode
                                 ? "bg-slate-800/60 border-slate-700"
