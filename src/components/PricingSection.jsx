@@ -1,18 +1,22 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import PropTypes from 'prop-types';
 import { fadeIn, textVariant } from '../utils/motion';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import { toast } from 'react-toastify';
 
 // Helper function to calculate price based on product count
-const calculatePrice = (basePrice, productCount) => Math.round(basePrice * (productCount / 50));
+const calculatePrice = (basePrice, productCount) =>
+  Math.round(basePrice * (productCount / 50));
 
 const PricingCard = ({ name, price, features, animation }) => (
   <motion.div
     variants={animation}
     className="bg-gradient-to-bl to-[#1c182c] from-[#1b1836] shadow-lg hover:shadow-2xl rounded-2xl px-5 justify-center py-5 hover:-translate-y-1.5 transition-all duration-500 flex flex-col gap-3 items-start"
   >
-    <span className="text-md text-purple-200 bg-gray-950 px-3 py-1 rounded-full border-1 border-purple-800 mb-4">{name}</span>
+    <span className="text-md text-purple-200 bg-gray-950 px-3 py-1 rounded-full border-1 border-purple-800 mb-4">
+      {name}
+    </span>
     <p className="text-2xl text-indigo-200 font-semibold mb-6">
       <span>Price: </span>${price}/month
     </p>
@@ -20,20 +24,26 @@ const PricingCard = ({ name, price, features, animation }) => (
       {features.map((feat) => (
         <li key={feat} className="flex items-start">
           <CheckCircleIcon
-          className="w-4 h-7 text-purple-400 mr-2 flex-shrink-0" 
-          aria-hidden="true"/>
+            className="w-4 h-7 text-purple-400 mr-2 flex-shrink-0"
+            aria-hidden="true"
+          />
           {feat}
         </li>
       ))}
     </ul>
-    {/* CTA button can be added if needed */}
-    <button
-    className='bg-purple-900 px-5 py-2 rounded-full hover:scale-x-105 hover:cursor-pointer transition-all duration-500'
-    >
+    <button className="bg-purple-900 px-5 py-2 rounded-full hover:scale-x-105 hover:cursor-pointer transition-all duration-500">
       Choose Plan
     </button>
   </motion.div>
 );
+
+
+PricingCard.propTypes = {
+  name: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  features: PropTypes.arrayOf(PropTypes.string).isRequired,
+  animation: PropTypes.object.isRequired,
+};
 
 const PricingSection = () => {
   const [productCount, setProductCount] = useState(1);
@@ -95,17 +105,28 @@ const PricingSection = () => {
           Pricing
         </motion.h2>
 
-        <motion.div variants={fadeIn('up', 0.4)} className="grid md:grid-cols-2 gap-8 mb-12">
+        <motion.div
+          variants={fadeIn('up', 0.4)}
+          className="grid md:grid-cols-2 gap-8 mb-12"
+        >
           {plans.map((plan) => (
             <PricingCard key={plan.name} {...plan} />
           ))}
         </motion.div>
 
         {/* Slider and CTA sections below */}
-        <motion.div variants={fadeIn('up', 0.8)} className="max-w-xl mx-auto">
-
-          <motion.div variants={fadeIn('up', 1.1)} className="text-center mt-16">
-            <motion.p variants={fadeIn('up', 1.2)} className="text-3xl text-gray-600 dark:text-gray-300 mb-4">
+        <motion.div
+          variants={fadeIn('up', 0.8)}
+          className="max-w-xl mx-auto"
+        >
+          <motion.div
+            variants={fadeIn('up', 1.1)}
+            className="text-center mt-16"
+          >
+            <motion.p
+              variants={fadeIn('up', 1.2)}
+              className="text-3xl text-gray-600 dark:text-gray-300 mb-4"
+            >
               Ready to get started?
             </motion.p>
             <motion.button
