@@ -82,7 +82,7 @@ const FeaturesSection = () => {
             transition={{ duration: 0.6, delay: index * 0.2 }}
             whileHover={{ y: -6, scale: 1.01 }}
             whileTap={{ scale: 0.99 }}
-            className={`flex flex-col items-center p-6 rounded-xl shadow-sm hover:shadow-lg transition-[background,box-shadow,border,color,transform] duration-300 border ${
+            className={`flex flex-col items-center p-6 rounded-xl shadow-sm hover:shadow-lg transition-[background,box-shadow,border,color,transform] ease-in-out duration-10 border ${
               isDarkMode
                 ? "bg-slate-800/70 border-slate-700 backdrop-blur-[1px]"
                 : "bg-white border-gray-100"
