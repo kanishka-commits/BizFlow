@@ -21,6 +21,7 @@ const Navbar = () => {
     { href: "/#about", label: "About Us" },
     { href: "/#services", label: "Our Services" },
     { href: "/#testimonials", label: "Testimonials" },
+    { href: "/#faq", label: "FAQ" },
     { href: "/analytics", label: "Analytics" },
     { href: "/contact", label: "Contact" },
     { href: "/contributors", label: "Contributors" },
@@ -337,7 +338,7 @@ const Navbar = () => {
               );
             })}
             <motion.button
-              variants={fadeIn("up", 0.4)}
+              variants={fadeIn("up", 0)}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => {
@@ -349,7 +350,7 @@ const Navbar = () => {
                   document.getElementById("newsletter")?.scrollIntoView({ behavior: "smooth" });
                 }
               }}
-              className="w-full bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-base font-medium transition-all hover:shadow-lg hover:shadow-blue-100 cursor-pointer"
+              className="w-full bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-base font-medium hover:shadow-lg hover:shadow-blue-100 cursor-pointer"
             >
               Get in touch
             </motion.button>

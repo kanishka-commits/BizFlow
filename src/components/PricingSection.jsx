@@ -1,43 +1,91 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import PropTypes from 'prop-types';
 import { fadeIn, textVariant } from '../utils/motion';
-import { CheckIcon } from '@heroicons/react/24/solid'; // Adjust import if needed
+import { CheckCircleIcon } from '@heroicons/react/24/solid';
+import { toast } from 'react-toastify';
+
+// Helper function to calculate price based on product count
+const calculatePrice = (basePrice, productCount) =>
+  Math.round(basePrice * (productCount / 50));
 
 const PricingCard = ({ name, price, features, animation }) => (
   <motion.div
     variants={animation}
-    className="rounded-lg bg-gradient-to-r from-pink-200 to-blue-100 p-8 shadow-lg"
+    className="bg-gradient-to-bl to-[#1c182c] from-[#1b1836] shadow-lg hover:shadow-2xl rounded-2xl px-5 justify-center py-5 hover:-translate-y-1.5 transition-all duration-500 flex flex-col gap-3 items-start"
   >
-    <h3 className="text-xl  text-gray-900 mb-4">{name}</h3>
-    <p className="text-3xl text-black font-bold mb-6">${price}/mo</p>
-    <ul className="list-disc list-inside pl-5 text-gray-700 space-y-2 mb-6">
+    <span className="text-md text-purple-200 bg-gray-950 px-3 py-1 rounded-full border-1 border-purple-800 mb-4">
+      {name}
+    </span>
+    <p className="text-2xl text-indigo-200 font-semibold mb-6">
+      <span>Price: </span>${price}/month
+    </p>
+    <ul className="list-disc list-inside pl-5 text-gray-400 text-md space-y-2 mb-6">
       {features.map((feat) => (
         <li key={feat} className="flex items-start">
-          <CheckIcon className="w-5 h-5 text-blue-500 mr-2 flex-shrink-0" />
+          <CheckCircleIcon
+            className="w-4 h-7 text-purple-400 mr-2 flex-shrink-0"
+            aria-hidden="true"
+          />
           {feat}
         </li>
       ))}
     </ul>
-    {/* Add CTA button if needed */}
+    <button className="bg-purple-900 px-5 py-2 rounded-full hover:scale-x-105 hover:cursor-pointer transition-all duration-500">
+      Choose Plan
+    </button>
   </motion.div>
 );
 
+
+PricingCard.propTypes = {
+  name: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  features: PropTypes.arrayOf(PropTypes.string).isRequired,
+  animation: PropTypes.object.isRequired,
+};
+
 const PricingSection = () => {
   const [productCount, setProductCount] = useState(1);
-  const starterPrice = Math.round(4000 * (productCount / 50));
-  const businessPrice = Math.round(7500 * (productCount / 50));
+  const starterPrice = calculatePrice(4000, productCount);
+  const businessPrice = calculatePrice(7500, productCount);
+
+  // Handle Start button click
+  const handleStartButton = () => {
+    try {
+      // Implement future functionality
+    } catch (error) {
+      toast.error('Something went wrong!');
+    } finally {
+      toast.info('⚒️ This feature is coming soon! Stay tuned for updates.');
+    }
+  };
 
   const plans = [
     {
       name: 'Starter',
       price: starterPrice,
-      features: ['Up to 10 users', 'Email support', 'Basic analytics'],
+      features: [
+        'Up to 10 users',
+        'Email support',
+        'Basic analytics dashboard',
+        'Access to community forum',
+        'Standard security features',
+        'Weekly performance reports',
+      ],
       animation: fadeIn('right', 0.5),
     },
     {
       name: 'Business',
       price: businessPrice,
-      features: ['Unlimited users', 'Priority support', 'Advanced analytics'],
+      features: [
+        'Unlimited users',
+        'Priority email & chat support',
+        'Advanced analytics & custom reports',
+        'Team collaboration tools',
+        'Multiple project workspaces',
+        'Daily performance insights',
+      ],
       animation: fadeIn('left', 0.5),
     },
   ];
@@ -47,56 +95,47 @@ const PricingSection = () => {
       variants={fadeIn('up', 0.2)}
       initial="hidden"
       whileInView="show"
-      className="py-20 px-4 bg-gray-50"
+      className="py-15 px-4 bg-pink-500 dark:bg-gray-900 dark:text-white transition duration-300"
     >
       <div className="max-w-6xl mx-auto">
         <motion.h2
           variants={textVariant(0.3)}
-          className="rounded-lg py-5 text-3xl md:text-4xl font-bold text-center mb-16"
+          className="rounded-lg py-5 text-3xl md:text-4xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-700 via-pink-500 to-purple-700 bg-[length:200%_200%] animate-gradient-x text-center mb-16"
         >
           Pricing
         </motion.h2>
 
-        <motion.div variants={fadeIn('up', 0.4)} className="grid md:grid-cols-2 gap-8 mb-12">
+        <motion.div
+          variants={fadeIn('up', 0.4)}
+          className="grid md:grid-cols-2 gap-8 mb-12"
+        >
           {plans.map((plan) => (
-            <PricingCard
-              key={plan.name}
-              {...plan}
-            />
+            <PricingCard key={plan.name} {...plan} />
           ))}
         </motion.div>
 
         {/* Slider and CTA sections below */}
-        <motion.div variants={fadeIn('up', 0.8)} className="max-w-xl mx-auto">
-          <motion.p variants={fadeIn('up', 0.9)} className="text-center text-gray-600 mb-4">
-            {productCount} product{productCount > 1 ? 's' : ''}
-          </motion.p>
-          <motion.div variants={fadeIn('up', 1.0)} className="relative px-4">
-            <div className="flex items-center gap-2">
-              <span className="text-xs sm:text-sm text-gray-600">1</span>
-              <input
-                type="range"
-                min="1"
-                max="50"
-                step="1"
-                value={productCount}
-                onChange={(e) => setProductCount(parseInt(e.target.value))}
-                className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-              />
-              <span className="text-xs sm:text-sm text-gray-600">50</span>
-            </div>
-          </motion.div>
-          <motion.div variants={fadeIn('up', 1.1)} className="text-center mt-12">
-            <motion.p variants={fadeIn('up', 1.2)} className="text-xl text-gray-600 mb-4">
+        <motion.div
+          variants={fadeIn('up', 0.8)}
+          className="max-w-xl mx-auto"
+        >
+          <motion.div
+            variants={fadeIn('up', 1.1)}
+            className="text-center mt-16"
+          >
+            <motion.p
+              variants={fadeIn('up', 1.2)}
+              className="text-3xl text-gray-600 dark:text-gray-300 mb-4"
+            >
               Ready to get started?
             </motion.p>
             <motion.button
               variants={fadeIn('up', 1.3)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-pink-200 text-gray-900 px-6 py-3 rounded-lg transition duration-300 hover:bg-pink-300 hover:shadow-lg cursor-pointer"
-                
-          >
+              className="bg-purple-900 px-5 py-2 rounded-full text-gray-200 hover:cursor-pointer hover:scale-3d transition-all duration-300"
+              onClick={handleStartButton}
+            >
               Get Started
             </motion.button>
           </motion.div>
