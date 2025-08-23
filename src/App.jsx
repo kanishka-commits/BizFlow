@@ -4,7 +4,7 @@ import { useTheme } from "./context/ThemeContext";
 import { useLocation } from "react-router-dom";
 
 // react-toastify
-import {ToastContainer} from 'react-toastify'
+import { ToastContainer } from "react-toastify";
 
 // Components
 import Navbar from "./components/Navbar";
@@ -23,12 +23,12 @@ import ScrollToTop from "./components/ScrollToTop";
 import NotFound from "./components/NotFound";
 import Contact from "./components/Contact";
 import AnalyticsDashboard from "./components/AnalyticsDashboard";
+import FAQ from "./components/FAQ"; // ✅ Our FAQ component
 
 // Pages
 import Partner from "./pages/Partner";
 import Contibutors from "./pages/Contibutors";
 import SupportCareer from "./pages/SupportCareer";
-import Faqs from "./pages/Faqs";
 
 // Router
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -59,8 +59,8 @@ function HashNavigation() {
 }
 
 function AppContent() {
-   const { isDarkMode } = useTheme();
-   const location = useLocation();
+  const { isDarkMode } = useTheme();
+  const location = useLocation();
 
   // Initialize analytics tracking hooks
   useScrollTracking();
@@ -78,16 +78,22 @@ function AppContent() {
 
   return (
     <main className="relative min-h-screen overflow-x-hidden scroll-smooth transition-colors duration-300">
-      {/* Background Gradients (fixed across the site, non-intrusive) */}
+      {/* Background Gradients */}
       <div className="pointer-events-none fixed inset-0 z-0">
-        <div className={`absolute -top-28 -left-28 w-[500px] h-[500px] rounded-full blur-[80px] ${isDarkMode
-            ? "bg-gradient-to-tr from-indigo-500/10 to-pink-500/10"
-            : "bg-gradient-to-tr from-indigo-500/20 to-pink-500/20"
-          }`}></div>
-        <div className={`absolute -bottom-32 -right-32 w-[600px] h-[600px] rounded-full blur-[100px] ${isDarkMode
-            ? "bg-gradient-to-tr from-blue-500/10 to-purple-500/10"
-            : "bg-gradient-to-tr from-blue-500/20 to-purple-500/20"
-          }`}></div>
+        <div
+          className={`absolute -top-28 -left-28 w-[500px] h-[500px] rounded-full blur-[80px] ${
+            isDarkMode
+              ? "bg-gradient-to-tr from-indigo-500/10 to-pink-500/10"
+              : "bg-gradient-to-tr from-indigo-500/20 to-pink-500/20"
+          }`}
+        ></div>
+        <div
+          className={`absolute -bottom-32 -right-32 w-[600px] h-[600px] rounded-full blur-[100px] ${
+            isDarkMode
+              ? "bg-gradient-to-tr from-blue-500/10 to-purple-500/10"
+              : "bg-gradient-to-tr from-blue-500/20 to-purple-500/20"
+          }`}
+        ></div>
       </div>
 
       <div className="relative z-10 overflow-hidden">
@@ -101,7 +107,9 @@ function AppContent() {
             path="/"
             element={
               <>
-                <section id="home"><Hero /></section>
+                <section id="home">
+                  <Hero />
+                </section>
                 <section id="about">
                   <CompanyLogo />
                   <PurposeSection />
@@ -113,8 +121,15 @@ function AppContent() {
                   <PricingSection />
                   <ServicesSection />
                 </section>
-                <section id="testimonials"><TestimonialsSection /></section>
-                <section id="newsletter"><NewsletterSection /></section>
+                <section id="testimonials">
+                  <TestimonialsSection />
+                </section>
+                <section id="faq">
+                  <FAQ />
+                </section>
+                <section id="newsletter">
+                  <NewsletterSection />
+                </section>
               </>
             }
           />
@@ -123,43 +138,30 @@ function AppContent() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/contributors" element={<Contibutors />} />
           <Route path="/support-career" element={<SupportCareer />} />
-          <Route path="/faqs" element={<Faqs />} />
+
+          <Route path="/faqs" element={<FAQ />} />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
 
-        {/* Toast conatiner for message */}
-        {
-          isDarkMode ? 
-          <ToastContainer
+        {/* Toast container for messages */}
+        <ToastContainer
           position="top-center"
           autoClose={5000}
           hideProgressBar={false}
           newestOnTop={true}
           closeOnClick={false}
           draggable
-          theme="dark"
+          theme={isDarkMode ? "dark" : "light"}
           pauseOnHover
         />
-          : 
-          <ToastContainer
-          position="top-center"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={true}
-          closeOnClick={false}
-          draggable
-          theme="light"
-          pauseOnHover
-        />
-
-        }
 
         <Footer />
         <ScrollToTop />
       </div>
     </main>
   );
- }
+}
 
 function App() {
   return (
