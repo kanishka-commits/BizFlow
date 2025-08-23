@@ -2,7 +2,6 @@ import React from 'react';
 import { motion } from "framer-motion";
 import { Link } from 'react-router-dom';
 import { fadeIn, textVariant } from "../utils/motion";
-
 // Variants for staggered animation
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -102,8 +101,12 @@ const FeaturesSection = () => {
       >
         <Link 
           to="/partner" 
-          className="inline-block bg-orange-200 text-gray-800 cursor-pointer px-8 py-3 rounded-full font-medium transition-all duration-300 ease-in-out hover:bg-orange-300 hover:scale-105 hover:shadow-[0_0_15px_#fed7aa] relative"
-        >
+          className="inline-block min-w-[140px] px-5 py-2 rounded-lg font-medium text-sm md:text-base 
+             text-white bg-gradient-to-r from-blue-600 via-blue-700 to-cyan-600 
+             transition-all duration-300 ease-in-out 
+             hover:from-blue-500 hover:via-blue-600 hover:to-cyan-500 
+             hover:scale-105 shadow-md hover:shadow-cyan-400/40 relative"
+>
           <motion.div
             variants={fadeIn('up', 0.8)}
             whileHover={{ scale: 1.05 }}
