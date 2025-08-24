@@ -140,16 +140,14 @@ const Contact = () => {
     },
   ];
 
-  const socialLinks = [
-    {
-      icon: FiLinkedin,
-      link: "https://linkedin.com/company/bizflow",
-      label: "LinkedIn",
-    },
-    { icon: FiTwitter, link: "https://twitter.com/bizflow", label: "Twitter" },
-    { icon: FiFacebook, label: "facebook" },
-    { icon: FiGithub, link: "https://github.com/bizflow", label: "GitHub" },
-  ];
+
+ const socialLinks = [
+  { icon: FiLinkedin, link: "https://linkedin.com/company/bizflow", label: "LinkedIn", hover: "hover:bg-blue-700 hover:text-white" },
+  { icon: FiTwitter, link: "https://twitter.com/bizflow", label: "Twitter", hover: "hover:bg-sky-500 hover:text-white" },
+  { icon: FiFacebook, link: "https://facebook.com/bizflow", label: "Facebook", hover: "hover:bg-blue-600 hover:text-white" },
+  { icon: FiGithub, link: "https://github.com/bizflow", label: "GitHub", hover: "hover:bg-neutral-900 hover:text-white" },
+];
+
 
   return (
     <div className="min-h-screen pt-20">
@@ -552,7 +550,7 @@ const Contact = () => {
                   * All times are in Indian Standard Time (IST)
                 </p>
               </div>
-
+                
               <div className="bg-white p-8 rounded-2xl shadow-lg">
                 <h3 className="text-xl font-semibold mb-4">Follow Us</h3>
                 <div className="flex gap-4">
@@ -565,7 +563,12 @@ const Contact = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         whileHover={{ scale: 1.1, y: -2 }}
-                        className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center text-gray-600 hover:bg-blue-600 hover:text-white transition-all"
+                        className={`w-10 h-10 rounded-full flex items-center justify-center shadow-full border transition-colors 
+                          ${isDarkMode 
+                          ? `bg-gray-800 text-gray-300 border-gray-600 ${social.hover}` 
+                          : `bg-gray-200 text-gray-700 border-gray-300 ${social.hover}`
+                        }`}
+
                         aria-label={social.label}
                       >
                         <IconComponent className="w-5 h-5" />

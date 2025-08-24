@@ -216,22 +216,27 @@ const Navbar = () => {
         >
           {/* Get in Touch Button */}
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => {
-              trackButtonClick("Navbar CTA Button");
-              if (location.pathname !== "/") {
-                navigate("/#newsletter");
-              } else {
-                document.getElementById("newsletter")?.scrollIntoView({ behavior: "smooth" });
-              }
-            }}
-            className={`bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-base font-medium transition-all hover:shadow-lg cursor-pointer ${
-              isDarkMode ? "hover:shadow-slate-900/60" : "hover:shadow-blue-100"
-            }`}
-          >
-            Get in touch
-          </motion.button>
+  initial={{ opacity: 0, rotateX: -20, y: -15 }}
+  animate={{ opacity: 1, rotateX: 0, y: 0 }}
+  transition={{ duration: 0.6, ease: "easeOut" }}
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+  onClick={() => {
+    trackButtonClick("Navbar CTA Button");
+    if (location.pathname !== "/") {
+      navigate("/#newsletter");
+    } else {
+      document.getElementById("newsletter")?.scrollIntoView({ behavior: "smooth" });
+    }
+  }}
+  className={`min-w-[140px] px-6 py-2.5 rounded-lg font-medium text-sm md:text-base transition-all duration-300 ease-in-out cursor-pointer
+    ${isDarkMode 
+      ? "bg-gradient-to-r from-blue-600 via-blue-700 to-cyan-600 text-white hover:from-blue-500 hover:to-cyan-500 hover:shadow-slate-900/60" 
+      : "bg-white text-blue-600 border border-blue-200 hover:bg-blue-50 hover:shadow-blue-100"}`}
+>
+  💬 Get in Touch
+</motion.button>
+
 
           {/* Theme Toggle Button */}
           <motion.button
