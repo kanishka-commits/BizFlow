@@ -83,9 +83,9 @@ const Navbar = () => {
   whileInView="show"
   viewport={{ once: true }}
   className={`fixed top-0 inset-x-0 z-50 border-b shadow-sm backdrop-blur-md transition-colors duration-300 ${
-    isDarkMode 
-      ? "bg-gray-900/90 border-gray-700" 
-      : "bg-white/90 border-gray-100"
+    isDarkMode
+      ? "bg-gray-900/90 border-gray-700 shadow-gray-900/40"
+      : "bg-white/90 border-gray-100 shadow-gray-200/40"
   }`}
 >
 
@@ -226,7 +226,9 @@ const Navbar = () => {
                 document.getElementById("newsletter")?.scrollIntoView({ behavior: "smooth" });
               }
             }}
-            className="bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-base font-medium transition-all hover:shadow-lg hover:shadow-blue-100 cursor-pointer"
+            className={`bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-base font-medium transition-all hover:shadow-lg cursor-pointer ${
+              isDarkMode ? "hover:shadow-slate-900/60" : "hover:shadow-blue-100"
+            }`}
           >
             Get in touch
           </motion.button>
