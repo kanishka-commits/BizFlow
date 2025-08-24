@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { FiPlus, FiMinus } from "react-icons/fi";
-import { motion } from "framer-motion";
-import { fadeIn, textVariant } from "../utils/motion";
 import { useTheme } from "../context/ThemeContext";
 
 const faqs = [
@@ -75,113 +73,57 @@ export default function FAQ() {
       }`}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div variants={fadeIn("up", 0.3)} className="max-w-4xl mx-auto">
-          <motion.h2
-            variants={textVariant(0.2)}
+        <div className="max-w-4xl mx-auto">
+          <h2
             className={`text-3xl md:text-4xl font-bold text-center mb-12 ${
               isDarkMode ? "text-white" : "text-gray-900"
             }`}
           >
             Frequently Asked Questions
-          </motion.h2>
+          </h2>
           <div className="space-y-6">
             {faqs.map((faq, index) => (
-              <motion.div
+              <div
                 key={index}
-                variants={fadeIn("up", 0.1 * (index + 1))}
                 className={`${
                   isDarkMode
                     ? "bg-white/5 border-white/10 text-white"
                     : "bg-gray-100 border-gray-200 text-gray-900"
-                } max-w-4xl mx-auto cursor-pointer rounded-2xl p-6 hover:shadow-lg transition-all duration-300`}
+                } max-w-4xl mx-auto cursor-pointer rounded-2xl p-6 hover:shadow-lg transition-all duration-300 border`}
                 onClick={() => toggleFAQ(index)}
               >
                 <div className="flex justify-between items-center">
-                  <h3 className="text-lg font-semibold">{faq.question}</h3>
-                  <span className="flex-shrink-0 ml-4">
+                  <h3 className="text-lg font-semibold pr-4">{faq.question}</h3>
+                  <span className="flex-shrink-0 transition-transform duration-300">
                     {openIndex === index ? (
-                      <FiMinus size={20} />
+                      <FiMinus size={20} className="rotate-0" />
                     ) : (
-                      <FiPlus size={20} />
+                      <FiPlus size={20} className="rotate-0" />
                     )}
                   </span>
                 </div>
-                <motion.div
-                  id={`faq-${index}`}
-                  className={`overflow-hidden transition-all duration-300 ${
-                    openIndex === index ? "mt-4" : "h-0"
+                <div
+                  className={`grid transition-all duration-300 ease-in-out ${
+                    openIndex === index 
+                      ? "grid-rows-[1fr] opacity-100 mt-4" 
+                      : "grid-rows-[0fr] opacity-0"
                   }`}
-                  initial={false}
-                  animate={{
-                    opacity: openIndex === index ? 1 : 0,
-                    height: openIndex === index ? "auto" : 0,
-                  }}
                 >
-                  <p
-                    className={`${
-                      isDarkMode ? "text-gray-300" : "text-gray-700"
-                    }`}
-                  >
-                    {faq.answer}
-                  </p>
-                </motion.div>
-              </motion.div>
+                  <div className="overflow-hidden">
+                    <p
+                      className={`${
+                        isDarkMode ? "text-gray-300" : "text-gray-700"
+                      } pb-1`}
+                    >
+                      {faq.answer}
+                    </p>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
-
-    // <section
-    //   id="faq"
-    //   className="py-20 bg-gradient-to-br from-gray-900 to-blue-900 w-full"
-    // >
-    //   <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-    //     <motion.div variants={fadeIn("up", 0.3)} className="max-w-4xl mx-auto">
-    //       <motion.h2
-    //         variants={textVariant(0.2)}
-    //         className="text-3xl md:text-4xl font-bold text-center mb-12 text-white"
-    //       >
-    //         Frequently Asked Questions
-    //       </motion.h2>
-    //       <div className="space-y-6">
-    //         {faqs.map((faq, index) => (
-    //           <motion.div
-    //             key={index}
-    //             variants={fadeIn("up", 0.1 * (index + 1))}
-    //             className="bg-white/5 backdrop-blur-sm border border-white/10 max-w-4xl mx-auto cursor-pointer rounded-2xl p-6 hover:shadow-lg hover:shadow-blue-900/30 transition-all duration-300 transform hover:scale-[1.02] hover:z-10"
-    //             onClick={() => toggleFAQ(index)}
-    //           >
-    //             <div className="flex justify-between items-center">
-    //               <h3 className="text-lg font-semibold text-white">
-    //                 {faq.question}
-    //               </h3>
-    //               <span className="text-white flex-shrink-0 ml-4">
-    //                 {openIndex === index ? (
-    //                   <FiMinus size={20} />
-    //                 ) : (
-    //                   <FiPlus size={20} />
-    //                 )}
-    //               </span>
-    //             </div>
-    //             <motion.div
-    //               id={`faq-${index}`}
-    //               className={`overflow-hidden transition-all duration-300 ${
-    //                 openIndex === index ? "mt-4" : "h-0"
-    //               }`}
-    //               initial={false}
-    //               animate={{
-    //                 opacity: openIndex === index ? 1 : 0,
-    //                 height: openIndex === index ? "auto" : 0,
-    //               }}
-    //             >
-    //               <p className="text-gray-300">{faq.answer}</p>
-    //             </motion.div>
-    //           </motion.div>
-    //         ))}
-    //       </div>
-    //     </motion.div>
-    //   </div>
-    // </section>
   );
 }
