@@ -4,7 +4,6 @@ import { useTheme } from "../context/ThemeContext";
 
 const ScheduleSection = () => {
   const { isDarkMode } = useTheme();
-  
   const handleUpcomingFeature = () => {
     // Toast notification for upcoming feature
     console.log("⚒️ Our team is working on this amazing feature! Stay tuned.");
