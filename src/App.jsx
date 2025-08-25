@@ -20,7 +20,6 @@ import TestimonialsSection from "./components/TestimonialsSection";
 import NewsletterSection from "./components/NewsletterSection";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
-import FloatingThemeToggle from "./components/FloatingThemeToggle";
 import NotFound from "./components/NotFound";
 import Contact from "./components/Contact";
 import FAQ from "./components/FAQ";
@@ -161,7 +160,7 @@ function AppContent() {
 
         <Footer />
         <ScrollToTop />
-        <FloatingThemeToggle />
+        
       </div>
     </main>
   );

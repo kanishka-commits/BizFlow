@@ -230,7 +230,7 @@ const Navbar = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={toggleTheme}
-            className={`p-2.5 rounded-lg transition-all cursor-pointer ${
+            className={`ml-4 w-10 h-10 flex items-center justify-center rounded-lg transition-all cursor-pointer ${
               isDarkMode 
                 ? "bg-gray-700 hover:bg-gray-600 text-yellow-400 hover:text-yellow-300" 
                 : "bg-blue-100 hover:bg-blue-200 text-blue-600 hover:text-blue-700"
