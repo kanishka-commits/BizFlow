@@ -134,7 +134,7 @@ const CompanyLogo = () => {
                   {logos.map((logo, index) => (
                     <motion.div
                       key={index}
-                      className={`flex-shrink-0 mx-8 lg:mx-12 group cursor-pointer ${isDarkMode? "bg-slate-800":"bg-slate-100"} `}
+                      className={`flex-shrink-0 mx-8 lg:mx-12 group cursor-pointer ${isDarkMode? "bg-slate-100":"bg-slate-100"} `}
                       onHoverStart={() => setHoveredLogo(index)}
                       onHoverEnd={() => setHoveredLogo(null)}
                       whileHover={{ scale: 1.1 }}
@@ -177,7 +177,7 @@ const CompanyLogo = () => {
                   {logos.map((logo, index) => (
                     <motion.div
                       key={`duplicate-${index}`}
-                      className="flex-shrink-0 mx-8 lg:mx-12 group cursor-pointer"
+                      className={`flex-shrink-0 mx-8 lg:mx-12 group cursor-pointer ${isDarkMode? "bg-slate-100":"bg-slate-100"} `}
                       onHoverStart={() => setHoveredLogo(`dup-${index}`)}
                       onHoverEnd={() => setHoveredLogo(null)}
                       whileHover={{ scale: 1.1 }}
