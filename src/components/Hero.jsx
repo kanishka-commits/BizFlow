@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { fadeIn, textVariant } from "../utils/motion";
 import heroImage from "../assets/hero-image.png";
@@ -273,6 +274,33 @@ const Hero = () => {
                 </motion.div>
               )}
             </div>
+          variants={subtleFadeIn("up", 0.4)}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.3 }}
+          className="flex flex-wrap gap-2 max-w-md relative -mt-1"
+        >
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email address"
+            className={`flex-1 px-6 py-3.5  border rounded-xl focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition-all duration-300 ${
+              isDarkMode
+                ? "border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:ring-blue-900"
+                : "border-gray-200 bg-white text-gray-600 placeholder-gray-500 focus:ring-blue-100"
+            }`}
+          />
+           <button
+            onClick={() => {
+            trackButtonClick("Hero Newsletter Button");
+            trackNewsletterSignup("hero_section");
+             handleSend();
+            }}
+          className="bg-blue-600 text-white px-5 py-3.5 rounded-xl hover:bg-blue-700 cursor-pointer transition-all duration-300 hover:shadow-lg active:scale-95 flex items-center justify-center min-w-[52px]"
+       >
+            <ArrowRight size={24} strokeWidth={2.5} />
+        </button>
 
             <motion.button
               onClick={() => {
