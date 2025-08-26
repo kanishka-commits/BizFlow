@@ -177,22 +177,89 @@ export default function FAQ() {
               ))}
             </div>
 
-            {/* Bottom CTA Section */}
-            <div className="text-center mt-16">
-              <p className={`mb-6 text-lg transition-colors duration-500 ${
-                isDarkMode ? "text-gray-300" : "text-gray-600"
+            {/* Enhanced Bottom CTA Section */}
+            <div className="text-center mt-20">
+              <div className={`relative mx-auto max-w-lg p-8 rounded-3xl backdrop-blur-xl border transition-all duration-500 ${
+                isDarkMode
+                  ? "bg-gradient-to-br from-gray-800/60 to-gray-900/60 border-gray-700/50 shadow-2xl shadow-gray-900/30"
+                  : "bg-gradient-to-br from-white/60 to-blue-50/60 border-blue-200/50 shadow-2xl shadow-blue-500/10"
               }`}>
-                Still have questions?
-              </p>
-              <button 
-                className={`px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 backdrop-blur-md ${
-                  isDarkMode
-                    ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white hover:from-blue-500 hover:to-blue-400 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/50 border border-blue-400/30"
-                    : "bg-gradient-to-r from-blue-600 to-blue-500 text-white hover:from-blue-700 hover:to-blue-600 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 border border-blue-300/30"
-                }`}
-              >
-                Contact Support
-              </button>
+                {/* Decorative background elements */}
+                <div className={`absolute -top-2 -right-2 w-20 h-20 rounded-full blur-2xl opacity-30 ${
+                  isDarkMode ? "bg-blue-500" : "bg-blue-400"
+                }`}></div>
+                <div className={`absolute -bottom-2 -left-2 w-16 h-16 rounded-full blur-xl opacity-20 ${
+                  isDarkMode ? "bg-purple-500" : "bg-indigo-400"
+                }`}></div>
+
+                <div className="relative z-10">
+                  <h3 className={`text-2xl font-bold mb-3 transition-colors duration-500 ${
+                    isDarkMode ? "text-white" : "text-gray-900"
+                  }`}>
+                    Still have questions?
+                  </h3>
+                  <p className={`mb-8 text-base leading-relaxed transition-colors duration-500 ${
+                    isDarkMode ? "text-gray-300" : "text-gray-600"
+                  }`}>
+                    Our support team is ready to help you with any inquiries or concerns you might have.
+                  </p>
+                  
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <button 
+                      className={`group relative px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 backdrop-blur-md overflow-hidden ${
+                        isDarkMode
+                          ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white hover:from-blue-500 hover:to-blue-400 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/50 border border-blue-400/30"
+                          : "bg-gradient-to-r from-blue-600 to-blue-500 text-white hover:from-blue-700 hover:to-blue-600 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 border border-blue-300/30"
+                      }`}
+                      onClick={()=>navigate('/contact')}
+                    >
+                      {/* Animated background shine effect */}
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-out"></div>
+                      </div>
+                      <span className="relative z-10 flex items-center gap-2">
+                        Contact Support
+                        <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                      </span>
+                    </button>
+
+                    <button 
+                      className={`group px-6 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 backdrop-blur-md border-2 ${
+                        isDarkMode
+                          ? "border-gray-600 text-gray-300 hover:border-gray-500 hover:text-white hover:bg-gray-800/50"
+                          : "border-gray-300 text-gray-600 hover:border-gray-400 hover:text-gray-800 hover:bg-white/50"
+                      }`}
+                    >
+                      <span className="flex items-center gap-2">
+                        Browse Help Center
+                        <svg className="w-4 h-4 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </span>
+                    </button>
+                  </div>
+
+                  {/* Contact info */}
+                  <div className={`mt-6 pt-6 border-t flex flex-col sm:flex-row justify-center items-center gap-6 text-sm ${
+                    isDarkMode ? "border-gray-700 text-gray-400" : "border-gray-200 text-gray-500"
+                  }`}>
+                    <div className="flex items-center gap-2">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                      support@yourcompany.com
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      Response within 24 hours
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>
