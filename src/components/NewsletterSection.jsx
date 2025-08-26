@@ -90,7 +90,7 @@ const NewsletterSection = () => {
 
       {/* Main Content */}
       <div className="relative max-w-6xl mx-auto">
-        <div className={`backdrop-blur-lg ${isDarkMode ? 'bg-white/5 border-white/10' : 'bg-white/80 border-gray-200/50'} border rounded-3xl p-8 md:p-16 shadow-2xl`}>
+        <div className={`backdrop-blur-3xl bg-transparent p-8 md:p-16 shadow-2xl`}>
           <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
             
             {/* Left Content */}
