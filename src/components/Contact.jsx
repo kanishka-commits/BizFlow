@@ -14,6 +14,8 @@ import {
   FiTwitter,
   FiGithub,
   FiFacebook,
+  FiArrowRight,
+  FiStar,
 } from "react-icons/fi";
 import { trackButtonClick } from "../utils/analytics";
 
@@ -95,18 +97,6 @@ const Contact = () => {
       setSubmitStatus("success");
       setFormData({ name: "", email: "", subject: "", message: "" });
       setErrors({});
-
-      // Log the submission details for testing
-      // console.log(`
-      //   📧 Contact Form Submission:
-      //   ===========================
-      //   Name: ${formData.name}
-      //   Email: ${formData.email}
-      //   Subject: ${formData.subject}
-      //   Message: ${formData.message}
-      //   Timestamp: ${new Date().toLocaleString()}
-      //   ===========================
-      // `);
     } catch (error) {
       console.error("Error submitting form:", error);
       setSubmitStatus("error");
@@ -123,6 +113,8 @@ const Contact = () => {
       details: "hello@bizflow.com",
       link: "mailto:hello@bizflow.com",
       description: "Send us an email anytime!",
+      gradient: "from-purple-500 to-pink-500",
+      color: "purple"
     },
     {
       icon: FiPhone,
@@ -130,6 +122,8 @@ const Contact = () => {
       details: "+1 (555) 123-4567",
       link: "tel:+15551234567",
       description: "Mon-Fri from 8am to 5pm",
+      gradient: "from-blue-500 to-cyan-500",
+      color: "blue"
     },
     {
       icon: FiMapPin,
@@ -137,65 +131,105 @@ const Contact = () => {
       details: "Delhi, India",
       link: "https://maps.google.com",
       description: "Come say hello at our HQ",
+      gradient: "from-green-500 to-emerald-500",
+      color: "green"
     },
   ];
 
-
- const socialLinks = [
-  { icon: FiLinkedin, link: "https://linkedin.com/company/bizflow", label: "LinkedIn", hover: "hover:bg-blue-700 hover:text-white" },
-  { icon: FiTwitter, link: "https://twitter.com/bizflow", label: "Twitter", hover: "hover:bg-sky-500 hover:text-white" },
-  { icon: FiFacebook, link: "https://facebook.com/bizflow", label: "Facebook", hover: "hover:bg-blue-600 hover:text-white" },
-  { icon: FiGithub, link: "https://github.com/bizflow", label: "GitHub", hover: "hover:bg-neutral-900 hover:text-white" },
-];
-
+  const socialLinks = [
+    { icon: FiLinkedin, link: "https://linkedin.com/company/bizflow", label: "LinkedIn", color: "bg-blue-600 hover:bg-blue-700" },
+    { icon: FiTwitter, link: "https://twitter.com/bizflow", label: "Twitter", color: "bg-sky-500 hover:bg-sky-600" },
+    { icon: FiFacebook, link: "https://facebook.com/bizflow", label: "Facebook", color: "bg-blue-600 hover:bg-blue-700" },
+    { icon: FiGithub, link: "https://github.com/bizflow", label: "GitHub", color: "bg-gray-800 hover:bg-gray-900" },
+  ];
 
   return (
-    <div className="min-h-screen pt-20">
-      {/* Hero Section */}
+    <div className={`min-h-screen pt-20 relative overflow-hidden ${isDarkMode ? 'bg-gray-900' : 'bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100'}`}>
+      {/* Enhanced Animated Background Elements for Glassmorphism */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className={`absolute top-20 left-10 w-72 h-72 ${isDarkMode ? 'bg-blue-500/20' : 'bg-blue-400/30'} rounded-full blur-3xl animate-pulse`}></div>
+        <div className={`absolute bottom-20 right-10 w-96 h-96 ${isDarkMode ? 'bg-purple-500/20' : 'bg-purple-400/30'} rounded-full blur-3xl animate-pulse delay-1000`}></div>
+        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 ${isDarkMode ? 'bg-cyan-500/15' : 'bg-cyan-400/25'} rounded-full blur-3xl animate-pulse delay-500`}></div>
+        <div className={`absolute top-10 right-1/3 w-60 h-60 ${isDarkMode ? 'bg-pink-500/15' : 'bg-pink-400/25'} rounded-full blur-3xl animate-pulse delay-2000`}></div>
+        <div className={`absolute bottom-1/3 left-1/4 w-48 h-48 ${isDarkMode ? 'bg-yellow-500/15' : 'bg-yellow-400/25'} rounded-full blur-3xl animate-pulse delay-1500`}></div>
+      </div>
+
+      {/* Hero Section with Glassmorphism */}
       <motion.section
         variants={fadeIn("up", 0.2)}
         initial="hidden"
         whileInView="show"
         viewport={{ once: true }}
-        className="section-container text-center"
+        className="section-container text-center relative z-10"
       >
-        <motion.div variants={textVariant(0.3)} className="max-w-3xl mx-auto">
-          <div
-            className={`flex items-center justify-center gap-2 w-fit px-4 py-2 rounded-full mx-auto mb-6 ${
-              isDarkMode ? "bg-slate-800" : "bg-blue-50"
+        <motion.div variants={textVariant(0.3)} className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className={`inline-flex items-center gap-3 px-6 py-3 rounded-full mx-auto mb-8 backdrop-blur-md border ${
+              isDarkMode 
+                ? "bg-white/10 border-white/20 text-white shadow-2xl" 
+                : "bg-white/60 border-white/80 text-gray-700 shadow-2xl"
             }`}
+            style={{
+              background: isDarkMode 
+                ? 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)'
+                : 'linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 100%)'
+            }}
           >
-            <span className={isDarkMode ? "text-white" : "text-blue-600"}>💬</span>
-            <span className={`text-sm font-medium ${isDarkMode ? "text-white" : "text-blue-700"}`}>
-              Get In Touch
-            </span>
-          </div>
+            <motion.span 
+              animate={{ rotate: [0, 10, -10, 0] }}
+              transition={{ repeat: Infinity, duration: 2 }}
+              className="text-2xl"
+            >
+              💬
+            </motion.span>
+            <span className="text-sm font-semibold tracking-wide uppercase">Get In Touch</span>
+          </motion.div>
 
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-            Let&apos;s start a{" "}
-            <span className="text-blue-600 relative inline-block">
-              conversation
-              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-200/60"></span>
+          <motion.h1 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className={`text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-8 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}
+          >
+            Let's start a{" "}
+            <span className="relative inline-block">
+              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent">
+                conversation
+              </span>
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 1.5, delay: 0.5 }}
+                className="absolute bottom-2 left-0 h-1 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 rounded-full"
+              />
             </span>
-          </h1>
+          </motion.h1>
 
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className={`text-xl leading-relaxed max-w-3xl mx-auto ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}
+          >
             Have a project in mind? Want to partner with us? Or just want to say
-            hello? We&apos;d love to hear from you. Drop us a line and we&apos;ll get back
+            hello? We'd love to hear from you. Drop us a line and we'll get back
             to you as soon as possible.
-          </p>
+          </motion.p>
         </motion.div>
       </motion.section>
 
-      {/* Contact Info Cards */}
+      {/* Contact Info Cards with Enhanced Glassmorphism */}
       <motion.section
         variants={fadeIn("up", 0.4)}
         initial="hidden"
         whileInView="show"
         viewport={{ once: true }}
-        className="section-container"
+        className="section-container relative z-10"
       >
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
           {contactInfo.map((info, index) => {
             const IconComponent = info.icon;
             return (
@@ -205,59 +239,114 @@ const Contact = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 variants={fadeIn("up", 0.5 + index * 0.1)}
-                whileHover={{ scale: 1.02, y: -5 }}
-                className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all border border-gray-100 group"
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true }}
+                whileHover={{ 
+                  scale: 1.03, 
+                  y: -8,
+                  boxShadow: isDarkMode ? "0 25px 50px rgba(0,0,0,0.4)" : "0 25px 50px rgba(0,0,0,0.2)"
+                }}
+                className={`group relative p-8 rounded-3xl transition-all duration-500 border backdrop-blur-lg ${
+                  isDarkMode 
+                    ? "bg-white/5 border-white/20 hover:bg-white/10 hover:border-white/30" 
+                    : "bg-white/40 border-white/60 hover:bg-white/60 hover:border-white/80 shadow-xl hover:shadow-2xl"
+                }`}
+                style={{
+                  background: isDarkMode 
+                    ? 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%)'
+                    : 'linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.3) 100%)',
+                  backdropFilter: 'blur(20px)',
+                  WebkitBackdropFilter: 'blur(20px)',
+                }}
               >
-                <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-600 transition-colors">
-                  <IconComponent className="w-6 h-6 text-blue-600 group-hover:text-white transition-colors" />
+                {/* Glassmorphism inner glow */}
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                
+                <div className="relative z-10">
+                  <motion.div 
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    className={`w-16 h-16 bg-gradient-to-r ${info.gradient} rounded-2xl flex items-center justify-center mb-6 shadow-2xl backdrop-blur-sm`}
+                    style={{ backdropFilter: 'blur(10px)' }}
+                  >
+                    <IconComponent className="w-7 h-7 text-white drop-shadow-lg" />
+                  </motion.div>
+                  
+                  <h3 className={`text-xl font-bold mb-3 ${isDarkMode ? 'text-white' : 'text-gray-900'} drop-shadow-sm`}>
+                    {info.title}
+                  </h3>
+                  
+                  <p className={`bg-gradient-to-r ${info.gradient} bg-clip-text text-transparent font-semibold text-lg mb-3 drop-shadow-sm`}>
+                    {info.details}
+                  </p>
+                  
+                  <p className={`text-sm leading-relaxed ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                    {info.description}
+                  </p>
+                  
+                  <motion.div
+                    className="flex items-center gap-2 mt-4 opacity-0 group-hover:opacity-100 transition-all duration-300"
+                    initial={{ x: -10 }}
+                    whileHover={{ x: 0 }}
+                  >
+                    <span className={`text-sm font-medium ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
+                      Get in touch
+                    </span>
+                    <FiArrowRight className={`w-4 h-4 ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`} />
+                  </motion.div>
                 </div>
-                <h3 className="text-xl font-semibold mb-2">{info.title}</h3>
-                <p className="text-blue-600 font-medium mb-2">{info.details}</p>
-                <p className="text-gray-600 text-sm">{info.description}</p>
+                
+                {/* Enhanced glow effect */}
+                <div className={`absolute inset-0 bg-gradient-to-r ${info.gradient} opacity-0 group-hover:opacity-20 rounded-3xl transition-all duration-500 blur-xl`}></div>
               </motion.a>
             );
           })}
         </div>
       </motion.section>
 
-      {/* Contact Form */}
+      {/* Contact Form Section with Glassmorphism */}
       <motion.section
         variants={fadeIn("up", 0.6)}
         initial="hidden"
         whileInView="show"
         viewport={{ once: true }}
-        className="section-container"
+        className="section-container relative z-10"
       >
-        <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Form */}
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            {/* Form - Takes 2 columns with Enhanced Glassmorphism */}
             <motion.div
               variants={fadeIn("right", 0.7)}
-              className={`p-8 rounded-2xl shadow-lg ${
-                isDarkMode ? "bg-slate-800 border border-slate-700" : "bg-white"
+              className={`lg:col-span-2 p-10 rounded-3xl backdrop-blur-xl border transition-all duration-500 ${
+                isDarkMode 
+                  ? "bg-white/5 border-white/20 shadow-2xl" 
+                  : "bg-white/50 border-white/70 shadow-2xl"
               }`}
+              style={{
+                background: isDarkMode 
+                  ? 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%)'
+                  : 'linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 100%)',
+                backdropFilter: 'blur(25px)',
+                WebkitBackdropFilter: 'blur(25px)',
+              }}
             >
-              <h2
-                className={`text-2xl font-bold mb-6 ${
-                  isDarkMode ? "text-white" : "text-gray-800"
-                }`}
-              >
-                Send us a message
-              </h2>
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center backdrop-blur-sm shadow-xl">
+                  <FiSend className="w-6 h-6 text-white drop-shadow-lg" />
+                </div>
+                <h2 className={`text-3xl font-bold ${isDarkMode ? "text-white" : "text-gray-900"} drop-shadow-sm`}>
+                  Send us a message
+                </h2>
+              </div>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label
-                      className={`block text-sm font-medium mb-2 ${
-                        isDarkMode ? "text-gray-200" : "text-gray-700"
-                      }`}
-                    >
-                      <FiUser
-                        className={`inline w-4 h-4 mr-2 ${
-                          isDarkMode ? "text-blue-400" : "text-gray-700"
-                        }`}
-                      />
+              <form onSubmit={handleSubmit} className="space-y-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <motion.div
+                    whileFocus={{ scale: 1.02 }}
+                    className="space-y-2"
+                  >
+                    <label className={`flex items-center gap-2 text-sm font-semibold ${isDarkMode ? "text-gray-200" : "text-gray-700"}`}>
+                      <FiUser className={`w-4 h-4 ${isDarkMode ? "text-blue-400" : "text-blue-600"}`} />
                       Full Name
                     </label>
                     <input
@@ -266,35 +355,44 @@ const Contact = () => {
                       value={formData.name}
                       onChange={handleInputChange}
                       required
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
+                      className={`w-full px-5 py-4 border-2 rounded-2xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 backdrop-blur-lg ${
                         errors.name
                           ? "border-red-500"
                           : isDarkMode
-                          ? "border-slate-600"
-                          : "border-gray-300"
+                          ? "border-white/20 focus:border-blue-400"
+                          : "border-white/60 focus:border-blue-500"
                       } ${
                         isDarkMode
-                          ? "bg-slate-700 text-white placeholder-gray-300"
-                          : "bg-white text-gray-800 placeholder-gray-500"
+                          ? "bg-white/5 text-white placeholder-gray-400"
+                          : "bg-white/40 text-gray-900 placeholder-gray-600"
                       }`}
+                      style={{
+                        background: isDarkMode 
+                          ? 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%)'
+                          : 'linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.3) 100%)',
+                        backdropFilter: 'blur(15px)',
+                        WebkitBackdropFilter: 'blur(15px)',
+                      }}
                       placeholder="John Doe"
                     />
                     {errors.name && (
-                      <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+                      <motion.p 
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="text-red-500 text-sm flex items-center gap-1"
+                      >
+                        <span className="w-4 h-4 text-red-500">⚠</span>
+                        {errors.name}
+                      </motion.p>
                     )}
-                  </div>
+                  </motion.div>
 
-                  <div>
-                    <label
-                      className={`block text-sm font-medium mb-2 ${
-                        isDarkMode ? "text-gray-200" : "text-gray-700"
-                      }`}
-                    >
-                      <FiMail
-                        className={`inline w-4 h-4 mr-2 ${
-                          isDarkMode ? "text-blue-400" : "text-gray-700"
-                        }`}
-                      />
+                  <motion.div
+                    whileFocus={{ scale: 1.02 }}
+                    className="space-y-2"
+                  >
+                    <label className={`flex items-center gap-2 text-sm font-semibold ${isDarkMode ? "text-gray-200" : "text-gray-700"}`}>
+                      <FiMail className={`w-4 h-4 ${isDarkMode ? "text-blue-400" : "text-blue-600"}`} />
                       Email
                     </label>
                     <input
@@ -303,38 +401,45 @@ const Contact = () => {
                       value={formData.email}
                       onChange={handleInputChange}
                       required
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
+                      className={`w-full px-5 py-4 border-2 rounded-2xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 backdrop-blur-lg ${
                         errors.email
                           ? "border-red-500"
                           : isDarkMode
-                          ? "border-slate-600"
-                          : "border-gray-300"
+                          ? "border-white/20 focus:border-blue-400"
+                          : "border-white/60 focus:border-blue-500"
                       } ${
                         isDarkMode
-                          ? "bg-slate-700 text-white placeholder-gray-300"
-                          : "bg-white text-gray-800 placeholder-gray-500"
+                          ? "bg-white/5 text-white placeholder-gray-400"
+                          : "bg-white/40 text-gray-900 placeholder-gray-600"
                       }`}
+                      style={{
+                        background: isDarkMode 
+                          ? 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%)'
+                          : 'linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.3) 100%)',
+                        backdropFilter: 'blur(15px)',
+                        WebkitBackdropFilter: 'blur(15px)',
+                      }}
                       placeholder="john@example.com"
                     />
                     {errors.email && (
-                      <p className="text-red-500 text-sm mt-1">
+                      <motion.p 
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="text-red-500 text-sm flex items-center gap-1"
+                      >
+                        <span className="w-4 h-4 text-red-500">⚠</span>
                         {errors.email}
-                      </p>
+                      </motion.p>
                     )}
-                  </div>
+                  </motion.div>
                 </div>
 
-                <div>
-                  <label
-                    className={`block text-sm font-medium mb-2 ${
-                      isDarkMode ? "text-gray-200" : "text-gray-700"
-                    }`}
-                  >
-                    <FiMessageSquare
-                      className={`inline w-4 h-4 mr-2 ${
-                        isDarkMode ? "text-blue-400" : "text-gray-700"
-                      }`}
-                    />
+                <motion.div
+                  whileFocus={{ scale: 1.01 }}
+                  className="space-y-2"
+                >
+                  <label className={`flex items-center gap-2 text-sm font-semibold ${isDarkMode ? "text-gray-200" : "text-gray-700"}`}>
+                    <FiMessageSquare className={`w-4 h-4 ${isDarkMode ? "text-blue-400" : "text-blue-600"}`} />
                     Subject
                   </label>
                   <input
@@ -343,37 +448,44 @@ const Contact = () => {
                     value={formData.subject}
                     onChange={handleInputChange}
                     required
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
+                    className={`w-full px-5 py-4 border-2 rounded-2xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 backdrop-blur-lg ${
                       errors.subject
                         ? "border-red-500"
                         : isDarkMode
-                        ? "border-slate-600"
-                        : "border-gray-300"
+                        ? "border-white/20 focus:border-blue-400"
+                        : "border-white/60 focus:border-blue-500"
                     } ${
                       isDarkMode
-                        ? "bg-slate-700 text-white placeholder-gray-300"
-                        : "bg-white text-gray-800 placeholder-gray-500"
+                        ? "bg-white/5 text-white placeholder-gray-400"
+                        : "bg-white/40 text-gray-900 placeholder-gray-600"
                     }`}
+                    style={{
+                      background: isDarkMode 
+                        ? 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%)'
+                        : 'linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.3) 100%)',
+                      backdropFilter: 'blur(15px)',
+                      WebkitBackdropFilter: 'blur(15px)',
+                    }}
                     placeholder="How can we help you?"
                   />
                   {errors.subject && (
-                    <p className="text-red-500 text-sm mt-1">
+                    <motion.p 
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-red-500 text-sm flex items-center gap-1"
+                    >
+                      <span className="w-4 h-4 text-red-500">⚠</span>
                       {errors.subject}
-                    </p>
+                    </motion.p>
                   )}
-                </div>
+                </motion.div>
 
-                <div>
-                  <label
-                    className={`block text-sm font-medium mb-2 ${
-                      isDarkMode ? "text-gray-200" : "text-gray-700"
-                    }`}
-                  >
-                    <FiMessageSquare
-                      className={`inline w-4 h-4 mr-2 ${
-                        isDarkMode ? "text-blue-400" : "text-gray-700"
-                      }`}
-                    />
+                <motion.div
+                  whileFocus={{ scale: 1.01 }}
+                  className="space-y-2"
+                >
+                  <label className={`flex items-center gap-2 text-sm font-semibold ${isDarkMode ? "text-gray-200" : "text-gray-700"}`}>
+                    <FiMessageSquare className={`w-4 h-4 ${isDarkMode ? "text-blue-400" : "text-blue-600"}`} />
                     Message
                   </label>
                   <textarea
@@ -382,204 +494,322 @@ const Contact = () => {
                     onChange={handleInputChange}
                     required
                     rows={6}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none ${
+                    className={`w-full px-5 py-4 border-2 rounded-2xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 resize-none backdrop-blur-lg ${
                       errors.message
                         ? "border-red-500"
                         : isDarkMode
-                        ? "border-slate-600"
-                        : "border-gray-300"
+                        ? "border-white/20 focus:border-blue-400"
+                        : "border-white/60 focus:border-blue-500"
                     } ${
                       isDarkMode
-                        ? "bg-slate-700 text-white placeholder-gray-300"
-                        : "bg-white text-gray-800 placeholder-gray-500"
+                        ? "bg-white/5 text-white placeholder-gray-400"
+                        : "bg-white/40 text-gray-900 placeholder-gray-600"
                     }`}
+                    style={{
+                      background: isDarkMode 
+                        ? 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%)'
+                        : 'linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.3) 100%)',
+                      backdropFilter: 'blur(15px)',
+                      WebkitBackdropFilter: 'blur(15px)',
+                    }}
                     placeholder="Tell us about your project or inquiry..."
                   />
                   {errors.message && (
-                    <p className="text-red-500 text-sm mt-1">
+                    <motion.p 
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-red-500 text-sm flex items-center gap-1"
+                    >
+                      <span className="w-4 h-4 text-red-500">⚠</span>
                       {errors.message}
-                    </p>
+                    </motion.p>
                   )}
-                </div>
+                </motion.div>
 
                 <motion.button
                   type="submit"
                   disabled={isSubmitting}
-                  whileHover={{ scale: 1.02 }}
+                  whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="relative w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-5 rounded-2xl font-semibold text-lg shadow-2xl transition-all duration-300 overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-sm"
+                  style={{ backdropFilter: 'blur(10px)' }}
                 >
-                  {isSubmitting ? (
-                    <>
-                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      Sending...
-                    </>
-                  ) : (
-                    <>
-                      <FiSend className="w-5 h-5" />
-                      Send Message
-                    </>
-                  )}
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-700 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="relative flex items-center justify-center gap-3">
+                    {isSubmitting ? (
+                      <>
+                        <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        Sending your message...
+                      </>
+                    ) : (
+                      <>
+                        <FiSend className="w-5 h-5 drop-shadow-lg" />
+                        Send Message
+                      </>
+                    )}
+                  </div>
                 </motion.button>
 
                 {submitStatus === "success" && (
                   <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="p-4 bg-green-100 border border-green-200 rounded-lg text-green-700"
+                    initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    className="p-6 backdrop-blur-lg border-2 border-green-300/60 rounded-2xl shadow-xl"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(34, 197, 94, 0.05) 100%)',
+                      backdropFilter: 'blur(20px)',
+                    }}
                   >
-                    ✅ Message sent successfully! We&apos;ll get back to you soon.
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center shadow-lg">
+                        <span className="text-white text-lg drop-shadow-sm">✓</span>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-green-800">Message sent successfully!</h4>
+                        <p className="text-green-600 text-sm">We'll get back to you within 24 hours.</p>
+                      </div>
+                    </div>
                   </motion.div>
                 )}
 
                 {submitStatus === "error" && (
                   <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="p-4 bg-red-100 border border-red-200 rounded-lg text-red-700"
+                    initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    className="p-6 backdrop-blur-lg border-2 border-red-300/60 rounded-2xl shadow-xl"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(239, 68, 68, 0.05) 100%)',
+                      backdropFilter: 'blur(20px)',
+                    }}
                   >
-                    ❌ Failed to send message. Please try again.
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center shadow-lg">
+                        <span className="text-white text-lg drop-shadow-sm">⚠</span>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-red-800">Failed to send message</h4>
+                        <p className="text-red-600 text-sm">Please try again or contact us directly.</p>
+                      </div>
+                    </div>
                   </motion.div>
                 )}
               </form>
             </motion.div>
 
-            {/* Info Sidebar */}
-            <motion.div variants={fadeIn("left", 0.8)} className="space-y-8">
-              <div
-                className={`p-8 rounded-2xl ${
+            {/* Info Sidebar with Glassmorphism */}
+            <motion.div 
+              variants={fadeIn("left", 0.8)} 
+              className="space-y-8"
+            >
+              {/* Why Choose BizFlow with Enhanced Glassmorphism */}
+              <motion.div
+                whileHover={{ y: -5, scale: 1.02 }}
+                className={`p-8 rounded-3xl backdrop-blur-xl border transition-all duration-500 ${
                   isDarkMode
-                    ? "bg-slate-800 border border-slate-700"
-                    : "bg-gradient-to-br from-blue-50 to-indigo-100"
+                    ? "bg-white/5 border-white/20 shadow-2xl"
+                    : "bg-white/40 border-white/60 shadow-xl"
                 }`}
+                style={{
+                  background: isDarkMode 
+                    ? 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%)'
+                    : 'linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(147, 51, 234, 0.1) 100%)',
+                  backdropFilter: 'blur(20px)',
+                  WebkitBackdropFilter: 'blur(20px)',
+                }}
               >
-                <h3
-                  className={`text-xl font-semibold mb-4 ${
-                    isDarkMode ? "text-white" : "text-gray-800"
-                  }`}
-                >
-                  Why choose BizFlow?
-                </h3>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center shadow-lg backdrop-blur-sm">
+                    <FiStar className="w-5 h-5 text-white drop-shadow-lg" />
+                  </div>
+                  <h3 className={`text-xl font-bold ${isDarkMode ? "text-white" : "text-gray-800"} drop-shadow-sm`}>
+                    Why choose BizFlow?
+                  </h3>
+                </div>
+                
                 <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <span className="text-white text-xs">✓</span>
-                    </div>
-                    <div>
-                      <p
-                        className={`font-medium ${
-                          isDarkMode ? "text-white" : "text-gray-800"
-                        }`}
-                      >
-                        Expert Team
-                      </p>
-                      <p
-                        className={`text-sm ${
-                          isDarkMode ? "text-gray-300" : "text-gray-600"
-                        }`}
-                      >
-                        Experienced professionals ready to help
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <span className="text-white text-xs">✓</span>
-                    </div>
-                    <div>
-                      <p
-                        className={`font-medium ${
-                          isDarkMode ? "text-white" : "text-gray-800"
-                        }`}
-                      >
-                        Fast Response
-                      </p>
-                      <p
-                        className={`text-sm ${
-                          isDarkMode ? "text-gray-300" : "text-gray-600"
-                        }`}
-                      >
-                        We respond within 24 hours
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <span className="text-white text-xs">✓</span>
-                    </div>
-                    <div>
-                      <p
-                        className={`font-medium ${
-                          isDarkMode ? "text-white" : "text-gray-800"
-                        }`}
-                      >
-                        Custom Solutions
-                      </p>
-                      <p
-                        className={`text-sm ${
-                          isDarkMode ? "text-gray-300" : "text-gray-600"
-                        }`}
-                      >
-                        Tailored to your specific needs
-                      </p>
-                    </div>
-                  </div>
+                  {[
+                    { title: "Expert Team", desc: "Experienced professionals ready to help", icon: "🎯" },
+                    { title: "Fast Response", desc: "We respond within 24 hours", icon: "⚡" },
+                    { title: "Custom Solutions", desc: "Tailored to your specific needs", icon: "🎨" }
+                  ].map((item, index) => (
+                    <motion.div 
+                      key={index}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      whileHover={{ scale: 1.02, x: 5 }}
+                      className={`flex items-start gap-4 group p-4 rounded-2xl transition-all duration-300 ${
+                        isDarkMode 
+                          ? "hover:bg-white/5" 
+                          : "hover:bg-white/30"
+                      }`}
+                    >
+                      <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform shadow-lg backdrop-blur-sm">
+                        <span className="text-white text-sm drop-shadow-sm">{item.icon}</span>
+                      </div>
+                      <div>
+                        <p className={`font-semibold ${isDarkMode ? "text-white" : "text-gray-800"}`}>
+                          {item.title}
+                        </p>
+                        <p className={`text-sm ${isDarkMode ? "text-gray-300" : "text-gray-600"}`}>
+                          {item.desc}
+                        </p>
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="bg-white p-8 rounded-2xl shadow-lg">
-                <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-                  <FiClock className="w-5 h-5 text-blue-600" />
-                  Business Hours
-                </h3>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Monday - Friday</span>
-                    <span className="font-medium">8:00 AM - 6:00 PM</span>
+              {/* Business Hours with Enhanced Glassmorphism */}
+              <motion.div
+                whileHover={{ y: -5, scale: 1.02 }}
+                className={`p-8 rounded-3xl backdrop-blur-xl border transition-all duration-500 ${
+                  isDarkMode 
+                    ? "bg-white/5 border-white/20 shadow-2xl" 
+                    : "bg-white/40 border-white/60 shadow-xl"
+                }`}
+                style={{
+                  background: isDarkMode 
+                    ? 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%)'
+                    : 'linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.4) 100%)',
+                  backdropFilter: 'blur(20px)',
+                  WebkitBackdropFilter: 'blur(20px)',
+                }}
+              >
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg backdrop-blur-sm">
+                    <FiClock className="w-5 h-5 text-white drop-shadow-lg" />
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Saturday</span>
-                    <span className="font-medium">9:00 AM - 4:00 PM</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Sunday</span>
-                    <span className="font-medium">Closed</span>
-                  </div>
+                  <h3 className={`text-xl font-bold ${isDarkMode ? "text-white" : "text-gray-800"} drop-shadow-sm`}>
+                    Business Hours
+                  </h3>
                 </div>
-                <p className="text-xs text-gray-500 mt-4">
+                
+                <div className="space-y-3">
+                  {[
+                    { day: "Monday - Friday", time: "8:00 AM - 6:00 PM" },
+                    { day: "Saturday", time: "9:00 AM - 4:00 PM" },
+                    { day: "Sunday", time: "Closed" }
+                  ].map((schedule, index) => (
+                    <motion.div 
+                      key={index} 
+                      whileHover={{ scale: 1.02, x: 5 }}
+                      className={`flex justify-between items-center py-3 px-4 rounded-xl border-b transition-all duration-300 ${
+                        isDarkMode 
+                          ? "border-white/10 hover:bg-white/5" 
+                          : "border-gray-200/30 hover:bg-white/30"
+                      } last:border-b-0`}
+                    >
+                      <span className={isDarkMode ? "text-gray-300" : "text-gray-600"}>{schedule.day}</span>
+                      <span className={`font-semibold ${isDarkMode ? "text-white" : "text-gray-800"}`}>{schedule.time}</span>
+                    </motion.div>
+                  ))}
+                </div>
+                
+                <p className={`text-xs mt-4 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
                   * All times are in Indian Standard Time (IST)
                 </p>
-              </div>
-                
-              <div className="bg-white p-8 rounded-2xl shadow-lg">
-                <h3 className="text-xl font-semibold mb-4">Follow Us</h3>
-                <div className="flex gap-4">
-                  {socialLinks.map((social, index) => {
-                    const IconComponent = social.icon;
-                    return (
-                      <motion.a
-                        key={index}
-                        href={social.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        whileHover={{ scale: 1.1, y: -2 }}
-                        className={`w-10 h-10 rounded-full flex items-center justify-center shadow-full border transition-colors 
-                          ${isDarkMode 
-                          ? `bg-gray-800 text-gray-300 border-gray-600 ${social.hover}` 
-                          : `bg-gray-200 text-gray-700 border-gray-300 ${social.hover}`
-                        }`}
-
-                        aria-label={social.label}
-                      >
-                        <IconComponent className="w-5 h-5" />
-                      </motion.a>
-                    );
-                  })}
-                </div>
-              </div>
+              </motion.div>
             </motion.div>
           </div>
         </div>
+      </motion.section>
+
+      {/* Floating CTA Section with Enhanced Glassmorphism */}
+      <motion.section
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="section-container py-20 relative z-10"
+      >
+        <motion.div
+          whileHover={{ scale: 1.02, y: -5 }}
+          className={`relative overflow-hidden rounded-3xl p-12 text-center backdrop-blur-2xl border transition-all duration-500 ${
+            isDarkMode
+              ? "bg-white/5 border-white/20 shadow-2xl"
+              : "bg-white/30 border-white/60 shadow-2xl"
+          }`}
+          style={{
+            background: isDarkMode 
+              ? 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 100%)'
+              : 'linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(59, 130, 246, 0.1) 100%)',
+            backdropFilter: 'blur(30px)',
+            WebkitBackdropFilter: 'blur(30px)',
+          }}
+        >
+          {/* Enhanced Background Pattern with Glassmorphism */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-3xl"></div>
+            <div className="absolute inset-0" style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.15'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            }}></div>
+          </div>
+          
+          {/* Floating orbs for enhanced glassmorphism effect */}
+          <div className="absolute top-6 left-6 w-4 h-4 bg-blue-400/30 rounded-full blur-sm animate-pulse"></div>
+          <div className="absolute top-12 right-8 w-6 h-6 bg-purple-400/30 rounded-full blur-sm animate-pulse delay-1000"></div>
+          <div className="absolute bottom-8 left-12 w-5 h-5 bg-cyan-400/30 rounded-full blur-sm animate-pulse delay-500"></div>
+          
+          <div className="relative z-10">
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className={`text-3xl md:text-4xl font-bold mb-4 ${isDarkMode ? "text-white" : "text-gray-900"} drop-shadow-lg`}
+            >
+              Ready to start your project?
+            </motion.h2>
+            
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className={`text-lg mb-8 max-w-2xl mx-auto ${isDarkMode ? "text-gray-300" : "text-gray-600"} drop-shadow-sm`}
+            >
+              Join hundreds of satisfied clients who have transformed their business with BizFlow. 
+              Let's discuss how we can help you achieve your goals.
+            </motion.p>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            >
+              <motion.a
+                href="mailto:hello@bizflow.com"
+                whileHover={{ scale: 1.05, y: -3 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-2xl font-semibold shadow-2xl hover:shadow-3xl transition-all duration-300 flex items-center gap-2 backdrop-blur-sm"
+                style={{ backdropFilter: 'blur(10px)' }}
+              >
+                <FiMail className="w-5 h-5 drop-shadow-sm" />
+                Start a Conversation
+              </motion.a>
+              
+              <motion.a
+                href="tel:+15551234567"
+                whileHover={{ scale: 1.05, y: -3 }}
+                whileTap={{ scale: 0.95 }}
+                className={`px-8 py-4 rounded-2xl font-semibold border-2 transition-all duration-300 flex items-center gap-2 backdrop-blur-lg shadow-xl ${
+                  isDarkMode
+                    ? "border-white/30 text-white hover:bg-white/10 hover:border-white/50"
+                    : "border-white/60 text-gray-700 hover:bg-white/50 hover:border-white/80"
+                }`}
+                style={{
+                  background: isDarkMode 
+                    ? 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)'
+                    : 'linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.3) 100%)',
+                  backdropFilter: 'blur(15px)',
+                  WebkitBackdropFilter: 'blur(15px)',
+                }}
+              >
+                <FiPhone className="w-5 h-5" />
+                Call Us Now
+              </motion.a>
+            </motion.div>
+          </div>
+        </motion.div>
       </motion.section>
     </div>
   );
