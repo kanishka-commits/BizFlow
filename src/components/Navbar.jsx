@@ -21,7 +21,7 @@ const Navbar = () => {
     { href: "/#about", label: "About Us" },
     { href: "/#services", label: "Our Services" },
     { href: "/#testimonials", label: "Testimonials" },
-    { href: "/analytics", label: "Analytics" },
+    { href: "/#faq", label: "FAQ" },
     { href: "/contact", label: "Contact" },
     { href: "/contributors", label: "Contributors" },
   ];
@@ -73,18 +73,22 @@ const Navbar = () => {
     }, 1000); // Ignore scroll spy for 1 second
   };
   return (
-    <motion.nav
-      variants={fadeIn("down", 0.2)}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true }}
-      className={`fixed top-0 inset-x-0 z-50 border-b shadow-sm transition-colors duration-300 ${
-        isDarkMode 
-          ? "bg-gray-900/90 backdrop-blur-sm border-gray-700" 
-          : "bg-white/90 backdrop-blur-sm border-gray-100"
-      }`}
-    >
-      <div className="w-full flex justify-between items-center container mx-auto px-4 sm:px-6 lg:px-8 lg:h-20 h-16">
+
+  <motion.nav
+  role="navigation"
+  aria-label="Main Navigation"
+  variants={fadeIn("down", 0.2)}
+  initial="hidden"
+  whileInView="show"
+  viewport={{ once: true }}
+  className={`fixed top-0 inset-x-0 z-50 border-b shadow-sm backdrop-blur-md transition-colors duration-300 ${
+    isDarkMode
+      ? "bg-gray-900/90 border-gray-700 shadow-gray-900/40"
+      : "bg-white/90 border-gray-100 shadow-gray-200/40"
+  }`}
+>
+
+      <div className="w-full flex justify-between items-center container mx-auto px-5 sm:px-7 lg:px-9 lg:h-20 h-16">
         {/* Logo */}
         <motion.div
           variants={fadeIn("right", 0.3)}
@@ -125,22 +129,10 @@ const Navbar = () => {
           </motion.span>
         </motion.div>
 
-        {/* Mobile Menu Button */}
-        <motion.button
-          variants={fadeIn("left", 0.3)}
-          className={`md:hidden p-2 cursor-pointer transition-colors ${
-            isDarkMode ? "text-white hover:text-gray-300" : "text-gray-600 hover:text-gray-900"
-          }`}
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-        >
-          {isMenuOpen ? <HiX className="h-6 w-6" /> : <HiMenu className="h-6 w-6" />}
-        </motion.button>
-
         {/* Navigation Links - Desktop */}
         <motion.div
           variants={fadeIn("down", 0.3)}
-          className="hidden lg:flex items-center lg:gap-6 xl:gap-10"
+          className="hidden xl:flex items-center lg:gap-6 xl:gap-10"
         >
           {navLinks.map((link) => {
             const isActive = activeLink === link.href;
@@ -204,34 +196,41 @@ const Navbar = () => {
           })}
         </motion.div>
 
-        {/* CTA Button and Theme Toggle */}
+        {/* Desktop CTA Button */}
         <motion.div
           variants={fadeIn("left", 0.3)}
-          className="hidden md:flex items-center gap-3"
+          className="hidden xl:flex items-center"
         >
-          {/* Get in Touch Button */}
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => {
-              trackButtonClick("Navbar CTA Button");
-              if (location.pathname !== "/") {
-                navigate("/#newsletter");
-              } else {
-                document.getElementById("newsletter")?.scrollIntoView({ behavior: "smooth" });
-              }
-            }}
-            className="bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-base font-medium transition-all hover:shadow-lg hover:shadow-blue-100 cursor-pointer"
-          >
-            Get in touch
-          </motion.button>
+  initial={{ opacity: 0, rotateX: -20, y: -15 }}
+  animate={{ opacity: 1, rotateX: 0, y: 0 }}
+  transition={{ duration: 0.6, ease: "easeOut" }}
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+  onClick={() => {
+    trackButtonClick("Navbar CTA Button");
+    if (location.pathname !== "/") {
+      navigate("/#newsletter");
+    } else {
+      document.getElementById("newsletter")?.scrollIntoView({ behavior: "smooth" });
+    }
+  }}
+  className={`min-w-[140px] px-6 py-2.5 rounded-lg font-medium text-sm md:text-base transition-all duration-300 ease-in-out cursor-pointer
+    ${isDarkMode 
+      ? "bg-gradient-to-r from-blue-600 via-blue-700 to-cyan-600 text-white hover:from-blue-500 hover:to-cyan-500 hover:shadow-slate-900/60" 
+      : "bg-white text-blue-600 border border-blue-200 hover:bg-blue-50 hover:shadow-blue-100"}`}
+>
+
+  💬 Get in Touch
+</motion.button>
+
 
           {/* Theme Toggle Button */}
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={toggleTheme}
-            className={`p-2.5 rounded-lg transition-all cursor-pointer ${
+            className={`ml-4 w-10 h-10 flex items-center justify-center rounded-lg transition-all cursor-pointer ${
               isDarkMode 
                 ? "bg-gray-700 hover:bg-gray-600 text-yellow-400 hover:text-yellow-300" 
                 : "bg-blue-100 hover:bg-blue-200 text-blue-600 hover:text-blue-700"
@@ -243,8 +242,22 @@ const Navbar = () => {
             ) : (
               <HiMoon className="h-5 w-5" />
             )}
+
+
           </motion.button>
         </motion.div>
+
+        {/* Mobile Menu Button */}
+        <motion.button
+          variants={fadeIn("left", 0.3)}
+          className={`xl:hidden p-2 cursor-pointer transition-colors ${
+            isDarkMode ? "text-white hover:text-gray-300" : "text-gray-600 hover:text-gray-900"
+          }`}
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+        >
+          {isMenuOpen ? <HiX className="h-6 w-6" /> : <HiMenu className="h-6 w-6" />}
+        </motion.button>
       </div>
 
       {/* Mobile Menu */}
@@ -253,7 +266,7 @@ const Navbar = () => {
           variants={fadeIn("down", 0.2)}
           initial="hidden"
           animate="show"
-          className={`md:hidden border-t py-4 transition-colors duration-300 ${
+          className={`xl:hidden border-t py-4 transition-colors duration-300 ${
             isDarkMode 
               ? "bg-gray-900 border-gray-700" 
               : "bg-white border-gray-100"
@@ -327,7 +340,7 @@ const Navbar = () => {
               );
             })}
             <motion.button
-              variants={fadeIn("up", 0.4)}
+              variants={fadeIn("up", 0)}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => {
@@ -339,7 +352,7 @@ const Navbar = () => {
                   document.getElementById("newsletter")?.scrollIntoView({ behavior: "smooth" });
                 }
               }}
-              className="w-full bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-base font-medium transition-all hover:shadow-lg hover:shadow-blue-100 cursor-pointer"
+              className="w-full bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-base font-medium hover:shadow-lg hover:shadow-blue-100 cursor-pointer"
             >
               Get in touch
             </motion.button>

@@ -4,106 +4,149 @@ import { FaGithub } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
 
-const Contibutors = () => {
-	const [contributors, setContributors] = useState([]);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(null);
-	const { isDarkMode } = useTheme();
+const Contributors = () => {
+  const [contributors, setContributors] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const { isDarkMode } = useTheme();
 
-	useEffect(() => {
-		fetchContributors("adityadomle", "BizFlow")
-			.then((data) => {
-				setContributors(data);
-				setLoading(false);
-			})
-			.catch((err) => {
-				setError(err.message);
-				setLoading(false);
-			});
-	}, []);
+  useEffect(() => {
+    fetchContributors("adityadomle", "BizFlow")
+      .then((data) => {
+        setContributors(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
 
-	if (loading) return <p className={`${isDarkMode ? "text-white" : "text-gray-900"}`}>Loading Contributors...</p>;
-	if (error) return <p className={`${isDarkMode ? "text-red-400" : "text-red-600"}`}>Error: {error}</p>;
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-pulse text-xl font-medium text-primary">
+          Loading Contributors...
+        </div>
+      </div>
+    );
+  }
 
-	return (
-		<motion.main
-			initial={{ opacity: 0, y: 50 }}
-			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.8, ease: "easeOut" }}
-			className="h-auto mt-25 mx-5 mb-5 font-roboto">
-			<div className={`h-auto w-full p-5 backdrop-blur-2xl z-50 border rounded-2xl flex flex-col gap-5 transition-colors duration-300 ${
-				isDarkMode 
-					? "bg-gray-800/80 border-gray-600" 
-					: "bg-white/80 border-neutral-200"
-			}`}>
-				<div className="relative">
-					<h1 className={`text-3xl sm:text-4xl md:text-5xl font-bold transition-colors ${
-						isDarkMode ? "text-white" : "text-neutral-900"
-					}`}>
-						Contributors on <span className="text-primary">BizFlow</span>
-					</h1>
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-red-500 font-medium">Error: {error}</div>
+      </div>
+    );
+  }
 
-					<p className={`items-center text-sm sm:text-md md:text-lg transition-colors ${
-						isDarkMode ? "text-gray-300" : "text-neutral-600"
-					}`}>
-						They are the reason you can scroll through this wonderful website.
-							<img
-								src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Saluting%20Face.png"
-								alt="Saluting Face"
-								className="inline-block size-5 md:size-8"
-							/>
-					</p>
+  if (contributors.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className={`text-lg ${isDarkMode ? "text-gray-300" : "text-gray-700"}`}>
+          No contributors found.
+        </div>
+      </div>
+    );
+  }
 
-					{/* Underline */}
-					<div className="absolute w-full h-px mt-2 bg-gradient-to-r from-primary to-transparent"></div>
-				</div>
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className={`min-h-screen py-20 px-4 sm:px-6 lg:px-8 ${
+        isDarkMode ? "bg-gray-900" : "bg-gray-50"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <motion.h1
+            initial={{ y: -20 }}
+            animate={{ y: 0 }}
+            className={`text-4xl md:text-5xl font-bold mb-4 ${
+              isDarkMode ? "text-white" : "text-gray-900"
+            }`}
+          >
+            Meet Our Contributors
+          </motion.h1>
+          <motion.p
+            initial={{ y: -20 }}
+            animate={{ y: 0 }}
+            className={`text-lg ${
+              isDarkMode ? "text-gray-300" : "text-gray-600"
+            }`}
+          >
+            The talented developers behind BizFlow's success
+          </motion.p>
+        </div>
 
-				{/* Contributor-Cards     */}
-				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8 md:gap-10">
-					{contributors.map((contributor, idx) => {
-						return (
-							<motion.div
-								initial={{ opacity: 0, y: 30 }}
-								whileInView={{ opacity: 1, y: 0 }}
-								transition={{ duration: 0.4, delay: idx * 0.1 }}
-								viewport={{ once: true }}
-								key={idx}>
-								<a
-									href={contributor.html_url}
-									className={`group flex flex-col justify-center px-5 py-5 sm:py-10 rounded-lg gap-1 sm:gap-2 items-center border shadow-lg hover:shadow-lg hover:shadow-primary transition duration-400 hover:-translate-y-2 ${
-										isDarkMode 
-											? "bg-gray-700 border-gray-600 hover:bg-gray-600" 
-											: "bg-neutral-50 border-neutral-200 hover:bg-white"
-									}`}>
-                                        
-									{/* Avatar */}
-									<img
-										src={contributor.avatar_url}
-										alt="Avatar"
-										className="size-20 md:size-25 rounded-full group-hover:border-2 group-hover:border-primary"></img>
+        {/* Contributor Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {contributors.map((contributor, idx) => (
+            <motion.div
+              key={contributor.login}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1 }}
+            >
+              <a
+                href={contributor.html_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`GitHub profile of ${contributor.login}`}
+                className={`block group ${
+                  isDarkMode ? "hover:bg-gray-800" : "hover:bg-white"
+                } rounded-xl p-6 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl ${
+                  isDarkMode
+                    ? "bg-gray-800/50 shadow-gray-900/50"
+                    : "bg-white shadow-gray-200/50"
+                }`}
+              >
+                <div className="flex items-center space-x-4">
+                  {/* Avatar */}
+                  <div className="relative">
+                    <img
+                      src={contributor.avatar_url}
+                      alt={`${contributor.login}'s avatar`}
+                      className="w-16 h-16 rounded-full object-cover ring-2 ring-primary/20"
+                    />
+                    <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full ring-2 ring-white"></span>
+                  </div>
 
-									{/* Github username */}
-									<h2 className={`flex items-center gap-2 font-medium text-xl group-hover:bg-primary rounded-3xl transition duration-300 ease-in-out group-hover:text-white p-2 ${
-										isDarkMode ? "text-gray-200" : "text-gray-800"
-									}`}>
-										<FaGithub />
-										{contributor.login}
-									</h2>
-
-									{/* Number of contributions */}
-									<p className={`text-sm sm:text-md transition-colors ${
-										isDarkMode ? "text-gray-300" : "text-gray-600"
-									}`}>
-										Contributions: {contributor.contributions}
-									</p>
-								</a>
-							</motion.div>
-						);
-					})}
-				</div>
-			</div>
-		</motion.main>
-	);
+                  {/* Username and contributions */}
+                  <div className="flex-1 min-w-0">
+                    <h2
+                      className={`text-lg font-semibold truncate group-hover:text-primary transition-colors ${
+                        isDarkMode ? "text-white" : "text-gray-900"
+                      }`}
+                    >
+                      {contributor.login}
+                    </h2>
+                    <div className="flex items-center mt-1 space-x-2">
+                      <FaGithub
+                        className={`w-4 h-4 ${
+                          isDarkMode ? "text-gray-400" : "text-gray-500"
+                        }`}
+                      />
+                      <span
+                        className={`text-sm ${
+                          isDarkMode ? "text-gray-400" : "text-gray-500"
+                        }`}
+                      >
+                        {contributor.contributions} contributions
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  );
 };
 
-export default Contibutors;
+export default Contributors;
