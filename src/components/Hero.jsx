@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { fadeIn, textVariant } from "../utils/motion";
 import heroImage from "../assets/hero-image.png";
@@ -12,7 +12,21 @@ const Hero = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const { isDarkMode } = useTheme();
+  const emailSectionRef = useRef(null);
 
+  // focus:ring-2 focus:ring-offset-2
+  const handleJumpClick = () => {
+    if (emailSectionRef.current) {
+      // scroll into view
+      emailSectionRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+      emailSectionRef.current.classList.add("ring-2", "ring-purple-500", "ring-offset-2",  "rounded-2xl");
+      // add highlight effect
+      emailSectionRef.current.classList.add("highlight");
+      setTimeout(() => {
+        emailSectionRef.current.classList.remove("ring-2", "ring-purple-500", "ring-offset-2" , "highlight",  "rounded-2xl");
+      }, 1500); // remove highlight after 1.5s
+    }
+  };
   useEffect(() => {
     const handleMouseMove = (e) => {
       setMousePosition({
@@ -92,7 +106,8 @@ const Hero = () => {
               ⭐
             </motion.span>
             <span
-              className={`text-xs font-semibold relative z-10 ${
+              onClick={handleJumpClick}
+              className={`cursor-pointer text-xs font-semibold relative z-10 ${
                 isDarkMode ? "text-gray-200" : "text-gray-700"
               }`}
             >
@@ -137,8 +152,8 @@ const Hero = () => {
 
         {/* Corrected Email Input and Button */}
         <motion.div variants={itemVariants} className="relative max-w-lg">
-          <div className="flex flex-col sm:flex-row gap-4 relative">
-            <div className="relative flex-1 group">
+          <div  className="flex flex-col sm:flex-row gap-4 relative">
+            <div ref={emailSectionRef} className="transition-all duration-500 relative flex-1 group">
               <motion.input
                 type="email"
                 value={email}
@@ -186,22 +201,22 @@ const Hero = () => {
                 handleSend();
               }}
               whileHover={{
-                scale: 1.05,
-                y: -3,
-                boxShadow: "0 25px 50px rgba(59, 130, 246, 0.4)",
+                scale: 1.03,
+                boxShadow: "0 20px 40px rgba(99, 102, 241, 0.45)",
               }}
-              whileTap={{ scale: 0.96 }}
+              whileTap={{ scale: 0.95 }}
               disabled={!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)}
-              className={`px-8 py-4 rounded-2xl font-bold text-sm transition-all duration-500 shadow-xl group min-w-[120px] ${
+              className={`relative px-8 py-4 rounded-2xl font-semibold text-sm transition-all duration-400 shadow-lg group min-w-[140px] overflow-hidden focus:outline-none focus:ring-2 focus:ring-offset-2 ${
                 email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-                  ? "bg-gradient-to-r from-blue-600 via-blue-700 to-purple-600 text-white cursor-pointer"
-                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  ? "bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 text-white "
+                  : "bg-gray-300 text-gray-600 cursor-not-allowed"
               }`}
             >
               {email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
                 ? "Send 🚀"
                 : "Enter Email"}
             </motion.button>
+          
           </div>
 
           {/* Success and Error Messages */}
