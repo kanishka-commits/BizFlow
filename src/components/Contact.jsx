@@ -137,10 +137,11 @@ const Contact = () => {
   ];
 
   const socialLinks = [
-    { icon: FiLinkedin, link: "https://linkedin.com/company/bizflow", label: "LinkedIn", color: "bg-blue-600 hover:bg-blue-700" },
-    { icon: FiTwitter, link: "https://twitter.com/bizflow", label: "Twitter", color: "bg-sky-500 hover:bg-sky-600" },
-    { icon: FiFacebook, link: "https://facebook.com/bizflow", label: "Facebook", color: "bg-blue-600 hover:bg-blue-700" },
-    { icon: FiGithub, link: "https://github.com/bizflow", label: "GitHub", color: "bg-gray-800 hover:bg-gray-900" },
+    { icon: FiLinkedin, link: 'https://www.linkedin.com/in/adityadomle', label: 'LinkedIn' },
+    { icon: FiTwitter, link: 'https://x.com/domle_aditya?t=H6VQcFZZd5-RnvHv4FniEw&s=09', label: 'Twitter' },
+    {icon:FiFacebook,label:'facebook'},
+    { icon: FiGithub, link: 'https://github.com/adityadomle', label: 'GitHub' }
+
   ];
 
   return (
