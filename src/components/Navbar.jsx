@@ -215,7 +215,7 @@ const Navbar = () => {
       document.getElementById("newsletter")?.scrollIntoView({ behavior: "smooth" });
     }
   }}
-  className={`min-w-[140px] px-6 py-2.5 rounded-lg font-medium text-sm md:text-base transition-all duration-300 ease-in-out cursor-pointer
+  className={`min-w-[140px] px-6 h-10 rounded-lg font-medium text-sm md:text-base transition-all duration-300 ease-in-out cursor-pointer
     ${isDarkMode 
       ? "bg-gradient-to-r from-blue-600 via-blue-700 to-cyan-600 text-white hover:from-blue-500 hover:to-cyan-500 hover:shadow-slate-900/60" 
       : "bg-white text-blue-600 border border-blue-200 hover:bg-blue-50 hover:shadow-blue-100"}`}
@@ -230,7 +230,7 @@ const Navbar = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={toggleTheme}
-            className={`ml-4 w-10 h-10 flex items-center justify-center rounded-lg transition-all cursor-pointer ${
+            className={`ml-8 w-10 h-10 flex items-center justify-center rounded-lg transition-all cursor-pointer ${
               isDarkMode 
                 ? "bg-gray-700 hover:bg-gray-600 text-yellow-400 hover:text-yellow-300" 
                 : "bg-blue-100 hover:bg-blue-200 text-blue-600 hover:text-blue-700"
