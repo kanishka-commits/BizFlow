@@ -43,20 +43,23 @@ import useScrollTracking from "./utils/useScrollTracking";
 import useTimeTracking from "./utils/useTimeTracking";
 import { trackPageView } from "./utils/analytics";
 
-// Simple Loader Component
+// Improved Simple Loader Component
 function Loader() {
   const { isDarkMode } = useTheme();
   
   return (
-    <div className="flex items-center justify-center min-h-[200px] py-12">
+    <div className="flex items-center justify-center min-h-screen py-12">
       <div className="flex flex-col items-center space-y-4">
         <div className="relative">
           <div 
-            className={`w-12 h-12 rounded-full border-4 border-solid ${
+            className={`w-8 h-8 rounded-full border-2 border-solid ${
               isDarkMode 
-                ? 'border-gray-700 border-t-indigo-400' 
+                ? 'border-gray-600 border-t-indigo-400' 
                 : 'border-gray-300 border-t-indigo-600'
-            } animate-spin`}
+            }`}
+            style={{
+              animation: 'spin 1s linear infinite'
+            }}
           ></div>
         </div>
         <p className={`text-sm font-medium ${
@@ -87,6 +90,37 @@ function HashNavigation() {
   }, [location]);
 
   return null;
+}
+
+// Home Page Component to reduce nesting
+function HomePage() {
+  return (
+    <>
+      <section id="home">
+        <Hero />
+      </section>
+      <section id="about">
+        <CompanyLogo />
+        <PurposeSection />
+        <FeaturesSection />
+      </section>
+      <section id="services">
+        <ScheduleSection />
+        <MonitorSection />
+        <PricingSection />
+        <ServicesSection />
+      </section>
+      <section id="testimonials">
+        <TestimonialsSection />
+      </section>
+      <section id="faq">
+        <FAQ />
+      </section>
+      <section id="newsletter">
+        <NewsletterSection />
+      </section>
+    </>
+  );
 }
 
 function AppContent() {
@@ -133,130 +167,20 @@ function AppContent() {
         {/* Hash Navigation Handler */}
         <HashNavigation />
 
+        {/* Single Suspense wrapper for all routes */}
         <Suspense fallback={<Loader />}>
           <Routes>
-            <Route
-              path="/"
-              element={
-                <>
-                  <section id="home">
-                    <Suspense fallback={<Loader />}>
-                      <Hero />
-                    </Suspense>
-                  </section>
-                  <section id="about">
-                    <Suspense fallback={<Loader />}>
-                      <CompanyLogo />
-                      <PurposeSection />
-                      <FeaturesSection />
-                    </Suspense>
-                  </section>
-                  <section id="services">
-                    <Suspense fallback={<Loader />}>
-                      <ScheduleSection />
-                      <MonitorSection />
-                      <PricingSection />
-                      <ServicesSection />
-                    </Suspense>
-                  </section>
-                  <section id="testimonials">
-                    <Suspense fallback={<Loader />}>
-                      <TestimonialsSection />
-                    </Suspense>
-                  </section>
-                  <section id="faq">
-                    <Suspense fallback={<Loader />}>
-                      <FAQ />
-                    </Suspense>
-                  </section>
-                  <section id="newsletter">
-                    <Suspense fallback={<Loader />}>
-                      <NewsletterSection />
-                    </Suspense>
-                  </section>
-                </>
-              }
-            />
-            <Route
-              path="/partner"
-              element={
-                <Suspense fallback={<Loader />}>
-                  <Partner />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/about"
-              element={
-                <Suspense fallback={<Loader />}>
-                  <About />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/contact"
-              element={
-                <Suspense fallback={<Loader />}>
-                  <Contact />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/contributors"
-              element={
-                <Suspense fallback={<Loader />}>
-                  <Contibutors />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/contributor-guide"
-              element={
-                <Suspense fallback={<Loader />}>
-                  <ContributorGuide />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/support-career"
-              element={
-                <Suspense fallback={<Loader />}>
-                  <SupportCareer />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/faqs"
-              element={
-                <Suspense fallback={<Loader />}>
-                  <FAQ />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/privacy-policy"
-              element={
-                <Suspense fallback={<Loader />}>
-                  <PrivacyPolicyPage />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/terms-of-use"
-              element={
-                <Suspense fallback={<Loader />}>
-                  <TermsOfUsePage />
-                </Suspense>
-              }
-            />
-            <Route
-              path="*"
-              element={
-                <Suspense fallback={<Loader />}>
-                  <NotFound />
-                </Suspense>
-              }
-            />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/partner" element={<Partner />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/contributors" element={<Contibutors />} />
+            <Route path="/contributor-guide" element={<ContributorGuide />} />
+            <Route path="/support-career" element={<SupportCareer />} />
+            <Route path="/faqs" element={<FAQ />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+            <Route path="/terms-of-use" element={<TermsOfUsePage />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
 
