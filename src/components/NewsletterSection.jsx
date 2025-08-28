@@ -161,6 +161,16 @@ const NewsletterSection = () => {
                       </div>
 
                       {/* Subscribe button */}
+                       <button
+                        type="submit"
+                        className="h-[52px] px-6 bg-gradient-to-r from-violet-500 to-fuchsia-500 
+                          rounded-full text-white text-base font-medium
+                          flex items-center justify-center gap-2 whitespace-nowrap"
+                      >
+                        <Zap className="w-4 h-4" />
+                        Subscribe
+                        <ArrowRight className="w-4 h-4" />
+                      </button>
          
                     </form>
 
