@@ -7,7 +7,7 @@
 [![Framer Motion](https://img.shields.io/badge/framer%20motion-10+-e535ab?logo=framer&logoColor=white)](https://www.framer.com/motion/)
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/nzbin/animated-css-background/master/demo/images/space.gif" alt="Animated Cosmic Background" width="100%" style="border-radius:12px;box-shadow:0 2px 16px #0003;">
+  <img src="https://raw.githubusercontent.com/nzbin/animated-css-background/master/demo/images/space.gif" alt="Animated Cosmic Background" width="100%">
 </div>
 
 > **BizFlow** is a modern, open-source business workflow dashboard built with React, TailwindCSS, and Framer Motion.  
@@ -17,10 +17,8 @@
 
 ## 🌀 The BizFlow Philosophy
 
-<div align="center">
-  <img src="https://cdn.jsdelivr.net/gh/edent/SuperTinyIcons/images/svg/rocket.svg" width="48" alt="Rocket" style="vertical-align:middle;animation:float 2s infinite ease-in-out;">
-  <img src="https://cdn.jsdelivr.net/gh/edent/SuperTinyIcons/images/svg/planet.svg" width="48" alt="Planet" style="vertical-align:middle;animation:spin 4s linear infinite;">
-  <img src="https://cdn.jsdelivr.net/gh/edent/SuperTinyIcons/images/svg/star.svg" width="32" alt="Star" style="vertical-align:middle;animation:twinkle 1.5s infinite;">
+<div align="center" style="font-size:2em;">
+  🚀 🪐 ✨
 </div>
 
 - Workflows shouldn’t be boring → they should feel like sci-fi adventures  
