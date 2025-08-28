@@ -284,7 +284,7 @@ const AboutUs = () => {
               Get in Touch
             </Link>
             <a
-              href="#"
+              href="/contributor-guide"
               className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all ${isDarkMode ? 'bg-slate-600 text-white hover:bg-slate-500' : 'bg-gray-100 text-gray-800 hover:bg-gray-200'}`}
             >
               <FiCode className="w-5 h-5" />
