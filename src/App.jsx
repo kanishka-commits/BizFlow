@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, Suspense, lazy } from "react";
 import "./App.css";
 import { useTheme } from "./context/ThemeContext";
 import { useLocation } from "react-router-dom";
@@ -6,28 +6,34 @@ import { useLocation } from "react-router-dom";
 // react-toastify
 import { ToastContainer } from "react-toastify";
 
-// Components
+// Essential components (loaded immediately)
 import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import CompanyLogo from "./components/CompanyLogo";
-import PurposeSection from "./components/PurposeSection";
-import FeaturesSection from "./components/FeaturesSection";
-import ScheduleSection from "./components/ScheduleSection";
-import MonitorSection from "./components/MonitorSection";
-import PricingSection from "./components/PricingSection";
-import ServicesSection from "./components/ServicesSection";
-import TestimonialsSection from "./components/TestimonialsSection";
-import NewsletterSection from "./components/NewsletterSection";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
-import NotFound from "./components/NotFound";
-import Contact from "./components/Contact";
-import FAQ from "./components/FAQ";
 
-// Pages
-import Partner from "./pages/Partner";
-import Contibutors from "./pages/Contibutors";
-import SupportCareer from "./pages/SupportCareer";
+// Lazy loaded components
+const Hero = lazy(() => import("./components/Hero"));
+const About = lazy(()=> import("./pages/About"))
+const CompanyLogo = lazy(() => import("./components/CompanyLogo"));
+const PurposeSection = lazy(() => import("./components/PurposeSection"));
+const FeaturesSection = lazy(() => import("./components/FeaturesSection"));
+const ScheduleSection = lazy(() => import("./components/ScheduleSection"));
+const MonitorSection = lazy(() => import("./components/MonitorSection"));
+const PricingSection = lazy(() => import("./components/PricingSection"));
+const ServicesSection = lazy(() => import("./components/ServicesSection"));
+const TestimonialsSection = lazy(() => import("./components/TestimonialsSection"));
+const NewsletterSection = lazy(() => import("./components/NewsletterSection"));
+const NotFound = lazy(() => import("./components/NotFound"));
+const Contact = lazy(() => import("./components/Contact"));
+const FAQ = lazy(() => import("./components/FAQ"));
+
+// Lazy loaded pages
+const Partner = lazy(() => import("./pages/Partner"));
+const Contibutors = lazy(() => import("./pages/Contibutors"));
+const SupportCareer = lazy(() => import("./pages/SupportCareer"));
+const PrivacyPolicyPage = lazy(() => import("./pages/PrivacyPolicyPage"));
+const TermsOfUsePage = lazy(() => import("./pages/TermsOfUsePage"));
+const ContributorGuide = lazy(() => import("./pages/ContributorGuide"));
 
 // Router
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -36,9 +42,32 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import useScrollTracking from "./utils/useScrollTracking";
 import useTimeTracking from "./utils/useTimeTracking";
 import { trackPageView } from "./utils/analytics";
-import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
-import TermsOfUsePage from "./pages/TermsOfUsePage";
-import ContributorGuide from "./pages/ContributorGuide";
+
+// Simple Loader Component
+function Loader() {
+  const { isDarkMode } = useTheme();
+  
+  return (
+    <div className="flex items-center justify-center min-h-[200px] py-12">
+      <div className="flex flex-col items-center space-y-4">
+        <div className="relative">
+          <div 
+            className={`w-12 h-12 rounded-full border-4 border-solid ${
+              isDarkMode 
+                ? 'border-gray-700 border-t-indigo-400' 
+                : 'border-gray-300 border-t-indigo-600'
+            } animate-spin`}
+          ></div>
+        </div>
+        <p className={`text-sm font-medium ${
+          isDarkMode ? 'text-gray-400' : 'text-gray-600'
+        }`}>
+          Loading...
+        </p>
+      </div>
+    </div>
+  );
+}
 
 // Hash Navigation component
 function HashNavigation() {
@@ -104,49 +133,132 @@ function AppContent() {
         {/* Hash Navigation Handler */}
         <HashNavigation />
 
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <section id="home">
-                  <Hero />
-                </section>
-                <section id="about">
-                  <CompanyLogo />
-                  <PurposeSection />
-                  <FeaturesSection />
-                </section>
-                <section id="services">
-                  <ScheduleSection />
-                  <MonitorSection />
-                  <PricingSection />
-                  <ServicesSection />
-                </section>
-                <section id="testimonials">
-                  <TestimonialsSection />
-                </section>
-                <section id="faq">
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <section id="home">
+                    <Suspense fallback={<Loader />}>
+                      <Hero />
+                    </Suspense>
+                  </section>
+                  <section id="about">
+                    <Suspense fallback={<Loader />}>
+                      <CompanyLogo />
+                      <PurposeSection />
+                      <FeaturesSection />
+                    </Suspense>
+                  </section>
+                  <section id="services">
+                    <Suspense fallback={<Loader />}>
+                      <ScheduleSection />
+                      <MonitorSection />
+                      <PricingSection />
+                      <ServicesSection />
+                    </Suspense>
+                  </section>
+                  <section id="testimonials">
+                    <Suspense fallback={<Loader />}>
+                      <TestimonialsSection />
+                    </Suspense>
+                  </section>
+                  <section id="faq">
+                    <Suspense fallback={<Loader />}>
+                      <FAQ />
+                    </Suspense>
+                  </section>
+                  <section id="newsletter">
+                    <Suspense fallback={<Loader />}>
+                      <NewsletterSection />
+                    </Suspense>
+                  </section>
+                </>
+              }
+            />
+            <Route
+              path="/partner"
+              element={
+                <Suspense fallback={<Loader />}>
+                  <Partner />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/about"
+              element={
+                <Suspense fallback={<Loader />}>
+                  <About />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/contact"
+              element={
+                <Suspense fallback={<Loader />}>
+                  <Contact />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/contributors"
+              element={
+                <Suspense fallback={<Loader />}>
+                  <Contibutors />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/contributor-guide"
+              element={
+                <Suspense fallback={<Loader />}>
+                  <ContributorGuide />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/support-career"
+              element={
+                <Suspense fallback={<Loader />}>
+                  <SupportCareer />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/faqs"
+              element={
+                <Suspense fallback={<Loader />}>
                   <FAQ />
-                </section>
-                <section id="newsletter">
-                  <NewsletterSection />
-                </section>
-              </>
-            }
-          />
-          <Route path="/partner" element={<Partner />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/contributors" element={<Contibutors />} />
-          <Route path='/contributor-guide' element={<ContributorGuide />} />
-          <Route path="/support-career" element={<SupportCareer />} />
-
-          <Route path="/faqs" element={<FAQ />} />
-
-          <Route path="*" element={<NotFound />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicyPage/>} />
-          <Route path="/terms-of-use" element={<TermsOfUsePage/>} />
-        </Routes>
+                </Suspense>
+              }
+            />
+            <Route
+              path="/privacy-policy"
+              element={
+                <Suspense fallback={<Loader />}>
+                  <PrivacyPolicyPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/terms-of-use"
+              element={
+                <Suspense fallback={<Loader />}>
+                  <TermsOfUsePage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="*"
+              element={
+                <Suspense fallback={<Loader />}>
+                  <NotFound />
+                </Suspense>
+              }
+            />
+          </Routes>
+        </Suspense>
 
         {/* Toast container for messages */}
         <ToastContainer
@@ -162,7 +274,6 @@ function AppContent() {
 
         <Footer />
         <ScrollToTop />
-        
       </div>
     </main>
   );
