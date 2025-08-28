@@ -38,6 +38,7 @@ import useTimeTracking from "./utils/useTimeTracking";
 import { trackPageView } from "./utils/analytics";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import TermsOfUsePage from "./pages/TermsOfUsePage";
+import ContributorGuide from "./pages/ContributorGuide";
 
 // Hash Navigation component
 function HashNavigation() {
@@ -137,6 +138,7 @@ function AppContent() {
           <Route path="/partner" element={<Partner />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/contributors" element={<Contibutors />} />
+          <Route path='/contributor-guide' element={<ContributorGuide />} />
           <Route path="/support-career" element={<SupportCareer />} />
 
           <Route path="/faqs" element={<FAQ />} />

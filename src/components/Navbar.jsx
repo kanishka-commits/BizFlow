@@ -24,6 +24,7 @@ const Navbar = () => {
     { href: "/#faq", label: "FAQ" },
     { href: "/contact", label: "Contact" },
     { href: "/contributors", label: "Contributors" },
+    { href: "/contributor-guide", label:"Contributor Guide"}
   ];
 
   // This effect now correctly handles PAGE changes without conflicting with the scroll spy.
