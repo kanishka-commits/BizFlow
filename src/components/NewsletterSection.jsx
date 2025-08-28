@@ -134,45 +134,46 @@ const NewsletterSection = () => {
                   {/* Glowing border effect */}
                   <div className="absolute -inset-1 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 rounded-2xl blur-lg opacity-30 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
                   
-                  <form onSubmit={handleSubmit} className={`relative flex flex-col sm:flex-row ${isDarkMode ? 'bg-white/10 border-white/20' : 'bg-white/80 border-gray-200/50'} backdrop-blur-xl border rounded-2xl p-2 shadow-2xl`}>
-                    <div className="relative flex-1">
-                      <input
-                        type="email"
-                        aria-label="Email address"
-                        placeholder="Enter your email address"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className={`w-full px-6 py-4 bg-transparent ${isDarkMode ? 'text-white placeholder-gray-400' : 'text-gray-800 placeholder-gray-500'} focus:outline-none text-lg font-medium`}
-                      />
-                      <div className="absolute left-6 top-1/2 transform -translate-y-1/2 pointer-events-none opacity-30">
-                        <Mail className={`w-5 h-5 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`} />
-                      </div>
-                    </div>
+                   
 
-                    <button
-                      type="submit"
-                      onMouseEnter={() => setIsHovered(true)}
-                      onMouseLeave={() => setIsHovered(false)}
-                      className="relative group/btn mt-3 sm:mt-0 px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(168,85,247,0.4)] flex items-center justify-center gap-3 text-lg overflow-hidden"
-                    >
-                      {/* Button background animation */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-purple-500 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
-                      
-                      <span className="relative z-10 flex items-center gap-2">
-                        <Zap className="w-5 h-5" />
+                    <form onSubmit={handleSubmit} className={`relative flex flex-col sm:flex-row gap-2 ${isDarkMode ? 'bg-white/10 border-white/20' : 'bg-white/80 border-gray-200/50'} backdrop-blur-xl border rounded-2xl p-2 shadow-2xl`}>
+                      {/* Input container */}
+                      <div className="relative flex-1">
+                        <div className="absolute left-6 top-1/2 transform -translate-y-1/2 pointer-events-none opacity-30">
+                          <Mail className={`w-5 h-5 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`} />
+                        </div>
+                        <input
+                          type="email"
+                          aria-label="Email address"
+                          placeholder="Enter your email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          className={`w-full pl-14 pr-6 py-4 bg-transparent 
+                            ${isDarkMode 
+                              ? 'text-white placeholder:text-white/80' 
+                              : 'text-gray-900 placeholder:text-gray-600'
+                            } 
+                            focus:outline-none 
+                            text-base
+                            font-medium 
+                            rounded-xl`}
+                        />
+                      </div>
+
+                      {/* Subscribe button */}
+                       <button
+                        type="submit"
+                        className="h-[52px] px-6 bg-gradient-to-r from-violet-500 to-fuchsia-500 
+                          rounded-full text-white text-base font-medium
+                          flex items-center justify-center gap-2 whitespace-nowrap"
+                      >
+                        <Zap className="w-4 h-4" />
                         Subscribe
-                      </span>
-                      
-                      <ArrowRight 
-                        className={`relative z-10 w-5 h-5 transition-all duration-300 ${
-                          isHovered ? 'translate-x-1 scale-110' : ''
-                        }`} 
-                      />
-                      
-                      {/* Ripple effect */}
-                      <div className="absolute inset-0 bg-white/20 rounded-xl scale-0 group-hover/btn:scale-100 transition-transform duration-500 ease-out"></div>
-                    </button>
-                  </form>
+                        <ArrowRight className="w-4 h-4" />
+                      </button>
+         
+                    </form>
+
                 </div>
 
                 {/* Messages */}
