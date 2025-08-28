@@ -3,6 +3,7 @@ import { fetchContributors } from "../../api/githubApi";
 import { FaGithub } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
+import GitHubStats from "./GitHubStats";
 
 const Contributors = () => {
   const [contributors, setContributors] = useState([]);
@@ -81,6 +82,10 @@ const Contributors = () => {
             The talented developers behind BizFlow's success
           </motion.p>
         </div>
+        <div className="my-12 px-4">
+  <GitHubStats />
+</div>
+
 
         {/* Contributor Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
