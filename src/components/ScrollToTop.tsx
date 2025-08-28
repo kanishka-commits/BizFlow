@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { FaArrowUp } from 'react-icons/fa';
 
 export default function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
@@ -50,9 +51,7 @@ export default function ScrollToTop() {
         className="h-12 w-12 rounded-full bg-[#0099F7] hover:bg-[#0077b5] shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-110 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center justify-center text-white font-bold text-lg border-2 border-pink-400 hover:border-pink-300 shadow-pink-400/50 hover:shadow-pink-300/60 group"
         aria-label="Back to top"
       >
-        <span className="transition-transform duration-300 group-hover:-translate-y-0.5">
-          ↑
-        </span>
+        <FaArrowUp className="text-1xl" />
       </button>
     </div>
   );
