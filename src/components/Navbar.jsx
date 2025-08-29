@@ -1,20 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import { HiMenu, HiX } from "react-icons/hi";
-import { HiSun, HiMoon } from "react-icons/hi";
-import { motion } from "framer-motion";
-import { fadeIn } from "../utils/motion";
-import { trackButtonClick } from "../utils/analytics";
-import { HashLink } from "react-router-hash-link";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useTheme } from "../context/ThemeContext";
+import { Menu, X, ChevronDown, Sun, Moon } from "lucide-react";
+import { useTheme } from '../context/ThemeContext'
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("/#home");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { isDarkMode, toggleTheme } = useTheme();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const userScroll = useRef(false);
+  const dropdownRef = useRef(null);
 
   const navLinks = [
     { href: "/#home", label: "Home" },
@@ -23,272 +16,469 @@ const Navbar = () => {
     { href: "/#testimonials", label: "Testimonials" },
     { href: "/#faq", label: "FAQ" },
     { href: "/contact", label: "Contact" },
-    { href: "/contributors", label: "Contributors" },
-    { href: "/contributor-guide", label:"Contributor Guide"}
   ];
 
-  useEffect(() => {
-    const currentPath = location.pathname;
-    if (currentPath === "/") setActiveLink("/#home");
-    else {
-      const activeNav = navLinks.find(link => link.href === currentPath);
-      if (activeNav) setActiveLink(activeNav.href);
-    }
-  }, [location.pathname]);
+  const dropdownItems = [
+    { href: "/contributors", label: "Contributors", icon: "👥" },
+    { href: "/contributor-guide", label: "Contributor Guide", icon: "📖" }
+  ];
 
-  useEffect(() => {
-    if (location.pathname !== "/") return;
-
-    const sections = document.querySelectorAll("section[id]");
-    if (!sections.length) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (userScroll.current) return;
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const id = entry.target.getAttribute("id");
-            setActiveLink(`/#${id}`);
-          }
-        });
-      },
-      { rootMargin: "-40% 0px -60% 0px", threshold: 0 }
-    );
-
-    sections.forEach((section) => observer.observe(section));
-    return () => sections.forEach((section) => observer.unobserve(section));
-  }, [location.pathname]);
+  const changeTheme = () => {
+    toggleTheme()
+  };
 
   const handleHashLinkClick = (href) => {
     setActiveLink(href);
     setIsMenuOpen(false);
-    userScroll.current = true;
-    setTimeout(() => (userScroll.current = false), 1000);
+    setIsDropdownOpen(false);
   };
 
-  // Scroll lock
+  const handleNavClick = (href) => {
+    if (href.includes('#')) {
+      // Handle hash links (same page navigation)
+      if (window.location.pathname !== '/') {
+        // If not on home page, navigate to home first then scroll
+        window.location.href = href;
+      } else {
+        // If on home page, just scroll to section
+        const elementId = href.split('#')[1];
+        const element = document.getElementById(elementId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+      handleHashLinkClick(href);
+    } else {
+      // Handle regular page navigation
+      setActiveLink(href);
+      setIsMenuOpen(false);
+      setIsDropdownOpen(false);
+      // Navigate to the page
+      window.location.href = href;
+    }
+  };
+
+  const handleDropdownItemClick = (href) => {
+    setIsDropdownOpen(false);
+    setIsMenuOpen(false);
+    setActiveLink(href);
+    // Navigate to the page
+    window.location.href = href;
+  };
+
+  // Close dropdown when clicking outside
   useEffect(() => {
-    if (isMenuOpen) document.body.style.overflow = "hidden";
-    else document.body.style.overflow = "auto";
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // Scroll lock for mobile menu
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
   }, [isMenuOpen]);
 
   return (
-    <motion.nav
+    <nav
       role="navigation"
       aria-label="Main Navigation"
-      variants={fadeIn("down", 0.2)}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true }}
-      className={`fixed top-0 inset-x-0 z-50 border-b shadow-sm backdrop-blur-md transition-colors duration-300 ${
+      className={`fixed top-0 inset-x-0 z-50 border-b backdrop-blur-xl transition-all duration-500 ${
         isDarkMode
-          ? "bg-gray-900/90 border-gray-700 shadow-gray-900/40"
-          : "bg-white/90 border-gray-100 shadow-gray-200/40"
+          ? "bg-gray-900/95 border-gray-700/50 shadow-2xl shadow-gray-900/20"
+          : "bg-white/95 border-gray-100/50 shadow-xl shadow-gray-200/20"
       }`}
     >
       <div className="w-full flex justify-between items-center container mx-auto px-5 sm:px-7 lg:px-9 lg:h-20 h-16">
-        {/* Logo */}
-        <motion.div
-          variants={fadeIn("right", 0.3)}
-          className="flex items-center gap-3 cursor-pointer"
-        >
+        {/* Enhanced Logo */}
+        <div className="flex items-center gap-3 cursor-pointer group">
           <div className="flex items-center gap-1">
-            <motion.div whileHover={{ scale: 1.1 }} className="w-4 h-4 bg-blue-600 rounded-full opacity-75 hover:opacity-100 transition-opacity"></motion.div>
-            <motion.div whileHover={{ scale: 1.1 }} className="w-4 h-4 bg-red-500 rounded-full -ml-2 hover:opacity-75 transition-opacity"></motion.div>
+            <div className="w-4 h-4 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full opacity-80 group-hover:opacity-100 transition-all duration-300 shadow-lg transform hover:scale-110 hover:rotate-180" />
+            <div className="w-4 h-4 bg-gradient-to-br from-red-500 to-pink-600 rounded-full -ml-2 opacity-80 group-hover:opacity-100 transition-all duration-300 shadow-lg transform hover:scale-110 hover:-rotate-180" />
           </div>
-          <motion.span whileHover={{ scale: 1.02 }} className={`text-4xl font-bold transition-colors ${isDarkMode ? "text-white hover:text-blue-400" : "text-gray-800 hover:text-blue-600"}`}>
+          <span className={`text-4xl font-bold bg-gradient-to-r bg-clip-text text-transparent transition-all duration-300 hover:scale-105 ${
+              isDarkMode 
+                ? "from-white via-blue-100 to-blue-300 group-hover:from-blue-300 group-hover:to-cyan-300" 
+                : "from-gray-800 via-blue-800 to-blue-600 group-hover:from-blue-600 group-hover:to-blue-800"
+            }`}>
             <button
-              onClick={() => {
-                if (window.location.pathname !== "/") navigate("/#home");
-                else document.getElementById("home")?.scrollIntoView({ behavior: "smooth" });
-              }}
+              onClick={() => handleNavClick("/#home")}
             >
               BizFlow
             </button>
-          </motion.span>
-        </motion.div>
+          </span>
+        </div>
 
-        {/* Desktop Navigation */}
-        <motion.div variants={fadeIn("down", 0.3)} className="hidden xl:flex items-center lg:gap-6 xl:gap-10">
+        {/* Enhanced Desktop Navigation */}
+        <div className="hidden xl:flex items-center lg:gap-8 xl:gap-12">
           {navLinks.map((link) => {
             const isActive = activeLink === link.href;
-            if (link.href === "/#home") {
-              return (
-                <button
-                  key={link.href}
-                  onClick={() => {
-                    handleHashLinkClick(link.href);
-                    if (location.pathname !== "/") navigate("/#home");
-                    else document.getElementById("home")?.scrollIntoView({ behavior: "smooth" });
-                  }}
-                  className={`text-base font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all cursor-pointer transition-colors ${
-                    isActive ? "text-blue-600 after:w-full" : isDarkMode ? "text-gray-300 hover:text-white" : "text-gray-600 hover:text-gray-900"
-                  }`}
-                >
+            return (
+              <button
+                key={link.href}
+                onClick={() => handleNavClick(link.href)}
+                className={`text-base font-semibold relative overflow-hidden group transition-all duration-500 transform hover:scale-110 hover:-translate-y-1 px-3 py-2 rounded-lg ${
+                  isActive 
+                    ? "text-blue-600 shadow-lg shadow-blue-200/50" 
+                    : isDarkMode 
+                      ? "text-gray-300 hover:text-blue-400 hover:shadow-lg hover:shadow-blue-900/20" 
+                      : "text-gray-600 hover:text-blue-600 hover:shadow-lg hover:shadow-blue-200/30"
+                }`}
+              >
+                <span className="relative z-10 transition-all duration-300 group-hover:drop-shadow-sm">
                   {link.label}
-                </button>
-              );
-            }
-
-            return link.href.includes("/#") ? (
-              <HashLink
-                key={link.href}
-                smooth
-                to={link.href}
-                onClick={() => handleHashLinkClick(link.href)}
-                className={`text-base font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all transition-colors ${
-                  isActive ? "text-blue-600 after:w-full" : isDarkMode ? "text-gray-300 hover:text-white" : "text-gray-600 hover:text-gray-900"
-                }`}
-              >
-                {link.label}
-              </HashLink>
-            ) : (
-              <Link
-                key={link.href}
-                to={link.href}
-                onClick={() => setActiveLink(link.href)}
-                className={`text-base font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-blue-600 after:transition-all transition-colors ${
-                  location.pathname === link.href ? "text-blue-600 after:w-full" : isDarkMode ? "text-gray-300 hover:text-white" : "text-gray-600 hover:text-gray-900"
-                }`}
-              >
-                {link.label}
-              </Link>
+                </span>
+                {/* Enhanced underline effect */}
+                <div
+                  className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-500 rounded-full transition-all duration-500 ease-out ${
+                    isActive ? "w-full opacity-100" : "w-0 group-hover:w-full opacity-0 group-hover:opacity-100"
+                  }`}
+                />
+                {/* Glowing background on hover */}
+                <div
+                  className={`absolute inset-0 rounded-lg bg-gradient-to-r opacity-0 group-hover:opacity-10 transition-all duration-500 ${
+                    isDarkMode
+                      ? "from-blue-500/20 via-cyan-500/20 to-purple-500/20"
+                      : "from-blue-500/10 via-cyan-500/10 to-purple-500/10"
+                  }`}
+                />
+                {/* Subtle border glow */}
+                <div
+                  className={`absolute inset-0 rounded-lg border opacity-0 group-hover:opacity-30 transition-all duration-500 ${
+                    isDarkMode
+                      ? "border-blue-400/30"
+                      : "border-blue-500/20"
+                  }`}
+                />
+              </button>
             );
           })}
-        </motion.div>
 
-        {/* Desktop CTA + Theme Toggle */}
-        <motion.div variants={fadeIn("left", 0.3)} className="hidden xl:flex items-center">
-          <motion.button
-            initial={{ opacity: 0, rotateX: -20, y: -15 }}
-            animate={{ opacity: 1, rotateX: 0, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          {/* Enhanced Dropdown */}
+          <div ref={dropdownRef} className="relative">
+            <button
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className={`flex items-center gap-2 text-base font-semibold relative overflow-hidden group transition-all duration-500 transform hover:scale-110 hover:-translate-y-1 px-3 py-2 rounded-lg ${
+                isDarkMode 
+                  ? "text-gray-300 hover:text-blue-400 hover:shadow-lg hover:shadow-blue-900/20" 
+                  : "text-gray-600 hover:text-blue-600 hover:shadow-lg hover:shadow-blue-200/30"
+              } ${isDropdownOpen ? "shadow-lg shadow-blue-200/50 text-blue-600" : ""}`}
+            >
+              <span className="relative z-10 transition-all duration-300 group-hover:drop-shadow-sm">Community</span>
+              <ChevronDown 
+                className={`w-4 h-4 relative z-10 transition-all duration-500 group-hover:scale-110 ${
+                  isDropdownOpen ? "rotate-180 text-blue-600" : "rotate-0"
+                }`}
+              />
+              {/* Enhanced underline effect */}
+              <div
+                className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-500 rounded-full transition-all duration-500 ease-out ${
+                  isDropdownOpen ? "w-full opacity-100" : "w-0 group-hover:w-full opacity-0 group-hover:opacity-100"
+                }`}
+              />
+              {/* Glowing background on hover */}
+              <div
+                className={`absolute inset-0 rounded-lg bg-gradient-to-r opacity-0 group-hover:opacity-10 transition-all duration-500 ${
+                  isDarkMode
+                    ? "from-blue-500/20 via-cyan-500/20 to-purple-500/20"
+                    : "from-blue-500/10 via-cyan-500/10 to-purple-500/10"
+                }`}
+              />
+              {/* Subtle border glow */}
+              <div
+                className={`absolute inset-0 rounded-lg border opacity-0 group-hover:opacity-30 transition-all duration-500 ${
+                  isDarkMode
+                    ? "border-blue-400/30"
+                    : "border-blue-500/20"
+                }`}
+              />
+            </button>
+
+            {/* Dropdown Menu */}
+            {isDropdownOpen && (
+              <div
+                className={`absolute top-full right-0 mt-3 w-56 rounded-2xl border shadow-2xl backdrop-blur-xl overflow-hidden z-[60] transition-all duration-500 transform origin-top-right ${
+                  isDarkMode
+                    ? "bg-gray-800/98 border-gray-600/40 shadow-gray-900/70"
+                    : "bg-white/98 border-gray-200/40 shadow-gray-300/70"
+                } ${
+                  isDropdownOpen 
+                    ? "opacity-100 scale-100 translate-y-0" 
+                    : "opacity-0 scale-95 -translate-y-2"
+                }`}
+              >
+                <div className="py-3">
+                  {dropdownItems.map((item, index) => (
+                    <button
+                      key={item.href}
+                      onClick={() => handleDropdownItemClick(item.href)}
+                      className={`flex items-center gap-3 px-5 py-4 text-sm font-medium transition-all duration-400 group w-full text-left transform hover:scale-105 hover:-translate-y-0.5 relative overflow-hidden ${
+                        isDarkMode
+                          ? "text-gray-300 hover:bg-gray-700/60 hover:text-blue-400 hover:shadow-lg hover:shadow-blue-900/20"
+                          : "text-gray-700 hover:bg-gray-50/80 hover:text-blue-600 hover:shadow-lg hover:shadow-blue-200/30"
+                      }`}
+                      style={{ animationDelay: `${index * 100}ms` }}
+                    >
+                      <span className="text-lg group-hover:scale-125 group-hover:rotate-12 transition-all duration-400 relative z-10">
+                        {item.icon}
+                      </span>
+                      <span className="relative z-10 group-hover:drop-shadow-sm transition-all duration-300">{item.label}</span>
+                      {/* Subtle hover effect */}
+                      <div
+                        className={`absolute inset-0 bg-gradient-to-r opacity-0 group-hover:opacity-5 transition-all duration-400 ${
+                          isDarkMode
+                            ? "from-blue-500/30 to-cyan-500/30"
+                            : "from-blue-500/20 to-cyan-500/20"
+                        }`}
+                      />
+                      {/* Left accent line */}
+                      <div
+                        className={`absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-all duration-400 transform scale-y-0 group-hover:scale-y-100`}
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Enhanced Desktop CTA + Theme Toggle */}
+        <div className="hidden xl:flex items-center gap-4">
+          <button
             onClick={() => {
-              trackButtonClick("Navbar CTA Button");
-              if (location.pathname !== "/") document.getElementById("newsletter")?.scrollIntoView({ behavior: "smooth" });
-              else navigate("/#newsletter");
+              const newsletter = document.getElementById("newsletter");
+              if (newsletter) {
+                newsletter.scrollIntoView({ behavior: "smooth" });
+              }
             }}
-            className={`min-w-[140px] px-6 h-10 rounded-lg font-medium text-sm md:text-base transition-all duration-300 ease-in-out cursor-pointer ${
+            className={`relative overflow-hidden min-w-[150px] px-7 py-3 rounded-xl font-semibold text-sm transition-all duration-300 group transform hover:scale-105 hover:-translate-y-1 ${
               isDarkMode
-                ? "bg-gradient-to-r from-blue-600 via-blue-700 to-cyan-600 text-white hover:from-blue-500 hover:to-cyan-500 hover:shadow-slate-900/60"
-                : "bg-white text-blue-600 border border-blue-200 hover:bg-blue-50 hover:shadow-blue-100"
+                ? "bg-gradient-to-r from-blue-600 via-blue-700 to-cyan-600 text-white shadow-lg shadow-blue-900/30 hover:shadow-xl hover:shadow-blue-900/40"
+                : "bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg shadow-blue-200/50 hover:shadow-xl hover:shadow-blue-300/60"
             }`}
           >
-            💬 Get in Touch
-          </motion.button>
+            <span className="relative z-10 flex items-center gap-2">
+              💬 Get in Touch
+            </span>
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          </button>
 
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={toggleTheme}
-            className={`ml-8 w-10 h-10 flex items-center justify-center rounded-lg transition-all cursor-pointer ${
-              isDarkMode ? "bg-gray-700 hover:bg-gray-600 text-yellow-400 hover:text-yellow-300" : "bg-blue-100 hover:bg-blue-200 text-blue-600 hover:text-blue-700"
+          <button
+            onClick={changeTheme}
+            className={`w-11 h-11 flex items-center justify-center rounded-xl transition-all duration-300 group transform hover:scale-110 hover:rotate-12 ${
+              isDarkMode 
+                ? "bg-gradient-to-br from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 text-yellow-400 shadow-lg shadow-gray-800/50" 
+                : "bg-gradient-to-br from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 text-blue-600 shadow-lg shadow-blue-200/50"
             }`}
             aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
           >
-            {isDarkMode ? <HiSun className="h-5 w-5" /> : <HiMoon className="h-5 w-5" />}
-          </motion.button>
-        </motion.div>
+            <div className={`transition-transform duration-500 ${isDarkMode ? "rotate-0" : "rotate-180"}`}>
+              {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            </div>
+          </button>
+        </div>
 
-        {/* Mobile Menu Button */}
-        <motion.button
-          variants={fadeIn("left", 0.3)}
-          className={`xl:hidden p-2 cursor-pointer transition-colors ${isDarkMode ? "text-white hover:text-gray-300" : "text-gray-600 hover:text-gray-900"}`}
+        {/* Enhanced Mobile Menu Button */}
+        <button
+          className={`xl:hidden p-3 rounded-xl transition-all duration-300 transform hover:scale-105 ${
+            isDarkMode 
+              ? "bg-gray-800/50 hover:bg-gray-700/50 text-white border border-gray-700/50" 
+              : "bg-gray-50/50 hover:bg-gray-100/50 text-gray-700 border border-gray-200/50"
+          }`}
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         >
-          {isMenuOpen ? <HiX className="h-6 w-6" /> : <HiMenu className="h-6 w-6" />}
-        </motion.button>
+          <div className={`transition-transform duration-300 ${isMenuOpen ? "rotate-180" : "rotate-0"}`}>
+            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </div>
+        </button>
       </div>
 
-      {/* Mobile Menu Overlay */}
-      {isMenuOpen && (
-        <>
-          <motion.div
-            className="fixed inset-0 bg-black/40 z-40"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsMenuOpen(false)}
-          />
-          <motion.div
-            variants={fadeIn("down", 0.2)}
-            initial="hidden"
-            animate="show"
-            className={`fixed top-0 inset-x-0 z-50 border-t py-4 transition-colors duration-300 ${isDarkMode ? "bg-gray-900 border-gray-700" : "bg-white border-gray-100"}`}
-          >
-            <div className="flex justify-end px-4">
+      {/* Enhanced Mobile Menu Overlay */}
+      <div
+        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-all duration-500 ${
+          isMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
+        }`}
+        onClick={() => setIsMenuOpen(false)}
+      />
+      <div
+        className={`fixed top-0 left-0 bottom-0 w-80 max-w-[85vw] z-[110] border-r shadow-2xl backdrop-blur-xl overflow-hidden transition-all duration-500 transform ${
+          isDarkMode 
+            ? "bg-gray-900/98 border-gray-700/50" 
+            : "bg-white/98 border-gray-200/50"
+        } ${
+          isMenuOpen 
+            ? "translate-x-0 opacity-100" 
+            : "-translate-x-full opacity-0"
+        }`}
+      >
+            {/* Mobile Menu Header */}
+            <div className="flex items-center justify-between p-6 border-b border-gray-200/50">
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-1">
+                  <div className="w-3 h-3 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full" />
+                  <div className="w-3 h-3 bg-gradient-to-br from-red-500 to-pink-600 rounded-full -ml-1" />
+                </div>
+                <span className={`text-2xl font-bold bg-gradient-to-r bg-clip-text text-transparent ${
+                  isDarkMode 
+                    ? "from-white via-blue-100 to-blue-300" 
+                    : "from-gray-800 via-blue-800 to-blue-600"
+                }`}>
+                  BizFlow
+                </span>
+              </div>
               <button
                 onClick={() => setIsMenuOpen(false)}
-                className={`p-2 rounded-md transition-colors ${isDarkMode ? "text-white hover:text-gray-300" : "text-gray-600 hover:text-gray-900"}`}
-                aria-label="Close mobile menu"
+                className={`p-2 rounded-xl transition-all duration-300 transform hover:scale-110 ${
+                  isDarkMode 
+                    ? "bg-gray-800/50 hover:bg-gray-700/50 text-white" 
+                    : "bg-gray-50/50 hover:bg-gray-100/50 text-gray-700"
+                }`}
               >
-                <HiX className="h-6 w-6" />
+                <X className="h-5 w-5" />
               </button>
             </div>
-            <motion.div variants={fadeIn("down", 0.3)} className="container mx-auto px-4 space-y-6">
-              {navLinks.map((link) => {
-                const isActive = activeLink === link.href;
-                if (link.href === "/#home") {
-                  return (
-                    <button
-                      key={link.href}
-                      onClick={() => {
-                        handleHashLinkClick(link.href);
-                        if (location.pathname !== "/") navigate("/#home");
-                        else document.getElementById("home")?.scrollIntoView({ behavior: "smooth" });
-                      }}
-                      className={`block text-base font-medium py-2 cursor-pointer w-full text-left transition-colors ${isActive ? "text-blue-600" : isDarkMode ? "text-gray-300 hover:text-white" : "text-gray-600 hover:text-gray-900"}`}
-                    >
-                      {link.label}
-                    </button>
-                  );
-                }
 
-                return link.href.includes("/#") ? (
-                  <HashLink
+            {/* Mobile Menu Content */}
+            <div className="p-6 space-y-2 overflow-y-auto h-full pb-32">
+              {navLinks.map((link, index) => {
+                const isActive = activeLink === link.href;
+                return (
+                  <button
                     key={link.href}
-                    smooth
-                    to={link.href}
-                    onClick={() => handleHashLinkClick(link.href)}
-                    className={`block text-base font-medium py-2 cursor-pointer transition-colors ${isActive ? "text-blue-600" : isDarkMode ? "text-gray-300 hover:text-white" : "text-gray-600 hover:text-gray-900"}`}
-                  >
-                    {link.label}
-                  </HashLink>
-                ) : (
-                  <Link
-                    key={link.href}
-                    to={link.href}
-                    onClick={() => {
-                      setActiveLink(link.href);
-                      setIsMenuOpen(false);
+                    onClick={() => handleNavClick(link.href)}
+                    className={`block text-base font-semibold py-4 px-4 rounded-xl transition-all duration-300 w-full text-left transform hover:scale-[1.02] ${
+                      isActive 
+                        ? isDarkMode
+                          ? "bg-blue-900/30 text-blue-400 border border-blue-700/50"
+                          : "bg-blue-50 text-blue-600 border border-blue-200" 
+                        : isDarkMode 
+                          ? "text-gray-300 hover:bg-gray-800/50 hover:text-blue-400" 
+                          : "text-gray-700 hover:bg-gray-50 hover:text-blue-600"
+                    }`}
+                    style={{ 
+                      animationDelay: `${index * 100}ms`,
+                      animation: `slideInLeft 0.6s ease-out ${index * 100}ms both`
                     }}
-                    className={`block text-base font-medium py-2 cursor-pointer transition-colors ${location.pathname === link.href ? "text-blue-600" : isDarkMode ? "text-gray-300 hover:text-white" : "text-gray-600 hover:text-gray-900"}`}
                   >
                     {link.label}
-                  </Link>
+                  </button>
                 );
               })}
-              <motion.button
-                variants={fadeIn("up", 0)}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => {
-                  trackButtonClick("Mobile Navbar CTA Button");
-                  setIsMenuOpen(false);
-                  if (location.pathname !== "/") document.getElementById("newsletter")?.scrollIntoView({ behavior: "smooth" });
-                  else navigate("/#newsletter");
+
+              {/* Mobile Community Section */}
+              <div
+                className={`rounded-xl border transition-all duration-300 mt-6 ${
+                  isDarkMode 
+                    ? "border-gray-700/50 bg-gray-800/30" 
+                    : "border-gray-200/50 bg-gray-50/30"
+                }`}
+                style={{ 
+                  animationDelay: `${navLinks.length * 100}ms`,
+                  animation: `slideInLeft 0.6s ease-out ${navLinks.length * 100}ms both`
                 }}
-                className="w-full bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 text-base font-medium hover:shadow-lg hover:shadow-blue-100 cursor-pointer"
               >
-                Get in touch
-              </motion.button>
-            </motion.div>
-          </motion.div>
-        </>
-      )}
-    </motion.nav>
+                <div className={`px-4 py-3 font-semibold text-sm border-b ${
+                  isDarkMode 
+                    ? "text-gray-400 border-gray-700/50" 
+                    : "text-gray-500 border-gray-200/50"
+                }`}>
+                  Community
+                </div>
+                {dropdownItems.map((item, index) => (
+                  <button
+                    key={item.href}
+                    onClick={() => handleDropdownItemClick(item.href)}
+                    className={`flex items-center gap-3 px-4 py-4 text-base font-medium transition-all duration-300 w-full text-left transform hover:scale-[1.02] ${
+                      isDarkMode
+                        ? "text-gray-300 hover:bg-gray-700/50 hover:text-blue-400"
+                        : "text-gray-700 hover:bg-gray-100 hover:text-blue-600"
+                    } ${index === dropdownItems.length - 1 ? "rounded-b-xl" : ""}`}
+                  >
+                    <span className="text-lg">{item.icon}</span>
+                    <span>{item.label}</span>
+                  </button>
+                ))}
+              </div>
+
+              {/* Mobile CTA Button */}
+              <div
+                className="pt-6"
+                style={{ 
+                  animationDelay: `${(navLinks.length + dropdownItems.length + 1) * 100}ms`,
+                  animation: `slideInLeft 0.6s ease-out ${(navLinks.length + dropdownItems.length + 1) * 100}ms both`
+                }}
+              >
+                <button
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    const newsletter = document.getElementById("newsletter");
+                    if (newsletter) {
+                      newsletter.scrollIntoView({ behavior: "smooth" });
+                    }
+                  }}
+                  className={`w-full px-6 py-4 rounded-xl text-base font-semibold transition-all duration-300 transform hover:scale-[1.02] ${
+                    isDarkMode
+                      ? "bg-gradient-to-r from-blue-600 via-blue-700 to-cyan-600 text-white shadow-lg shadow-blue-900/30"
+                      : "bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg shadow-blue-200/50"
+                  }`}
+                >
+                  💬 Get in Touch
+                </button>
+              </div>
+
+              {/* Theme Toggle in Mobile Menu */}
+              <div
+                className="pt-4"
+                style={{ 
+                  animationDelay: `${(navLinks.length + dropdownItems.length + 2) * 100}ms`,
+                  animation: `slideInLeft 0.6s ease-out ${(navLinks.length + dropdownItems.length + 2) * 100}ms both`
+                }}
+              >
+                <button
+                  onClick={changeTheme}
+                  className={`w-full flex items-center justify-center gap-3 py-4 px-4 rounded-xl transition-all duration-300 transform hover:scale-[1.02] ${
+                    isDarkMode 
+                      ? "bg-gradient-to-br from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 text-yellow-400" 
+                      : "bg-gradient-to-br from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 text-blue-600"
+                  }`}
+                >
+                  <div className={`transition-transform duration-500 ${isDarkMode ? "rotate-0" : "rotate-180"}`}>
+                    {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                  </div>
+                  <span className="font-semibold">
+                    {isDarkMode ? "Light Mode" : "Dark Mode"}
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Add CSS for slide animation */}
+          <style jsx>{`
+            @keyframes slideInLeft {
+              from {
+                opacity: 0;
+                transform: translateX(-30px);
+              }
+              to {
+                opacity: 1;
+                transform: translateX(0);
+              }
+            }
+          `}</style>
+    </nav>
   );
 };
 
