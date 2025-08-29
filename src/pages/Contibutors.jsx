@@ -4,6 +4,7 @@ import { FaGithub } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
 import GitHubStats from "./GitHubStats";
+import Loader from "../components/Loader";
 
 const Contributors = () => {
   const [contributors, setContributors] = useState([]);
@@ -24,13 +25,7 @@ const Contributors = () => {
   }, []);
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-pulse text-xl font-medium text-primary">
-          Loading Contributors...
-        </div>
-      </div>
-    );
+    <Loader />
   }
 
   if (error) {
