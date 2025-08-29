@@ -105,74 +105,77 @@ export default function LeaderBoard() {
         <div className="overflow-x-auto">
           <table className="min-w-full border-separate border-spacing-y-3">
             {/* Table Header */}
-            <thead>
-              <tr
-                className={`text-left text-sm uppercase ${
-                  isDarkMode ? "text-gray-400" : "text-gray-600"
-                }`}
-              >
-                <th className="px-6 py-3">Rank</th>
-                <th className="px-6 py-3">Contributor</th>
-                <th className="px-6 py-3">Contributions</th>
-              </tr>
-            </thead>
+            {/* Table Header */}
+<thead>
+  <tr
+    className={`text-left text-sm uppercase ${
+      isDarkMode ? "text-gray-400" : "text-gray-600"
+    }`}
+  >
+    <th className="px-6 py-3">Rank</th>
+    <th className="px-6 py-3">Contributor</th>
+    <th className="px-6 py-3">Contributions</th>
+  </tr>
+</thead>
 
-            <tbody>
-              {contributors.map((c, index) => (
-                <motion.tr
-                  key={c.username}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.03 }}
-                  className={`rounded-xl transition-all duration-300 ${
-                    isDarkMode
-                      ? "bg-gray-800/60 hover:bg-gradient-to-r hover:from-purple-600/30 hover:to-blue-600/30"
-                      : "bg-white/70 hover:bg-gradient-to-r hover:from-blue-100 hover:to-pink-100"
-                  }`}
-                >
-                  {/* Rank */}
-                  <td className="px-6 py-4 font-semibold">
-                    {index === 0 ? (
-                      <FaTrophy className="text-yellow-400 text-2xl drop-shadow-md animate-pulse" />
-                    ) : index === 1 ? (
-                      <FaMedal className="text-gray-300 text-2xl drop-shadow" />
-                    ) : index === 2 ? (
-                      <FaMedal className="text-amber-600 text-2xl drop-shadow" />
-                    ) : (
-                      <span className="text-lg">{index + 1}</span>
-                    )}
-                  </td>
+<tbody>
+  {contributors.map((c, index) => (
+    <motion.tr
+      key={c.username}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, delay: index * 0.03 }}
+      className={`rounded-xl transition-all duration-300 ${
+        isDarkMode
+          ? "bg-gray-800/60 hover:bg-gradient-to-r hover:from-purple-600/30 hover:to-blue-600/30"
+          : "bg-white/70 hover:bg-gradient-to-r hover:from-blue-100 hover:to-pink-100"
+      }`}
+    >
+      {/* Rank */}
+      <td className="px-6 py-4 font-semibold">
+        {index === 0 ? (
+          <FaTrophy className="text-yellow-400 text-2xl drop-shadow-md animate-pulse" />
+        ) : index === 1 ? (
+          <FaMedal className="text-gray-300 text-2xl drop-shadow" />
+        ) : index === 2 ? (
+          <FaMedal className="text-amber-600 text-2xl drop-shadow" />
+        ) : (
+          <span className="text-lg">{index + 1}</span>
+        )}
+      </td>
 
-                  {/* Contributor Info */}
-                  <td className="px-6 py-4 flex items-center space-x-4">
-                    <img
-                      src={c.avatar}
-                      alt={c.username}
-                      className="w-11 h-11 rounded-full border-2 border-indigo-400 shadow-md"
-                    />
-                    <a
-                      href={c.profile}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-medium hover:underline text-lg"
-                    >
-                      {c.username}
-                    </a>
-                  </td>
+      {/* Contributor Info */}
+      <td className="px-6 py-4 flex items-center space-x-4">
+        <img
+          src={c.avatar}
+          alt={c.username}
+          className="w-11 h-11 rounded-full border-2 border-indigo-400 shadow-md"
+        />
+        <a
+          href={c.profile}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-medium hover:underline text-lg"
+        >
+          {c.username}
+        </a>
+      </td>
 
-                  {/* Stats (Points + PRs in one line) */}
-                  <td className="px-6 py-4 flex items-center gap-6 text-lg font-semibold">
-                    <span className="flex items-center gap-2 text-yellow-500">
-                      <FaStar /> {c.points}
-                    </span>
-                    <span className="opacity-50">|</span>
-                    <span className="flex items-center gap-2 text-indigo-500">
-                      <FaCode /> {c.prs}
-                    </span>
-                  </td>
-                </motion.tr>
-              ))}
-            </tbody>
+      {/* Contributions → Points + PRs inline */}
+      <td className="px-6 py-4">
+        <div className="flex items-center gap-6 text-lg font-semibold">
+          <span className="flex items-center gap-2 text-yellow-500">
+            <FaStar /> {c.points}
+          </span>
+          <span className="flex items-center gap-2 text-indigo-500">
+            <FaCode /> {c.prs}
+          </span>
+        </div>
+      </td>
+    </motion.tr>
+  ))}
+</tbody>
+
           </table>
         </div>
       )}
