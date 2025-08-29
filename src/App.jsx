@@ -42,35 +42,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import useScrollTracking from "./utils/useScrollTracking";
 import useTimeTracking from "./utils/useTimeTracking";
 import { trackPageView } from "./utils/analytics";
+import Loader from "./components/Loader";
 
-// Improved Simple Loader Component
-function Loader() {
-  const { isDarkMode } = useTheme();
-  
-  return (
-    <div className="flex items-center justify-center min-h-screen py-12">
-      <div className="flex flex-col items-center space-y-4">
-        <div className="relative">
-          <div 
-            className={`w-8 h-8 rounded-full border-2 border-solid ${
-              isDarkMode 
-                ? 'border-gray-600 border-t-indigo-400' 
-                : 'border-gray-300 border-t-indigo-600'
-            }`}
-            style={{
-              animation: 'spin 1s linear infinite'
-            }}
-          ></div>
-        </div>
-        <p className={`text-sm font-medium ${
-          isDarkMode ? 'text-gray-400' : 'text-gray-600'
-        }`}>
-          Loading...
-        </p>
-      </div>
-    </div>
-  );
-}
 
 // Hash Navigation component
 function HashNavigation() {
