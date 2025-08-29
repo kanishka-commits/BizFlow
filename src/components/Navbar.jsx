@@ -1,27 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { Menu, X, ChevronDown, Sun, Moon, Zap, Users, BookOpen, Sparkles } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-
-// Enhanced theme context with system preference detection
-const useTheme = () => {
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('theme') === 'dark' || 
-             (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    }
-    return false;
-  });
-
-  const toggleTheme = useCallback(() => {
-    const newTheme = !isDarkMode;
-    setIsDarkMode(newTheme);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('theme', newTheme ? 'dark' : 'light');
-    }
-  }, [isDarkMode]);
-
-  return { isDarkMode, toggleTheme };
-};
+import { useTheme } from '../context/ThemeContext'
 
 // Custom hook for smooth scrolling with intersection observer
 const useSmoothScroll = () => {
