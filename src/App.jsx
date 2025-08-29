@@ -27,6 +27,7 @@ const NotFound = lazy(() => import("./components/NotFound"));
 const Contact = lazy(() => import("./components/Contact"));
 const FAQ = lazy(() => import("./components/FAQ"));
 
+
 // Lazy loaded pages
 const Partner = lazy(() => import("./pages/Partner"));
 const Contibutors = lazy(() => import("./pages/Contibutors"));
@@ -34,6 +35,7 @@ const SupportCareer = lazy(() => import("./pages/SupportCareer"));
 const PrivacyPolicyPage = lazy(() => import("./pages/PrivacyPolicyPage"));
 const TermsOfUsePage = lazy(() => import("./pages/TermsOfUsePage"));
 const ContributorGuide = lazy(() => import("./pages/ContributorGuide"));
+const LeaderBoard = lazy(() => import("./pages/LeaderBoard"));
 
 // Router
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -149,6 +151,8 @@ function AppContent() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/contributors" element={<Contibutors />} />
             <Route path="/contributor-guide" element={<ContributorGuide />} />
+            <Route path="/leaderboard" element={<LeaderBoard />} />
+
             <Route path="/support-career" element={<SupportCareer />} />
             <Route path="/faqs" element={<FAQ />} />
             <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />

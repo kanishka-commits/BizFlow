@@ -82,6 +82,12 @@ const ModernNavbar = () => {
       label: "Contributor Guide", 
       icon: "📖",
       description: "Learn how to contribute"
+    },
+    { 
+      href: "/leaderboard", 
+      label: "LeaderBoard", 
+      icon: "🏆",
+      description: "Check your rank"
     }
   ], []);
 
