@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Menu, X, ChevronDown, Sun, Moon } from "lucide-react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useTheme } from '../context/ThemeContext'
 
 const Navbar = () => {
@@ -8,6 +9,8 @@ const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { isDarkMode, toggleTheme } = useTheme();
   const dropdownRef = useRef(null);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const navLinks = [
     { href: "/#home", label: "Home" },
@@ -36,9 +39,17 @@ const Navbar = () => {
   const handleNavClick = (href) => {
     if (href.includes('#')) {
       // Handle hash links (same page navigation)
-      if (window.location.pathname !== '/') {
+      if (location.pathname !== '/') {
         // If not on home page, navigate to home first then scroll
-        window.location.href = href;
+        navigate('/');
+        // Small delay to ensure page loads before scrolling
+        setTimeout(() => {
+          const elementId = href.split('#')[1];
+          const element = document.getElementById(elementId);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 100);
       } else {
         // If on home page, just scroll to section
         const elementId = href.split('#')[1];
@@ -53,8 +64,8 @@ const Navbar = () => {
       setActiveLink(href);
       setIsMenuOpen(false);
       setIsDropdownOpen(false);
-      // Navigate to the page
-      window.location.href = href;
+      // Navigate using React Router
+      navigate(href);
     }
   };
 
@@ -62,9 +73,15 @@ const Navbar = () => {
     setIsDropdownOpen(false);
     setIsMenuOpen(false);
     setActiveLink(href);
-    // Navigate to the page
-    window.location.href = href;
+    // Navigate using React Router
+    navigate(href);
   };
+
+  // Update active link based on current location
+  useEffect(() => {
+    const currentPath = location.pathname + location.hash;
+    setActiveLink(currentPath || '/');
+  }, [location]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
