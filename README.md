@@ -15,6 +15,26 @@
 
 ---
 
+## 📚 Table of Contents
+
+1. [BizFlow Philosophy](#-the-bizflow-philosophy)
+2. [Live Demo](#-live-demo)
+3. [Tech Stack](#-tech-stack)
+4. [Features](#-features)
+5. [Project Structure](#-project-structure)
+6. [Getting Started](#-getting-started)
+7. [Analytics Setup](#-analytics-setup)
+8. [Analytics Implementation Summary](#-analytics-implementation-summary)
+9. [Contact Page Setup](#-contact-page-setup)
+10. [Contributor Guide](#-contributor-guide)
+11. [Code of Conduct](#-code-of-conduct)
+12. [Community & Support](#-community--support)
+13. [License](#-license)
+14. [Contributing](CONTRIBUTING.md)
+15. [FAQ](#-faq)
+
+---
+
 ## 🌀 The BizFlow Philosophy
 
 <div align="center" style="font-size:2em;">
@@ -110,67 +130,119 @@ BIZFLOW
 
 ---
 
-## 👥 Contributing
+## 📊 Analytics Setup
 
-We welcome all contributions — features, bug fixes, documentation, and more!
+### Secure Google Analytics 4 (GA4) Integration
 
-### Quick Start
+- **Never commit your actual Measurement ID or sensitive data.**
+- Use environment variables for configuration.
 
-1. **Fork the repository**  
-2. **Create a feature branch**
+#### Quick Setup
+
+1. Create your own GA4 property at [Google Analytics](https://analytics.google.com/)
+2. Copy your Measurement ID (`G-XXXXXXXXXX`)
+3. Copy `env.example` to `.env` and add your ID:
    ```bash
-   git checkout -b feature/your-feature-name
+   cp env.example .env
    ```
-3. **Commit your changes**
-   ```bash
-   git commit -m "feat: add your feature description"
    ```
-4. **Push to your fork**
-   ```bash
-   git push origin feature/your-feature-name
+   REACT_APP_GA4_MEASUREMENT_ID=G-YOUR_ACTUAL_ID_HERE
+   REACT_APP_ANALYTICS_ENABLED=true
    ```
-5. **Open a Pull Request**  
-   - Use [Conventional Commits](https://www.conventionalcommits.org/) for PR titles  
-   - Fill out the PR template
+4. For temporary manual setup, replace the placeholder in `index.html`:
+   ```html
+   <script async src="https://www.googletagmanager.com/gtag/js?id=G-YOUR_ACTUAL_ID_HERE"></script>
+   <script>
+     gtag('config', 'G-YOUR_ACTUAL_ID_HERE');
+   </script>
+   ```
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for full guidelines.
+#### Security Checklist
+
+- Remove your personal GA4 Measurement ID from all files
+- `.env` is in `.gitignore`
+- Use placeholders in committed files
+- Never commit API keys, credentials, or personal info
+
+#### [See full analytics setup details](#analytics-implementation-summary)
 
 ---
 
-### 📚 Contributor Guide
+## 📈 Analytics Implementation Summary
 
-New to BizFlow? Visit our [Contributor Guide](/contributor-guide) for step-by-step instructions, tips, and resources to help you get started contributing to the project.  
-Whether you're fixing bugs, adding features, or improving documentation, this guide will help you make your first contribution with confidence!  
-**Route:** `/contributor-guide`  
-**File:** `src/pages/contributor-guide.jsx`
+### What’s Implemented
+
+- **GA4 tracking code** in `index.html`
+- **Automatic tracking:** page views, scroll depth, time on page, session duration
+- **Event tracking:** button clicks, form submissions, newsletter signups, external links, pricing plan interactions
+- **Analytics dashboard:** `/analytics` route, key metrics, popular pages, referrer tracking, loading/error states
+- **Testing tools:** `/analytics-test` route, real-time status, debugging
+- **Utility hooks:** `useScrollTracking`, `useTimeTracking`, analytics utility functions
+
+### How to Use
+
+- Access dashboard at `/analytics`
+- Test analytics at `/analytics-test`
+- Add tracking to components:
+  ```javascript
+  import { trackButtonClick } from '../utils/analytics';
+  <button onClick={() => trackButtonClick('My Button')}>Click Me</button>
+  ```
+- Track form submissions:
+  ```javascript
+  import { trackFormSubmission } from '../utils/analytics';
+  <form onSubmit={() => trackFormSubmission('Contact Form')}>{/* ... */}</form>
+  ```
+
+### Configuration
+
+- Update `src/config/analytics.js` with your Measurement ID
+- Install dependencies:
+  ```bash
+  npm install react-use chart.js react-chartjs-2
+  ```
+
+---
+
+## 📧 Contact Page Setup
+
+### Email Configuration
+
+- Add credentials to `.env.local`:
+  ```
+  EMAIL_USER=your-email@gmail.com
+  EMAIL_PASS=your-app-password
+  OWNER_EMAIL=owner@bizflow.com
+  ```
+- For Gmail, enable 2-Step Verification and generate an App Password.
+- Supports SendGrid, Mailgun, and other services (see `api/contact.js`).
+
+### Features
+
+- Real-time validation, loading states, success/error messages
+- Business notification and user confirmation emails
+- Responsive, accessible, animated design
+- Multiple contact methods, business hours, social links, FAQ
+
+### Troubleshooting
+
+- Check environment variables and app password
+- Review CORS and API endpoint configuration
+- Test form and email functionality locally
+
+---
+
+## 📚 Contributor Guide
+
+New to BizFlow?  
+Visit our [Contributor Guide](CONTRIBUTING.md) for step-by-step instructions, tips, and resources to help you get started contributing to the project.
 
 ---
 
 ## 📜 Code of Conduct
 
-Please read our [Code of Conduct](CODE_OF_CONDUCT.md) to understand the expected behavior in this community.
-
----
-
-## 🏆 Contribution Levels (GSSOC Only)
-
-| Level | Points | Description                       |
-|-------|--------|-----------------------------------|
-| 🟢 1  |   3    | Bug fixes, docs, minor improvements |
-| 🟡 2  |   7    | Features, refactoring, moderate complexity |
-| 🔴 3  |  10    | Complex features, architecture changes |
-
----
-
-## 📄 License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
-
-## 💚 Maintainers
-
-Developed & maintained by [Aditya Domle](https://github.com/adityadomle) and the open-source community.
+BizFlow is dedicated to maintaining an inclusive, respectful, and collaborative environment for all contributors.  
+See the [Code of Conduct](CONTRIBUTING.md#code-of-conduct) for details.
 
 ---
 
@@ -184,5 +256,27 @@ Developed & maintained by [Aditya Domle](https://github.com/adityadomle) and the
 
 ---
 
+## 📄 License
+
+This project is licensed under the [MIT License](CONTRIBUTING.md#license).
+
+---
+
+## ❓ FAQ
+
+**Q: Where can I find contribution guidelines and code standards?**  
+A: See [CONTRIBUTING.md](CONTRIBUTING.md) for all details.
+
+**Q: How do I report a bug or request a feature?**  
+A: Open an issue on [GitHub Issues](https://github.com/adityadomle/BizFlow/issues).
+
+**Q: How do I get help or support?**  
+A: Use [GitHub Discussions](https://github.com/adityadomle/BizFlow/discussions) or contact a maintainer.
+
+**Q: Where can I see the changelog?**  
+A: See [GitHub Releases](https://github.com/adityadomle/BizFlow/releases).
+
+---
+
 > **Ready to streamline your business?**  
-> ⭐️ Star this repo & [join the community](https://github.com/adityadomle/BizFlow/discussions)!
+> ⭐️ Star this repo & [join the community](https://github.com/adityadomle/BizFlow/discussions)
