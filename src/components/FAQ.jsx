@@ -1,5 +1,7 @@
 // Mock AnimatePresence component
-const AnimatePresence = ({ children, initial }) => children;import { useState } from "react";
+const AnimatePresence = ({ children, initial }) => children;
+import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { Plus, Minus } from "lucide-react";
 
 import { useTheme } from "../context/ThemeContext";
@@ -46,6 +48,7 @@ const faqs = [
 ];
 
 export default function FAQ() {
+  const navigate = useNavigate();
   const { isDarkMode } = useTheme();  
   const [openIndex, setOpenIndex] = useState(null);
 
@@ -177,25 +180,19 @@ export default function FAQ() {
               ))}
             </div>
 
-            {/* Enhanced Bottom CTA Section */}
+            {/* Enhanced Bottom CTA Section - UPDATED */}
             <div className="text-center mt-20">
-              <div className={`relative mx-auto max-w-lg p-8 rounded-3xl backdrop-blur-xl border transition-all duration-500 ${
-                isDarkMode
-                  ? "bg-gradient-to-br from-gray-800/60 to-gray-900/60 border-gray-700/50 shadow-2xl shadow-gray-900/30"
-                  : "bg-gradient-to-br from-white/60 to-blue-50/60 border-blue-200/50 shadow-2xl shadow-blue-500/10"
-              }`}>
-                {/* Decorative background elements */}
-                <div className={`absolute -top-2 -right-2 w-20 h-20 rounded-full blur-2xl opacity-30 ${
-                  isDarkMode ? "bg-blue-500" : "bg-blue-400"
-                }`}></div>
-                <div className={`absolute -bottom-2 -left-2 w-16 h-16 rounded-full blur-xl opacity-20 ${
-                  isDarkMode ? "bg-purple-500" : "bg-indigo-400"
-                }`}></div>
-
-                <div className="relative z-10">
-                  <h3 className={`text-2xl font-bold mb-3 transition-colors duration-500 ${
-                    isDarkMode ? "text-white" : "text-gray-900"
-                  }`}>
+              <div className={`p-10 rounded-2xl border transition-all duration-500 ease-out backdrop-blur-md transform-gpu hover:scale-[1.01] ${
+                  isDarkMode
+                    ? "bg-gradient-to-br from-gray-800/80 to-gray-900/80 text-white border border-gray-700/50 hover:from-gray-800 hover:to-gray-900 hover:border-gray-700 hover:shadow-xl hover:shadow-gray-900/40"
+                    : "bg-gradient-to-br from-blue-50/80 to-indigo-50/80 text-gray-900 border border-blue-100/50 hover:from-blue-50 hover:to-indigo-50 hover:border-blue-100 hover:shadow-xl hover:shadow-indigo-500/10"
+                }`}>
+                <div>
+                  <h3 className={`text-3xl font-bold mb-3 bg-gradient-to-r ${
+                    isDarkMode
+                      ? "from-white via-blue-100 to-white"
+                      : "from-gray-900 via-blue-900 to-gray-900"
+                  } bg-clip-text text-transparent`}>
                     Still have questions?
                   </h3>
                   <p className={`mb-8 text-base leading-relaxed transition-colors duration-500 ${
@@ -249,7 +246,7 @@ export default function FAQ() {
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
-                      support@yourcompany.com
+                      hello@bizflow.com
                     </div>
                     <div className="flex items-center gap-2">
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
