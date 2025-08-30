@@ -68,7 +68,7 @@ const PricingCard = ({ name, price, features, animation, isDarkMode }) => (
       {/* Price display */}
       <div className="mb-8">
         <div className={`flex items-baseline gap-2 ${isDarkMode ? "text-white" : "text-gray-800"}`}>
-          <span className={`text-4xl font-bold bg-gradient-to-r ${isDarkMode ? "from-blue-400 to-cyan-400" : "from-blue-600 to-cyan-600"} bg-clip-text text-transparent`}>
+          <span className={`text-4xl font-bold bg-gradient-to-r ${isDarkMode ? "from-blue-500 to-blue-600" : "from-blue-600 to-blue-600"} bg-clip-text text-transparent`}>
             ${price}
           </span>
           <span className={`text-lg font-medium ${isDarkMode ? "text-gray-300" : "text-gray-600"}`}>
@@ -211,8 +211,8 @@ const PricingSection = () => {
               viewport={{ once: true, margin: "-50px" }}
               className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r ${
                 isDarkMode 
-                  ? "from-blue-400 via-cyan-300 to-blue-500" 
-                  : "from-blue-600 via-cyan-600 to-blue-700"
+                  ? "from-blue-400 to-blue-500" 
+                  : "from-blue-600 to-blue-700"
               } bg-clip-text text-transparent leading-normal`}
             >
               Pricing Plans
