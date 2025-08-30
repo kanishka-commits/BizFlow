@@ -209,7 +209,7 @@ const Hero = () => {
               className={`relative px-8 py-4 rounded-2xl font-semibold text-sm transition-all duration-400 shadow-lg group min-w-[140px] overflow-hidden focus:outline-none focus:ring-2 focus:ring-offset-2 ${
                 email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
                   ? "bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 text-white "
-                  : "bg-gray-300 text-gray-600 cursor-not-allowed"
+                  : "bg-gray-300 text-gray-700 cursor-not-allowed"
               }`}
             >
               {email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
@@ -246,7 +246,7 @@ const Hero = () => {
       </motion.div>
 
       {/* Right image column is unchanged */}
-      <motion.div
+       <motion.div
         initial={{ opacity: 0, x: 100 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.3, duration: 0.8, type: "spring", damping: 20 }}
@@ -256,10 +256,41 @@ const Hero = () => {
         }}
       >
         <div className="relative">
+          {/* Glassmorphism colored boxes with full opacity */}
+          <motion.div
+            className={`absolute top-4 right-5/12 w-20 h-20 rounded-2xl backdrop-blur-sm border ${
+              isDarkMode
+                ? "bg-gradient-to-br from-blue-500 to-cyan-400 border-blue-300/30"
+                : "bg-gradient-to-br from-blue-400 to-cyan-300 border-blue-200/50"
+            }`}
+            initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ delay: 0.6, duration: 0.6, type: "spring" }}
+            whileHover={{ scale: 1.05, rotate: 5 }}
+            style={{
+              transform: `translate(${mousePosition.x * 0.3}px, ${mousePosition.y * 0.3}px)`,
+            }}
+          />
+          
+          <motion.div
+            className={`absolute -bottom-3 -left-3 w-20 h-20 rounded-2xl backdrop-blur-sm border ${
+              isDarkMode
+                ? "bg-gradient-to-tr from-green-500 to-emerald-400 border-green-300/30"
+                : "bg-gradient-to-tr from-green-400 to-emerald-300 border-green-200/50"
+            }`}
+            initial={{ opacity: 0, scale: 0.8, rotate: 10 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ delay: 0.8, duration: 0.6, type: "spring" }}
+            whileHover={{ scale: 1.05, rotate: -5 }}
+            style={{
+              transform: `translate(${-mousePosition.x * 0.2}px, ${-mousePosition.y * 0.2}px)`,
+            }}
+          />
+
           <motion.img
             src={heroImage}
             alt="Team meeting"
-            className="rounded-2xl shadow-2xl border border-white/20"
+            className="rounded-2xl shadow-2xl border border-white/20 relative z-10 backdrop-blur-3xl"
             whileHover={{ scale: 1.02 }}
           />
         </div>
