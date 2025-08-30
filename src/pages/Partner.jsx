@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { motion , AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { fadeIn, textVariant } from "../utils/motion";
 import { useTheme } from "../context/ThemeContext";
 import { FaCheckCircle } from "react-icons/fa";
 import { FaMapMarkerAlt, FaEnvelope, FaPhone } from "react-icons/fa";
-
-
 
 const Partner = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -197,90 +195,87 @@ const Partner = () => {
       </motion.form>
       {/* Contact Info Cards */}
 
-
-
-
-{/* Contact Info Cards */}
-<div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 max-w-5xl mx-auto">
-  {/* Address Card */}
-  <motion.div
-    whileHover={{ scale: 1.05 }}
-    transition={{ type: "spring", stiffness: 200 }}
-    className={`group rounded-2xl p-6 backdrop-blur-xl 
+      {/* Contact Info Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 max-w-5xl mx-auto">
+        {/* Address Card */}
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          transition={{ type: "spring", stiffness: 200 }}
+          className={`group rounded-2xl p-6 backdrop-blur-xl 
       flex flex-col items-center text-center cursor-pointer
       ${
         isDarkMode
           ? "bg-white/5 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)] text-white"
           : "bg-gray-50/70 border border-gray-200 shadow-[0_0_30px_rgba(59,130,246,0.25)] text-gray-900"
       }`}
-  >
-    <motion.div
-      whileHover={{ scale: 1.3, rotate: 10 }}
-      transition={{ type: "spring", stiffness: 300 }}
-      className="flex items-center justify-center w-12 h-12 rounded-full 
+        >
+          <motion.div
+            whileHover={{ scale: 1.3, rotate: 10 }}
+            transition={{ type: "spring", stiffness: 300 }}
+            className="flex items-center justify-center w-12 h-12 rounded-full 
                  bg-gradient-to-r from-blue-500 to-indigo-500 shadow-lg mb-4
                  group-hover:shadow-[0_0_20px_rgba(59,130,246,0.7)]"
-    >
-      <FaMapMarkerAlt className="text-white text-xl" />
-    </motion.div>
-    <h3 className="text-lg font-semibold mb-1">Our Address</h3>
-    <p className="text-sm opacity-80 leading-relaxed">
-      123 BizFlow Street <br /> Mumbai, India
-    </p>
-  </motion.div>
+          >
+            <FaMapMarkerAlt className="text-white text-xl" />
+          </motion.div>
+          <h3 className="text-lg font-semibold mb-1">Our Address</h3>
+          <p className="text-sm opacity-80 leading-relaxed">
+            123 BizFlow Street <br /> Mumbai, India
+          </p>
+        </motion.div>
 
-  {/* Email Card */}
-  <motion.div
-    whileHover={{ scale: 1.05 }}
-    transition={{ type: "spring", stiffness: 200 }}
-    className={`group rounded-2xl p-6 backdrop-blur-xl 
+        {/* Email Card */}
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          transition={{ type: "spring", stiffness: 200 }}
+          className={`group rounded-2xl p-6 backdrop-blur-xl 
       flex flex-col items-center text-center cursor-pointer
       ${
         isDarkMode
           ? "bg-white/5 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)] text-white"
           : "bg-gray-50/70 border border-gray-200 shadow-[0_0_30px_rgba(139,92,246,0.25)] text-gray-900"
       }`}
-  >
-    <motion.div
-      whileHover={{ scale: 1.3, rotate: -10 }}
-      transition={{ type: "spring", stiffness: 300 }}
-      className="flex items-center justify-center w-12 h-12 rounded-full 
+        >
+          <motion.div
+            whileHover={{ scale: 1.3, rotate: -10 }}
+            transition={{ type: "spring", stiffness: 300 }}
+            className="flex items-center justify-center w-12 h-12 rounded-full 
                  bg-gradient-to-r from-purple-500 to-pink-500 shadow-lg mb-4
                  group-hover:shadow-[0_0_20px_rgba(147,51,234,0.7)]"
-    >
-      <FaEnvelope className="text-white text-xl" />
-    </motion.div>
-    <h3 className="text-lg font-semibold mb-1">Email Us</h3>
-    <p className="text-sm opacity-80 leading-relaxed">contact@bizflow.com</p>
-  </motion.div>
+          >
+            <FaEnvelope className="text-white text-xl" />
+          </motion.div>
+          <h3 className="text-lg font-semibold mb-1">Email Us</h3>
+          <p className="text-sm opacity-80 leading-relaxed">
+            contact@bizflow.com
+          </p>
+        </motion.div>
 
-  {/* Phone Card */}
-  <motion.div
-    whileHover={{ scale: 1.05 }}
-    transition={{ type: "spring", stiffness: 200 }}
-    className={`group rounded-2xl p-6 backdrop-blur-xl 
+        {/* Phone Card */}
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          transition={{ type: "spring", stiffness: 200 }}
+          className={`group rounded-2xl p-6 backdrop-blur-xl 
       flex flex-col items-center text-center cursor-pointer
       ${
         isDarkMode
           ? "bg-white/5 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)] text-white"
           : "bg-gray-50/70 border border-gray-200 shadow-[0_0_30px_rgba(236,72,153,0.25)] text-gray-900"
       }`}
-  >
-    <motion.div
-      whileHover={{ scale: 1.3, rotate: 5 }}
-      transition={{ type: "spring", stiffness: 300 }}
-      className="flex items-center justify-center w-12 h-12 rounded-full 
+        >
+          <motion.div
+            whileHover={{ scale: 1.3, rotate: 5 }}
+            transition={{ type: "spring", stiffness: 300 }}
+            className="flex items-center justify-center w-12 h-12 rounded-full 
                  bg-gradient-to-r from-pink-500 to-red-500 shadow-lg mb-4
                  group-hover:shadow-[0_0_20px_rgba(236,72,153,0.7)]"
-    >
-      <FaPhone className="text-white text-xl" />
-    </motion.div>
-    <h3 className="text-lg font-semibold mb-1">Call Us</h3>
-    <p className="text-sm opacity-80 leading-relaxed">+91 98765 XXXXX</p>
-  </motion.div>
-</div>
-
-      
+          >
+            <FaPhone className="text-white text-xl" />
+          </motion.div>
+          <h3 className="text-lg font-semibold mb-1">Call Us</h3>
+          <p className="text-sm opacity-80 leading-relaxed">+91 98765 XXXXX</p>
+        </motion.div>
+      </div>
 
       {/* Success Popup */}
       <AnimatePresence>
@@ -290,10 +285,10 @@ const Partner = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -30 }}
             transition={{ duration: 0.6 }}
-            className="fixed top-6 left-1/2 -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999]"
+            className="fixed top-6 left-1/2 -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] flex items-center gap-2"
           >
-            <FaCheckCircle className="text-white text-xl" /> 
-      <span>Your request has been submitted!</span>
+            <FaCheckCircle className="text-white text-xl" />
+            <span>Your request has been submitted!</span>
           </motion.div>
         )}
       </AnimatePresence>
@@ -302,11 +297,3 @@ const Partner = () => {
 };
 
 export default Partner;
-
-
-
-
-
-
-
-// >📍 123 BizFlow Street, Mumbai, India</p> <p className="text-gray-600">📧 contact@bizflow.com</p> <p className="text-gray-600">📞 +91 98765 XXXXX</p> </motion.div>
