@@ -1,13 +1,102 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { fadeIn, textVariant } from "../utils/motion";
 import { useTheme } from "../context/ThemeContext";
-import { FaCheckCircle } from "react-icons/fa";
-import { FaMapMarkerAlt, FaEnvelope, FaPhone } from "react-icons/fa";
+import { FaCheckCircle, FaMapMarkerAlt, FaEnvelope, FaPhone } from "react-icons/fa";
+
+// Bounce animation for demo glass card
+const demoBounce = {
+  initial: { opacity: 0, scale: 0.92, y: 40 },
+  animate: {
+    opacity: 1,
+    scale: 1.08,
+    y: 0,
+    transition: { type: "spring", stiffness: 260, damping: 12 }
+  },
+  whileHover: {
+    scale: 1.13,
+    boxShadow: "0 16px 64px rgba(59,130,246,0.25)",
+    transition: { type: "spring", stiffness: 340 }
+  }
+};
+
+const glassVariants = {
+  initial: { opacity: 0, scale: 0.95, y: 40 },
+  animate: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 120, damping: 14 }
+  },
+  whileHover: {
+    scale: 1.03,
+    boxShadow: "0 8px 32px rgba(59,130,246,0.15)",
+    transition: { type: "spring", stiffness: 200 }
+  }
+};
+
+// Container animation: whole section comes from below
+const containerVariants = {
+  initial: { opacity: 0, y: 80 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 120,
+      damping: 18,
+      when: "beforeChildren",
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+// Section bounce animation for children
+const sectionBounce = {
+  initial: { opacity: 0, scale: 0.95, y: 30 },
+  animate: {
+    opacity: 1,
+    scale: 1.08,
+    y: 0,
+    transition: { type: "spring", stiffness: 180, damping: 8 }
+  }
+};
+
+// Floating tiny glass dots
+const GlassDot = ({ isDarkMode, style }) => (
+  <motion.div
+    initial={{ opacity: 0, scale: 0.5 }}
+    animate={{ opacity: 0.7, scale: 1 }}
+    transition={{ duration: 1, delay: Math.random() * 1.5 }}
+    whileHover={{ scale: 1.5, opacity: 1 }}
+    className={`fixed z-30 rounded-full backdrop-blur-lg
+      ${isDarkMode
+        ? "bg-gradient-to-br from-blue-900 to-white/20"
+        : "bg-gradient-to-br from-slate-300 to-slate-200"
+      }`}
+    style={{
+      width: 14,
+      height: 14,
+      ...style,
+    }}
+  />
+);
+
+// Utility to generate random positions for dots
+const generateDotPositions = () => {
+  const positions = [];
+  for (let i = 0; i < 10; i++) {
+    positions.push({
+      top: `${Math.random() * 90 + 5}vh`,
+      left: `${Math.random() * 90 + 5}vw`,
+    });
+  }
+  return positions;
+};
 
 const Partner = () => {
   const [showPopup, setShowPopup] = useState(false);
   const { isDarkMode } = useTheme();
+  const [dotPositions] = useState(generateDotPositions());
 
   // Form state
   const [formData, setFormData] = useState({
@@ -34,7 +123,6 @@ const Partner = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log("Form Submitted ✅", formData); // you can replace with API call
     setShowPopup(true);
 
     // reset form after submit
@@ -48,49 +136,80 @@ const Partner = () => {
     setTimeout(() => setShowPopup(false), 3000); // hide popup after 3s
   };
 
+  const bounceHover = {
+    whileHover: {
+      scale: 1.01,
+      transition: { type: "spring", stiffness: 340 }
+    }
+  };
+
+  const bounceHoverSmall = {
+    whileHover: {
+      scale: 1.02,
+      transition: { type: "spring", stiffness: 320 }
+    }
+  };
+
+  const bounceHoverCard = {
+    whileHover: {
+      scale: 1.13,
+      boxShadow: "0 16px 64px rgba(59,130,246,0.25)",
+      transition: { type: "spring", stiffness: 340 }
+    }
+  };
+
   return (
     <motion.section
-      variants={fadeIn("up", 0.2)}
-      initial="hidden"
-      animate="show"
-      className="pt-32 max-w-7xl mx-auto px-4 pb-24"
+      variants={containerVariants}
+      initial="initial"
+      animate="animate"
+      className="pt-32 max-w-7xl mx-auto px-4 pb-24 relative"
+      {...bounceHover}
     >
-      {/* Background Gradient Glow */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 opacity-20 blur-3xl -z-10" />
+      {/* Floating tiny glass dots - behind form */}
+      <div className="absolute inset-0 pointer-events-none -z-10">
+        {dotPositions.map((pos, idx) => (
+          <GlassDot key={idx} isDarkMode={isDarkMode} style={pos} {...bounceHoverSmall} />
+        ))}
+      </div>
 
       <motion.h1
-        variants={textVariant(0.3)}
-        className="text-5xl font-extrabold text-center mb-6 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent"
+        variants={sectionBounce}
+        className="text-5xl font-extrabold text-center mb-6 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent cursor-pointer"
+        {...bounceHover}
       >
         Become a Partner
       </motion.h1>
 
       <motion.p
-        variants={fadeIn("up", 0.4)}
-        className={`text-lg text-center max-w-2xl mx-auto mb-12 
+        variants={sectionBounce}
+        className={`text-lg text-center max-w-2xl mx-auto mb-12 cursor-pointer
           ${isDarkMode ? "text-gray-300" : "text-gray-700"}`}
+        {...bounceHoverSmall}
       >
         Join hands with us to grow together. Fill out the form below, and our
         team will reach out soon!
       </motion.p>
 
-      {/* Form */}
       <motion.form
         onSubmit={handleSubmit}
-        variants={fadeIn("up", 0.5)}
-        className={`backdrop-blur-xl rounded-2xl p-10 max-w-2xl mx-auto space-y-6
-          ${
-            isDarkMode
-              ? "bg-white/5 text-white border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
-              : "bg-gray-50/70 text-gray-900 border-transparent shadow-[0_0_30px_rgba(59,130,246,0.25)]"
+        variants={sectionBounce}
+        className={`backdrop-blur-3xl rounded-2xl p-10 max-w-2xl mx-auto space-y-6 border opacity-80
+          ${isDarkMode
+            ? "bg-white/10 text-white border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.35)]"
+            : "bg-white/60 text-gray-900 border-gray-200 shadow-[0_0_30px_rgba(59,130,246,0.12)]"
           }`}
+        style={{
+          boxShadow: isDarkMode
+            ? "0 8px 32px rgba(59,130,246,0.10), 0 1.5px 8px rgba(255,255,255,0.08)"
+            : "0 8px 32px rgba(59,130,246,0.10), 0 1.5px 8px rgba(59,130,246,0.08)"
+        }}
+        {...bounceHoverCard}
       >
         {/* Name */}
-        <div>
+        <motion.div {...bounceHoverSmall}>
           <label
-            className={`block font-semibold mb-2 ${
-              isDarkMode ? "text-gray-200" : "text-gray-800"
-            }`}
+            className={`block font-semibold mb-2 ${isDarkMode ? "text-gray-200" : "text-gray-800"}`}
           >
             Name
           </label>
@@ -100,22 +219,19 @@ const Partner = () => {
             value={formData.name}
             onChange={handleChange}
             placeholder="Your full name"
-            className={`w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 
-              ${
-                isDarkMode
-                  ? "border-white/20 bg-gray-900/40 text-white placeholder-gray-300 focus:ring-pink-400"
-                  : "border-gray-300 bg-white/80 text-gray-800 placeholder-gray-500 focus:ring-pink-400"
+            className={`w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2
+              ${isDarkMode
+                ? "border-white/20 bg-gray-900/40 text-white placeholder-gray-300 focus:ring-pink-400"
+                : "border-gray-300 bg-white/80 text-gray-800 placeholder-gray-500 focus:ring-pink-400"
               }`}
             required
           />
-        </div>
+        </motion.div>
 
         {/* Email */}
-        <div>
+        <motion.div {...bounceHoverSmall}>
           <label
-            className={`block font-semibold mb-2 ${
-              isDarkMode ? "text-gray-200" : "text-gray-800"
-            }`}
+            className={`block font-semibold mb-2 ${isDarkMode ? "text-gray-200" : "text-gray-800"}`}
           >
             Email
           </label>
@@ -125,22 +241,19 @@ const Partner = () => {
             value={formData.email}
             onChange={handleChange}
             placeholder="you@example.com"
-            className={`w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 
-              ${
-                isDarkMode
-                  ? "border-white/20 bg-gray-900/40 text-white placeholder-gray-300 focus:ring-purple-400"
-                  : "border-gray-300 bg-white/80 text-gray-800 placeholder-gray-500 focus:ring-purple-400"
+            className={`w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2
+              ${isDarkMode
+                ? "border-white/20 bg-gray-900/40 text-white placeholder-gray-300 focus:ring-purple-400"
+                : "border-gray-300 bg-white/80 text-gray-800 placeholder-gray-500 focus:ring-purple-400"
               }`}
             required
           />
-        </div>
+        </motion.div>
 
         {/* Company */}
-        <div>
+        <motion.div {...bounceHoverSmall}>
           <label
-            className={`block font-semibold mb-2 ${
-              isDarkMode ? "text-gray-200" : "text-gray-800"
-            }`}
+            className={`block font-semibold mb-2 ${isDarkMode ? "text-gray-200" : "text-gray-800"}`}
           >
             Company Name
           </label>
@@ -150,21 +263,18 @@ const Partner = () => {
             value={formData.company}
             onChange={handleChange}
             placeholder="Your company name"
-            className={`w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 
-              ${
-                isDarkMode
-                  ? "border-white/20 bg-gray-900/40 text-white placeholder-gray-300 focus:ring-blue-400"
-                  : "border-gray-300 bg-white/80 text-gray-800 placeholder-gray-500 focus:ring-blue-400"
+            className={`w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2
+              ${isDarkMode
+                ? "border-white/20 bg-gray-900/40 text-white placeholder-gray-300 focus:ring-blue-400"
+                : "border-gray-300 bg-white/80 text-gray-800 placeholder-gray-500 focus:ring-blue-400"
               }`}
           />
-        </div>
+        </motion.div>
 
         {/* Message */}
-        <div>
+        <motion.div {...bounceHoverSmall}>
           <label
-            className={`block font-semibold mb-2 ${
-              isDarkMode ? "text-gray-200" : "text-gray-800"
-            }`}
+            className={`block font-semibold mb-2 ${isDarkMode ? "text-gray-200" : "text-gray-800"}`}
           >
             Message
           </label>
@@ -174,47 +284,48 @@ const Partner = () => {
             onChange={handleChange}
             placeholder="Tell us about your partnership proposal"
             rows="4"
-            className={`w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 
-              ${
-                isDarkMode
-                  ? "border-white/20 bg-gray-900/40 text-white placeholder-gray-300 focus:ring-indigo-400"
-                  : "border-gray-300 bg-white/80 text-gray-800 placeholder-gray-500 focus:ring-indigo-400"
+            className={`w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2
+              ${isDarkMode
+                ? "border-white/20 bg-gray-900/40 text-white placeholder-gray-300 focus:ring-indigo-400"
+                : "border-gray-300 bg-white/80 text-gray-800 placeholder-gray-500 focus:ring-indigo-400"
               }`}
           />
-        </div>
+        </motion.div>
 
         {/* Submit Button */}
-        <button
+        <motion.button
           type="submit"
-          className="w-full py-3 rounded-xl font-semibold text-lg 
-          bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 
-          text-white shadow-lg hover:opacity-90 transition-all"
+          whileTap={{ scale: 0.97 }}
+          whileHover={{ scale: 1.13, transition: { type: "spring", stiffness: 340 } }}
+          className="w-full py-3 rounded-xl font-semibold text-lg
+            bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500
+            text-white shadow-lg hover:opacity-90 transition-all"
         >
           Submit
-        </button>
+        </motion.button>
       </motion.form>
-      {/* Contact Info Cards */}
 
       {/* Contact Info Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 max-w-5xl mx-auto">
         {/* Address Card */}
         <motion.div
-          whileHover={{ scale: 1.05 }}
-          transition={{ type: "spring", stiffness: 200 }}
-          className={`group rounded-2xl p-6 backdrop-blur-xl 
-      flex flex-col items-center text-center cursor-pointer
-      ${
-        isDarkMode
-          ? "bg-white/5 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)] text-white"
-          : "bg-gray-50/70 border border-gray-200 shadow-[0_0_30px_rgba(59,130,246,0.25)] text-gray-900"
-      }`}
+          variants={sectionBounce}
+          initial="initial"
+          animate="animate"
+          whileHover={{ scale: 1.13, transition: { type: "spring", stiffness: 340 } }}
+          className={`group rounded-2xl p-6 backdrop-blur-2xl
+            flex flex-col items-center text-center cursor-pointer
+            ${isDarkMode
+              ? "bg-white/10 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.35)] text-white"
+              : "bg-white/60 border border-gray-200 shadow-[0_0_30px_rgba(59,130,246,0.12)] text-gray-900"
+            }`}
         >
           <motion.div
-            whileHover={{ scale: 1.3, rotate: 10 }}
+            whileHover={{ scale: 1.2, rotate: 10 }}
             transition={{ type: "spring", stiffness: 300 }}
-            className="flex items-center justify-center w-12 h-12 rounded-full 
-                 bg-gradient-to-r from-blue-500 to-indigo-500 shadow-lg mb-4
-                 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.7)]"
+            className="flex items-center justify-center w-12 h-12 rounded-full
+              bg-gradient-to-r from-blue-500 to-indigo-500 shadow-lg mb-4
+              group-hover:shadow-[0_0_20px_rgba(59,130,246,0.7)]"
           >
             <FaMapMarkerAlt className="text-white text-xl" />
           </motion.div>
@@ -226,22 +337,23 @@ const Partner = () => {
 
         {/* Email Card */}
         <motion.div
-          whileHover={{ scale: 1.05 }}
-          transition={{ type: "spring", stiffness: 200 }}
-          className={`group rounded-2xl p-6 backdrop-blur-xl 
-      flex flex-col items-center text-center cursor-pointer
-      ${
-        isDarkMode
-          ? "bg-white/5 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)] text-white"
-          : "bg-gray-50/70 border border-gray-200 shadow-[0_0_30px_rgba(139,92,246,0.25)] text-gray-900"
-      }`}
+          variants={glassVariants}
+          initial="initial"
+          animate="animate"
+          whileHover={{ scale: 1.13, transition: { type: "spring", stiffness: 340 } }}
+          className={`group rounded-2xl p-6 backdrop-blur-2xl
+            flex flex-col items-center text-center cursor-pointer
+            ${isDarkMode
+              ? "bg-white/10 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.35)] text-white"
+              : "bg-white/60 border border-gray-200 shadow-[0_0_30px_rgba(139,92,246,0.12)] text-gray-900"
+            }`}
         >
           <motion.div
-            whileHover={{ scale: 1.3, rotate: -10 }}
+            whileHover={{ scale: 1.2, rotate: -10 }}
             transition={{ type: "spring", stiffness: 300 }}
-            className="flex items-center justify-center w-12 h-12 rounded-full 
-                 bg-gradient-to-r from-purple-500 to-pink-500 shadow-lg mb-4
-                 group-hover:shadow-[0_0_20px_rgba(147,51,234,0.7)]"
+            className="flex items-center justify-center w-12 h-12 rounded-full
+              bg-gradient-to-r from-purple-500 to-pink-500 shadow-lg mb-4
+              group-hover:shadow-[0_0_20px_rgba(147,51,234,0.7)]"
           >
             <FaEnvelope className="text-white text-xl" />
           </motion.div>
@@ -253,22 +365,23 @@ const Partner = () => {
 
         {/* Phone Card */}
         <motion.div
-          whileHover={{ scale: 1.05 }}
-          transition={{ type: "spring", stiffness: 200 }}
-          className={`group rounded-2xl p-6 backdrop-blur-xl 
-      flex flex-col items-center text-center cursor-pointer
-      ${
-        isDarkMode
-          ? "bg-white/5 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)] text-white"
-          : "bg-gray-50/70 border border-gray-200 shadow-[0_0_30px_rgba(236,72,153,0.25)] text-gray-900"
-      }`}
+          variants={glassVariants}
+          initial="initial"
+          animate="animate"
+          whileHover={{ scale: 1.13, transition: { type: "spring", stiffness: 340 } }}
+          className={`group rounded-2xl p-6 backdrop-blur-2xl
+            flex flex-col items-center text-center cursor-pointer
+            ${isDarkMode
+              ? "bg-white/10 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.35)] text-white"
+              : "bg-white/60 border border-gray-200 shadow-[0_0_30px_rgba(236,72,153,0.12)] text-gray-900"
+            }`}
         >
           <motion.div
-            whileHover={{ scale: 1.3, rotate: 5 }}
+            whileHover={{ scale: 1.2, rotate: 5 }}
             transition={{ type: "spring", stiffness: 300 }}
-            className="flex items-center justify-center w-12 h-12 rounded-full 
-                 bg-gradient-to-r from-pink-500 to-red-500 shadow-lg mb-4
-                 group-hover:shadow-[0_0_20px_rgba(236,72,153,0.7)]"
+            className="flex items-center justify-center w-12 h-12 rounded-full
+              bg-gradient-to-r from-pink-500 to-red-500 shadow-lg mb-4
+              group-hover:shadow-[0_0_20px_rgba(236,72,153,0.7)]"
           >
             <FaPhone className="text-white text-xl" />
           </motion.div>
