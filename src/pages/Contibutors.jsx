@@ -129,9 +129,15 @@ const Contributors = () => {
     }
   };
 
+  const bounceHover = {
+    onMouseEnter: e => e.currentTarget.style.transform = "scale(1.07)",
+    onMouseLeave: e => e.currentTarget.style.transform = "scale(1)",
+    style: { transition: "transform 0.3s cubic-bezier(.34,1.56,.64,1)" }
+  };
+
   return (
     <motion.div
-      className={`min-h-screen ${
+      className={`min-h-screen mt-10 ${
         isDarkMode 
           ? "bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900" 
           : "bg-gradient-to-br from-gray-50 via-white to-gray-100"
@@ -160,18 +166,24 @@ const Contributors = () => {
                   isDarkMode ? "text-blue-400" : "text-blue-600"
                 }`} />
               </div>
-              <h1 className={`text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r ${
-                isDarkMode 
-                  ? "from-white via-blue-100 to-blue-200" 
-                  : "from-gray-900 via-blue-900 to-blue-700"
-              } bg-clip-text text-transparent`}>
+              <h1
+                className={`text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r ${
+                  isDarkMode 
+                    ? "from-white via-blue-100 to-blue-200" 
+                    : "from-gray-900 via-blue-900 to-blue-700"
+                } bg-clip-text text-transparent cursor-pointer inline-block`}
+                {...bounceHover}
+              >
                 Our Contributors
               </h1>
             </div>
             
-            <p className={`text-lg md:text-xl max-w-3xl mx-auto ${
-              isDarkMode ? "text-gray-300" : "text-gray-600"
-            }`}>
+            <p
+              className={`text-lg md:text-xl max-w-3xl mx-auto cursor-pointer inline-block ${
+                isDarkMode ? "text-gray-300" : "text-gray-600"
+              }`}
+              {...bounceHover}
+            >
               Meet the amazing developers who bring BizFlow to life with their code, ideas, and passion
             </p>
 
@@ -220,15 +232,21 @@ const Contributors = () => {
           {/* Top 3 Contributors */}
           {contributors.length >= 3 && (
             <motion.div variants={itemVariants} className="mb-20">
-              <div className="text-center mb-12">
-                <h2 className={`text-3xl md:text-4xl font-bold mb-4 ${
-                  isDarkMode ? "text-white" : "text-gray-900"
-                }`}>
+              <div className="text-center mb-12 flex items-center justify-center flex-col">
+                <h2
+                  className={`text-3xl md:text-4xl font-bold mb-4 ${
+                    isDarkMode ? "text-white" : "text-gray-900"
+                  } cursor-pointer inline-block`}
+                  {...bounceHover}
+                >
                   🏆 Top Contributors
                 </h2>
-                <p className={`text-lg ${
-                  isDarkMode ? "text-gray-400" : "text-gray-600"
-                }`}>
+                <p
+                  className={`text-lg ${
+                    isDarkMode ? "text-gray-400" : "text-gray-600"
+                  } cursor-pointer inline-block`}
+                  {...bounceHover}
+                >
                   Our most active contributors leading the way
                 </p>
               </div>
@@ -345,15 +363,21 @@ const Contributors = () => {
           {/* Other Contributors */}
           {contributors.length > 3 && (
             <motion.div variants={itemVariants}>
-              <div className="text-center mb-12">
-                <h2 className={`text-3xl md:text-4xl font-bold mb-4 ${
-                  isDarkMode ? "text-white" : "text-gray-900"
-                }`}>
+              <div className="text-center mb-12 flex items-center justify-center flex-col">
+                <h2
+                  className={`text-3xl md:text-4xl font-bold mb-4 ${
+                    isDarkMode ? "text-white" : "text-gray-900"
+                  } cursor-pointer inline-block`}
+                  {...bounceHover}
+                >
                   👥 All Contributors
                 </h2>
-                <p className={`text-lg ${
-                  isDarkMode ? "text-gray-400" : "text-gray-600"
-                }`}>
+                <p
+                  className={`text-lg ${
+                    isDarkMode ? "text-gray-400" : "text-gray-600"
+                  } cursor-pointer inline-block`}
+                  {...bounceHover}
+                >
                   Every contribution makes a difference
                 </p>
               </div>
@@ -460,7 +484,9 @@ const Contributors = () => {
               isDarkMode ? "bg-gray-800/50 text-gray-300" : "bg-white/50 text-gray-600"
             } backdrop-blur-sm border ${
               isDarkMode ? "border-gray-700/50" : "border-gray-200/50"
-            }`}>
+            } cursor-pointer`}
+            {...bounceHover}
+            >
               <span>Want to contribute?</span>
               <a 
                 href="https://github.com/adityadomle/BizFlow" 
@@ -469,6 +495,7 @@ const Contributors = () => {
                 className={`font-semibold hover:underline ${
                   isDarkMode ? "text-blue-400" : "text-blue-600"
                 }`}
+                {...bounceHover}
               >
                 Join us on GitHub →
               </a>
