@@ -35,9 +35,42 @@ const glassVariants = {
   }
 };
 
+// Floating tiny glass dots
+const GlassDot = ({ isDarkMode, style }) => (
+  <motion.div
+    initial={{ opacity: 0, scale: 0.5 }}
+    animate={{ opacity: 0.7, scale: 1 }}
+    transition={{ duration: 1, delay: Math.random() * 1.5 }}
+    whileHover={{ scale: 1.5, opacity: 1 }}
+    className={`fixed z-30 rounded-full backdrop-blur-lg
+      ${isDarkMode
+        ? "bg-gradient-to-br from-blue-900 to-white/20"
+        : "bg-gradient-to-br from-slate-300 to-slate-200"
+      }`}
+    style={{
+      width: 14,
+      height: 14,
+      ...style,
+    }}
+  />
+);
+
+// Utility to generate random positions for dots
+const generateDotPositions = () => {
+  const positions = [];
+  for (let i = 0; i < 10; i++) {
+    positions.push({
+      top: `${Math.random() * 90 + 5}vh`,
+      left: `${Math.random() * 90 + 5}vw`,
+    });
+  }
+  return positions;
+};
+
 const Partner = () => {
   const [showPopup, setShowPopup] = useState(false);
   const { isDarkMode } = useTheme();
+  const [dotPositions] = useState(generateDotPositions());
 
   // Form state
   const [formData, setFormData] = useState({
@@ -84,6 +117,13 @@ const Partner = () => {
       animate="show"
       className="pt-32 max-w-7xl mx-auto px-4 pb-24 relative"
     >
+      {/* Floating tiny glass dots - behind form */}
+      <div className="absolute inset-0 pointer-events-none -z-10">
+        {dotPositions.map((pos, idx) => (
+          <GlassDot key={idx} isDarkMode={isDarkMode} style={pos} />
+        ))}
+      </div>
+
       <motion.h1
         variants={textVariant(0.3)}
         whileHover={{ scale: 1.13, transition: { type: "spring", stiffness: 340 } }}
