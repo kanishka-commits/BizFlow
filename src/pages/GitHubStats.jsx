@@ -1,5 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useTheme } from "../context/ThemeContext";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 // 🔹 Define the GitHub username and repo we are fetching stats for
 const GITHUB_USER = "adityadomle";
@@ -42,6 +47,33 @@ export default function GitHubStats() {
     lastCommit: "",
     size: 0,
   });
+
+  // Refs for stat cards
+  const statRefs = useRef([]);
+
+  useGSAP(() => {
+    statRefs.current.forEach((card, idx) => {
+      if (card) {
+        gsap.fromTo(
+          card,
+          { opacity: 0, y: 40, scale: 0.95 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.7,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 90%",
+              scrub:1,
+            },
+            delay: idx * 0.08,
+          }
+        );
+      }
+    });
+  }, [isLoading]);
 
   useEffect(() => {
     async function fetchGitHubStats() {
@@ -141,24 +173,36 @@ export default function GitHubStats() {
       <div className="relative max-w-7xl mx-auto">
         {/* Enhanced heading */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-3 mb-6">
+          <div className="flex items-center justify-center gap-3 mb-6">
             <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${
               isDarkMode ? "bg-white/10" : "bg-black/5"
             }`}>
               <span className="text-2xl">📊</span>
             </div>
-            <h2 className={`text-4xl md:text-5xl font-bold bg-gradient-to-r ${
-              isDarkMode 
-                ? "from-white via-gray-200 to-gray-400" 
-                : "from-gray-900 via-gray-700 to-gray-500"
-            } bg-clip-text text-transparent`}>
+            {/* Add bounce on hover to heading */}
+            <span
+              className={`text-4xl md:text-5xl font-bold bg-gradient-to-r ${
+                isDarkMode 
+                  ? "from-white via-gray-200 to-gray-400" 
+                  : "from-gray-900 via-gray-700 to-gray-500"
+              } bg-clip-text text-transparent cursor-pointer inline-block transition-transform duration-300`}
+              style={{ willChange: "transform" }}
+              onMouseEnter={e => e.currentTarget.style.transform = "scale(1.07)"}
+              onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
+            >
               Project Analytics
-            </h2>
+            </span>
           </div>
           
-          <p className={`text-lg max-w-2xl mx-auto ${
-            isDarkMode ? "text-gray-400" : "text-gray-600"
-          }`}>
+          {/* Add bounce on hover to description */}
+          <p
+            className={`text-lg max-w-2xl mx-auto ${
+              isDarkMode ? "text-gray-400" : "text-gray-600"
+            } cursor-pointer transition-transform duration-300 inline-block`}
+            style={{ willChange: "transform" }}
+            onMouseEnter={e => e.currentTarget.style.transform = "scale(1.04)"}
+            onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
+          >
             Real-time insights and metrics from our GitHub repository
           </p>
           
@@ -168,11 +212,12 @@ export default function GitHubStats() {
           </div>
         </div>
 
-        {/* Stats grid with enhanced loading state */}
+        {/* Stats grid with GSAP scroll trigger */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
           {statCards.map(({ label, value, icon, link, gradient, bgGradient, suffix = "" }, index) => (
             <a
               key={label}
+              ref={el => statRefs.current[index] = el}
               href={link}
               target="_blank"
               rel="noopener noreferrer"
@@ -181,10 +226,6 @@ export default function GitHubStats() {
                   ? "bg-gray-800/50 border-gray-700/50 hover:border-gray-600/50 backdrop-blur-sm"
                   : "bg-white/80 border-gray-200/50 hover:border-gray-300/50 backdrop-blur-sm"
               } shadow-xl hover:shadow-2xl`}
-              style={{
-                animationDelay: `${index * 0.1}s`,
-                animation: isLoading ? "none" : "fadeInUp 0.6s ease-out forwards"
-              }}
             >
               {/* Gradient background */}
               <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${bgGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
