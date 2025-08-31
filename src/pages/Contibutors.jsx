@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { fetchContributors } from "../../api/githubApi";
 import { FaGithub, FaCode, FaUsers } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
 import GitHubStats from "./GitHubStats";
 import Loader from "../components/Loader";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Contributors = () => {
   const [contributors, setContributors] = useState([]);
@@ -23,6 +28,39 @@ const Contributors = () => {
         setLoading(false);
       });
   }, []);
+
+  // Refs for cards
+  const cardRefs = useRef([]);
+
+  useGSAP(() => {
+    cardRefs.current.forEach((card, idx) => {
+      if (card) {
+        gsap.fromTo(
+          card,
+          { opacity: 0, y: 60, scale: 0.95 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.7,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 85%",
+              scrub:2
+            },
+            delay: idx * 0.08,
+          }
+        );
+      }
+    });
+  }, [contributors]);
+
+  useEffect(()=>{
+    window.scrollTo({
+      top:0,
+    })
+  },[])
 
   if (loading) {
     return <Loader />;
@@ -93,9 +131,6 @@ const Contributors = () => {
 
   return (
     <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
       className={`min-h-screen ${
         isDarkMode 
           ? "bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900" 
@@ -198,15 +233,11 @@ const Contributors = () => {
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              <div className="mb-20 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
                 {contributors.slice(0, 3).map((contributor, idx) => (
-                  <motion.div
+                  <div
                     key={`top-${contributor.login}`}
-                    variants={itemVariants}
-                    whileHover={{ 
-                      y: -12,
-                      transition: { type: "spring", stiffness: 300, damping: 20 }
-                    }}
+                    ref={el => cardRefs.current[idx] = el}
                     className="group relative"
                   >
                     {/* Ranking badge */}
@@ -305,7 +336,7 @@ const Contributors = () => {
                         } to-transparent -skew-x-12 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000`}></div>
                       </div>
                     </a>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </motion.div>
@@ -329,13 +360,9 @@ const Contributors = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {contributors.slice(3).map((contributor, idx) => (
-                  <motion.div
+                  <div
                     key={contributor.login}
-                    variants={itemVariants}
-                    whileHover={{ 
-                      y: -8,
-                      transition: { type: "spring", stiffness: 300, damping: 20 }
-                    }}
+                    ref={el => cardRefs.current[idx + 3] = el}
                     className="group"
                   >
                     <a
@@ -418,7 +445,7 @@ const Contributors = () => {
                         <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-transparent via-white/5 to-transparent -skew-x-12 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                       </div>
                     </a>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </motion.div>
