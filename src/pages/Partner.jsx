@@ -136,24 +136,47 @@ const Partner = () => {
     setTimeout(() => setShowPopup(false), 3000); // hide popup after 3s
   };
 
+  const bounceHover = {
+    whileHover: {
+      scale: 1.01,
+      transition: { type: "spring", stiffness: 340 }
+    }
+  };
+
+  const bounceHoverSmall = {
+    whileHover: {
+      scale: 1.02,
+      transition: { type: "spring", stiffness: 320 }
+    }
+  };
+
+  const bounceHoverCard = {
+    whileHover: {
+      scale: 1.13,
+      boxShadow: "0 16px 64px rgba(59,130,246,0.25)",
+      transition: { type: "spring", stiffness: 340 }
+    }
+  };
+
   return (
     <motion.section
       variants={containerVariants}
       initial="initial"
       animate="animate"
       className="pt-32 max-w-7xl mx-auto px-4 pb-24 relative"
+      {...bounceHover}
     >
       {/* Floating tiny glass dots - behind form */}
       <div className="absolute inset-0 pointer-events-none -z-10">
         {dotPositions.map((pos, idx) => (
-          <GlassDot key={idx} isDarkMode={isDarkMode} style={pos} />
+          <GlassDot key={idx} isDarkMode={isDarkMode} style={pos} {...bounceHoverSmall} />
         ))}
       </div>
 
       <motion.h1
         variants={sectionBounce}
         className="text-5xl font-extrabold text-center mb-6 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent cursor-pointer"
-        whileHover={{ scale: 1.13, transition: { type: "spring", stiffness: 340 } }}
+        {...bounceHover}
       >
         Become a Partner
       </motion.h1>
@@ -162,7 +185,7 @@ const Partner = () => {
         variants={sectionBounce}
         className={`text-lg text-center max-w-2xl mx-auto mb-12 cursor-pointer
           ${isDarkMode ? "text-gray-300" : "text-gray-700"}`}
-        whileHover={{ scale: 1.09, transition: { type: "spring", stiffness: 320 } }}
+        {...bounceHoverSmall}
       >
         Join hands with us to grow together. Fill out the form below, and our
         team will reach out soon!
@@ -181,9 +204,10 @@ const Partner = () => {
             ? "0 8px 32px rgba(59,130,246,0.10), 0 1.5px 8px rgba(255,255,255,0.08)"
             : "0 8px 32px rgba(59,130,246,0.10), 0 1.5px 8px rgba(59,130,246,0.08)"
         }}
+        {...bounceHoverCard}
       >
         {/* Name */}
-        <div>
+        <motion.div {...bounceHoverSmall}>
           <label
             className={`block font-semibold mb-2 ${isDarkMode ? "text-gray-200" : "text-gray-800"}`}
           >
@@ -202,10 +226,10 @@ const Partner = () => {
               }`}
             required
           />
-        </div>
+        </motion.div>
 
         {/* Email */}
-        <div>
+        <motion.div {...bounceHoverSmall}>
           <label
             className={`block font-semibold mb-2 ${isDarkMode ? "text-gray-200" : "text-gray-800"}`}
           >
@@ -224,10 +248,10 @@ const Partner = () => {
               }`}
             required
           />
-        </div>
+        </motion.div>
 
         {/* Company */}
-        <div>
+        <motion.div {...bounceHoverSmall}>
           <label
             className={`block font-semibold mb-2 ${isDarkMode ? "text-gray-200" : "text-gray-800"}`}
           >
@@ -245,10 +269,10 @@ const Partner = () => {
                 : "border-gray-300 bg-white/80 text-gray-800 placeholder-gray-500 focus:ring-blue-400"
               }`}
           />
-        </div>
+        </motion.div>
 
         {/* Message */}
-        <div>
+        <motion.div {...bounceHoverSmall}>
           <label
             className={`block font-semibold mb-2 ${isDarkMode ? "text-gray-200" : "text-gray-800"}`}
           >
@@ -266,13 +290,13 @@ const Partner = () => {
                 : "border-gray-300 bg-white/80 text-gray-800 placeholder-gray-500 focus:ring-indigo-400"
               }`}
           />
-        </div>
+        </motion.div>
 
         {/* Submit Button */}
         <motion.button
           type="submit"
           whileTap={{ scale: 0.97 }}
-          whileHover={{ scale: 1.09 }}
+          whileHover={{ scale: 1.13, transition: { type: "spring", stiffness: 340 } }}
           className="w-full py-3 rounded-xl font-semibold text-lg
             bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500
             text-white shadow-lg hover:opacity-90 transition-all"
@@ -288,7 +312,7 @@ const Partner = () => {
           variants={sectionBounce}
           initial="initial"
           animate="animate"
-          whileHover={{ scale: 1.08 }}
+          whileHover={{ scale: 1.13, transition: { type: "spring", stiffness: 340 } }}
           className={`group rounded-2xl p-6 backdrop-blur-2xl
             flex flex-col items-center text-center cursor-pointer
             ${isDarkMode
@@ -315,9 +339,8 @@ const Partner = () => {
         <motion.div
           variants={glassVariants}
           initial="initial"
-          whileInView="animate"
-          whileHover="whileHover"
-          viewport={{ once: true, amount: 0.2 }}
+          animate="animate"
+          whileHover={{ scale: 1.13, transition: { type: "spring", stiffness: 340 } }}
           className={`group rounded-2xl p-6 backdrop-blur-2xl
             flex flex-col items-center text-center cursor-pointer
             ${isDarkMode
@@ -344,9 +367,8 @@ const Partner = () => {
         <motion.div
           variants={glassVariants}
           initial="initial"
-          whileInView="animate"
-          whileHover="whileHover"
-          viewport={{ once: true, amount: 0.2 }}
+          animate="animate"
+          whileHover={{ scale: 1.13, transition: { type: "spring", stiffness: 340 } }}
           className={`group rounded-2xl p-6 backdrop-blur-2xl
             flex flex-col items-center text-center cursor-pointer
             ${isDarkMode
