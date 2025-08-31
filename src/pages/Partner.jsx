@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { fadeIn, textVariant } from "../utils/motion";
 import { useTheme } from "../context/ThemeContext";
 import { FaCheckCircle, FaMapMarkerAlt, FaEnvelope, FaPhone } from "react-icons/fa";
 
@@ -32,6 +31,33 @@ const glassVariants = {
     scale: 1.03,
     boxShadow: "0 8px 32px rgba(59,130,246,0.15)",
     transition: { type: "spring", stiffness: 200 }
+  }
+};
+
+// Container animation: whole section comes from below
+const containerVariants = {
+  initial: { opacity: 0, y: 80 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 120,
+      damping: 18,
+      when: "beforeChildren",
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+// Section bounce animation for children
+const sectionBounce = {
+  initial: { opacity: 0, scale: 0.95, y: 30 },
+  animate: {
+    opacity: 1,
+    scale: 1.08,
+    y: 0,
+    transition: { type: "spring", stiffness: 180, damping: 8 }
   }
 };
 
@@ -112,9 +138,9 @@ const Partner = () => {
 
   return (
     <motion.section
-      variants={fadeIn("up", 0.2)}
-      initial="hidden"
-      animate="show"
+      variants={containerVariants}
+      initial="initial"
+      animate="animate"
       className="pt-32 max-w-7xl mx-auto px-4 pb-24 relative"
     >
       {/* Floating tiny glass dots - behind form */}
@@ -125,31 +151,27 @@ const Partner = () => {
       </div>
 
       <motion.h1
-        variants={textVariant(0.3)}
-        whileHover={{ scale: 1.13, transition: { type: "spring", stiffness: 340 } }}
+        variants={sectionBounce}
         className="text-5xl font-extrabold text-center mb-6 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent cursor-pointer"
+        whileHover={{ scale: 1.13, transition: { type: "spring", stiffness: 340 } }}
       >
         Become a Partner
       </motion.h1>
 
       <motion.p
-        variants={fadeIn("up", 0.4)}
-        whileHover={{ scale: 1.09, transition: { type: "spring", stiffness: 320 } }}
+        variants={sectionBounce}
         className={`text-lg text-center max-w-2xl mx-auto mb-12 cursor-pointer
           ${isDarkMode ? "text-gray-300" : "text-gray-700"}`}
+        whileHover={{ scale: 1.09, transition: { type: "spring", stiffness: 320 } }}
       >
         Join hands with us to grow together. Fill out the form below, and our
         team will reach out soon!
       </motion.p>
 
-      {/* Form with glassmorphism and bounce animation */}
       <motion.form
         onSubmit={handleSubmit}
-        variants={glassVariants}
-        initial="initial"
-        animate="animate"
-        whileHover="whileHover"
-        className={`backdrop-blur-3xl rounded-2xl p-10 max-w-2xl mx-auto space-y-6 border
+        variants={sectionBounce}
+        className={`backdrop-blur-3xl rounded-2xl p-10 max-w-2xl mx-auto space-y-6 border opacity-80
           ${isDarkMode
             ? "bg-white/10 text-white border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.35)]"
             : "bg-white/60 text-gray-900 border-gray-200 shadow-[0_0_30px_rgba(59,130,246,0.12)]"
@@ -259,15 +281,14 @@ const Partner = () => {
         </motion.button>
       </motion.form>
 
-      {/* Contact Info Cards with glassmorphism and bounce */}
+      {/* Contact Info Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 max-w-5xl mx-auto">
         {/* Address Card */}
         <motion.div
-          variants={glassVariants}
+          variants={sectionBounce}
           initial="initial"
-          whileInView="animate"
-          whileHover="whileHover"
-          viewport={{ once: true, amount: 0.2 }}
+          animate="animate"
+          whileHover={{ scale: 1.08 }}
           className={`group rounded-2xl p-6 backdrop-blur-2xl
             flex flex-col items-center text-center cursor-pointer
             ${isDarkMode
