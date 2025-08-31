@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { FaArrowUp } from "react-icons/fa";
+import { HiChevronUp } from "react-icons/hi";   // minimal + modern
+
 
 export default function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
@@ -63,7 +64,7 @@ export default function ScrollToTop() {
         <span className="absolute inset-0 bg-gradient-to-tr from-pink-400 via-purple-500 to-blue-400 opacity-20 group-hover:opacity-50 rounded-full transition-opacity duration-300"></span>
 
         {/* Icon stays on top */}
-        <FaArrowUp className="relative z-10" />
+<HiChevronUp className="relative z-10 w-6 h-6" />
       </button>
     </div>
   );
