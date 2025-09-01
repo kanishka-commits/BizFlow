@@ -20,7 +20,7 @@ const colorCodes = {
     bg: "bg-blue-600",
     text: "text-blue-600",
     lightBg: "bg-blue-50",
-    darkBg: "bg-slate-800",
+    darkBg: "bg-slate-900",
     border: "border-blue-600",
     accent: "text-blue-300",
     badge: "bg-blue-600 text-white",
