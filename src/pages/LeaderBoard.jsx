@@ -1,8 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { FaTrophy, FaStar, FaCode, FaUsers, FaGithub, FaSearch } from "react-icons/fa";
 import { ChevronRight, ChevronLeft } from "lucide-react";
-import { useTheme } from "../context/ThemeContext"; // Theme context
+import { useTheme } from "../context/ThemeContext";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const GITHUB_REPO = "adityadomle/bizflow";
 const token = import.meta.env.VITE_GITHUB_TOKEN;
@@ -247,6 +252,33 @@ export default function LeaderBoard() {
     style: { transition: "transform 0.3s cubic-bezier(.34,1.56,.64,1)" }
   };
 
+  // Refs for contributor containers
+  const contributorRefs = useRef([]);
+
+  useGSAP(() => {
+    contributorRefs.current.forEach((ref, idx) => {
+      if (ref) {
+        gsap.fromTo(
+          ref,
+          { opacity: 0, y: -20 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: ref,
+              start: "top 85%",
+              scrub: 1,
+              end: "top 65%"
+            },
+            delay: idx * 0.05,
+          }
+        );
+      }
+    });
+  }, [currentContributors]);
+
   return (
     <div className={`${isDark ? colorCodes.blue.darkBg : "bg-gray-50"} min-h-screen py-6 sm:py-12 px-2 sm:px-4 mt-10`}>
       <div className="max-w-5xl mx-auto">
@@ -370,11 +402,9 @@ export default function LeaderBoard() {
                 </div>
               ) : (
                 currentContributors.map((contributor, index) => (
-                  <motion.div
+                  <div
                     key={contributor.username}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.03 }}
+                    ref={el => contributorRefs.current[index] = el}
                     className={`group ${isDark ? colorCodes.blue.darkBg : colorCodes.blue.lightBg} hover:shadow-xl transition-colors`}
                   >
                     {/* Mobile Layout */}
@@ -507,7 +537,7 @@ export default function LeaderBoard() {
                         </div>
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
                 ))
               )}
             </div>
