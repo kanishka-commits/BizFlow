@@ -151,6 +151,7 @@ const PricingCard = ({ name, price, features, animation, isDarkMode }) => {
         scrollTrigger: {
           trigger: el,
           start: "top 80%",
+          end: "top 60%",  
           scrub:true
         },
       }
