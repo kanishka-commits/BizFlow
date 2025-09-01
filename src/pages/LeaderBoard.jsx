@@ -241,6 +241,12 @@ export default function LeaderBoard() {
     ? colorCodes.blue.darkBg
     : colorCodes.blue.lightBg;
 
+  const bounceHover = {
+    onMouseEnter: e => e.currentTarget.style.transform = "scale(1.07)",
+    onMouseLeave: e => e.currentTarget.style.transform = "scale(1)",
+    style: { transition: "transform 0.3s cubic-bezier(.34,1.56,.64,1)" }
+  };
+
   return (
     <div className={`${isDark ? colorCodes.blue.darkBg : "bg-gray-50"} min-h-screen py-6 sm:py-12 px-2 sm:px-4 mt-10`}>
       <div className="max-w-5xl mx-auto">
@@ -253,10 +259,11 @@ export default function LeaderBoard() {
         >
           <h1
             className={`text-2xl sm:text-4xl font-bold mb-2 sm:mb-4 ${colorCodes.blue.text}`}
+            {...bounceHover}
           >
             GSSoC'25 Leaderboard
           </h1>
-          <p className={`text-sm sm:text-lg max-w-3xl mx-auto leading-relaxed ${isDark ? "text-gray-300" : "text-gray-600"}`}>
+          <p {...bounceHover} className={`text-sm sm:text-lg max-w-3xl mx-auto leading-relaxed ${isDark ? "text-gray-300" : "text-gray-600"}`}>
             Celebrating the amazing contributions from GSSoC'25 participants.
             Join us in building something incredible together!
           </p>
