@@ -30,7 +30,12 @@ const ScheduleSection = () => {
   const benefits = [
     "Reduce no-shows by 40% with automated reminders",
     "Save 5+ hours weekly on manual scheduling",
-    "Increase customer satisfaction with instant booking"
+    "Increase customer satisfaction with instant booking",
+    "Boost Team Productivity with centralized scheduling",
+    "Secure Data Management with role-based access",
+    "AI-Powered Scheduling that auto-suggests best meeting times",
+    "Analytics Dashboard to track bookings, cancellations, and revenue"
+    
   ];
 
   return (
