@@ -83,7 +83,7 @@ const Footer = () => {
 
   const footerLinks = {
     company: [
-      { name: "About", href: "/#about" },
+      { name: "About", href: "/about" },
       { name: "Terms of Use", href: "/terms-of-use" },
       { name: "Privacy Policy", href: "/privacy-policy" },
       { name: "How it Works", href: "/#SCHEDULE" },
