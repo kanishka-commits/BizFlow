@@ -1,9 +1,49 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { fadeIn, textVariant } from "../utils/motion";
 import heroImage from "../assets/hero-image.png";
 import { trackButtonClick, trackNewsletterSignup } from "../utils/analytics";
 import { useTheme } from "../context/ThemeContext";
+
+// --- Self-contained Typing Animation Component ---
+// This component replaces the 'react-typed' library.
+const TypingAnimation = ({ phrases, className }) => {
+  const [phraseIndex, setPhraseIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [text, setText] = useState('');
+
+  const TYPING_SPEED = 50;
+  const DELETING_SPEED = 30;
+  const DELAY_AFTER_TYPING = 1000;
+
+  useEffect(() => {
+    const handleTyping = () => {
+      const currentPhrase = phrases[phraseIndex];
+      const updatedText = isDeleting
+        ? currentPhrase.substring(0, text.length - 1)
+        : currentPhrase.substring(0, text.length + 1);
+
+      setText(updatedText);
+
+      if (!isDeleting && updatedText === currentPhrase) {
+        setTimeout(() => setIsDeleting(true), DELAY_AFTER_TYPING);
+      } else if (isDeleting && updatedText === '') {
+        setIsDeleting(false);
+        setPhraseIndex((prevIndex) => (prevIndex + 1) % phrases.length);
+      }
+    };
+
+    const timeout = setTimeout(handleTyping, isDeleting ? DELETING_SPEED : TYPING_SPEED);
+    return () => clearTimeout(timeout);
+  }, [text, isDeleting, phraseIndex, phrases]);
+
+  return (
+    <span className={className}>
+      {text}
+      <span className="typing-cursor"></span>
+    </span>
+  );
+};
 
 const Hero = () => {
   const [email, setEmail] = useState("");
@@ -74,11 +114,43 @@ const Hero = () => {
     },
   };
 
+  const phrasesForTyping = useMemo(
+  () => [
+    "Startups 🚀",
+    "Agencies 💼",
+    "Creators 🎨",
+    "Enterprises 🏢",
+    "Freelancers 🌍",
+    "Innovators 💡",
+  ],
+  []
+);
+
   return (
-    <section
-      id="home"
-      className="relative flex flex-col md:flex-row justify-between items-center px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 md:pt-44 pb-16 container mx-auto overflow-hidden bg-transparent"
-    >
+    <>
+      <style>{`
+        .typing-cursor {
+          display: inline-block;
+          width: 3px;
+          height: 1em;
+          background-color: ${isDarkMode ? '#a78bfa' : '#8b5cf6'};
+          animation: blink 1s infinite;
+          margin-left: 8px;
+          vertical-align: middle;
+          border-radius: 2px;
+        }
+        @keyframes blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
+        }
+        .typing-animation {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        }
+      `}</style>
+      <section
+        id="home"
+        className="relative flex flex-col md:flex-row justify-between items-center px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 md:pt-44 pb-16 container mx-auto overflow-hidden bg-transparent"
+      >
       <motion.div
         initial="hidden"
         animate="visible"
@@ -123,19 +195,20 @@ const Hero = () => {
             }`}
           >
             We boost the{" "}
-            <motion.span className="inline-block bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
+            <motion.span
+              className="inline-block bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent"
+            >
               growth
             </motion.span>{" "}
-            for <br /> Startup to Fortune 500 Companies{" "}
-            <motion.span
-              className="inline-block ml-2 text-xl"
-              animate={{ scale: [1, 1.1, 1], rotate: [0, 5, -5, 0] }}
-              transition={{ duration: 3, repeat: Infinity }}
-            >
-              🚀
-            </motion.span>
+            for <br />
+            <TypingAnimation
+              phrases={phrasesForTyping}
+              className={`font-bold typing-animation ${isDarkMode ? "text-purple-400" : "text-purple-600"}`}
+            />
           </h1>
         </motion.div>
+    
+
 
         <motion.p
           variants={itemVariants}
@@ -296,6 +369,7 @@ const Hero = () => {
         </div>
       </motion.div>
     </section>
+    </>
   );
 };
 
