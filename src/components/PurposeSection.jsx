@@ -17,6 +17,18 @@ const PurposeSection = () => {
       description:
         "We work the way you do by adapting to your workflows and rhythm we aim to blend in for a seamless.",
     },
+    {
+      icon: "🔴",
+      title: "Always evolving",
+      description:
+        "We constantly learn,adapt,and innovate so your team stay ahead of the curve",
+    },
+    {
+      icon: "🟣",
+      title: "Seamless delivery",
+      description:
+        "From start to finish, we ensure projects are smooth,efficient,and stress-free for your team",
+    },
   ];
 
   return (
