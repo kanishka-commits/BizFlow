@@ -205,6 +205,7 @@ const ScheduleSection = () => {
                   { time: "16:00", client: "Design Update", type: "UI Fixes" },
                   { time: "17:30", client: "Project Review", type: "Client Feedback" },
                   { time: "19:00", client: "Code Deployment", type: "Staging Server" },
+                  { time: "14:00", client: "Team Meeting", type: "Internal" }
                   
                 ].map((appointment, index) => (
                   <motion.div
