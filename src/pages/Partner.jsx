@@ -52,12 +52,12 @@ const containerVariants = {
 
 // Section bounce animation for children
 const sectionBounce = {
-  initial: { opacity: 0, scale: 0.95, y: 30 },
+  initial: { opacity: 0, scale: 0.97, y: 20 },
   animate: {
     opacity: 1,
-    scale: 1.08,
+    scale: 1,
     y: 0,
-    transition: { type: "spring", stiffness: 180, damping: 8 }
+    transition: { type: "spring", stiffness: 180, damping: 18 }
   }
 };
 
@@ -146,25 +146,26 @@ const Partner = () => {
   const bounceHoverSmall = {
     whileHover: {
       scale: 1.02,
-      transition: { type: "spring", stiffness: 320 }
+      transition: { type: "spring", stiffness: 180, damping: 22 }
     }
   };
-
+  
+  // Reduced scale for a more subtle form card hover effect
   const bounceHoverCard = {
     whileHover: {
-      scale: 1.13,
-      boxShadow: "0 16px 64px rgba(59,130,246,0.25)",
-      transition: { type: "spring", stiffness: 340 }
+      scale: 1.04,
+      boxShadow: "0 12px 40px rgba(59,130,246,0.18)",
+      transition: { type: "spring", stiffness: 200, damping: 20 }
     }
   };
 
   return (
+    // REMOVED {...bounceHover} from this section
     <motion.section
       variants={containerVariants}
       initial="initial"
       animate="animate"
       className="pt-32 max-w-7xl mx-auto px-4 pb-24 relative"
-      {...bounceHover}
     >
       {/* Floating tiny glass dots - behind form */}
       <div className="absolute inset-0 pointer-events-none -z-10">
@@ -175,8 +176,8 @@ const Partner = () => {
 
       <motion.h1
         variants={sectionBounce}
+        whileHover={{ scale: 1.04, transition: { type: "spring", stiffness: 300 } }}
         className="text-5xl font-extrabold text-center mb-6 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent cursor-pointer"
-        {...bounceHover}
       >
         Become a Partner
       </motion.h1>
@@ -296,7 +297,7 @@ const Partner = () => {
         <motion.button
           type="submit"
           whileTap={{ scale: 0.97 }}
-          whileHover={{ scale: 1.13, transition: { type: "spring", stiffness: 340 } }}
+          whileHover={{ scale: 1.05, transition: { type: "spring", stiffness: 300 } }}
           className="w-full py-3 rounded-xl font-semibold text-lg
             bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500
             text-white shadow-lg hover:opacity-90 transition-all"
@@ -312,7 +313,7 @@ const Partner = () => {
           variants={sectionBounce}
           initial="initial"
           animate="animate"
-          whileHover={{ scale: 1.13, transition: { type: "spring", stiffness: 340 } }}
+          whileHover={{ scale: 1.05, transition: { type: "spring", stiffness: 300 } }}
           className={`group rounded-2xl p-6 backdrop-blur-2xl
             flex flex-col items-center text-center cursor-pointer
             ${isDarkMode
@@ -321,8 +322,8 @@ const Partner = () => {
             }`}
         >
           <motion.div
-            whileHover={{ scale: 1.2, rotate: 10 }}
-            transition={{ type: "spring", stiffness: 300 }}
+            whileHover={{ scale: 1.1, rotate: 5 }}
+            transition={{ type: "spring", stiffness: 180, damping: 20 }}            
             className="flex items-center justify-center w-12 h-12 rounded-full
               bg-gradient-to-r from-blue-500 to-indigo-500 shadow-lg mb-4
               group-hover:shadow-[0_0_20px_rgba(59,130,246,0.7)]"
@@ -340,7 +341,7 @@ const Partner = () => {
           variants={glassVariants}
           initial="initial"
           animate="animate"
-          whileHover={{ scale: 1.13, transition: { type: "spring", stiffness: 340 } }}
+          whileHover={{ scale: 1.05, transition: { type: "spring", stiffness: 300 } }}
           className={`group rounded-2xl p-6 backdrop-blur-2xl
             flex flex-col items-center text-center cursor-pointer
             ${isDarkMode
@@ -349,7 +350,7 @@ const Partner = () => {
             }`}
         >
           <motion.div
-            whileHover={{ scale: 1.2, rotate: -10 }}
+            whileHover={{ scale: 1.1, rotate: -10 }}
             transition={{ type: "spring", stiffness: 300 }}
             className="flex items-center justify-center w-12 h-12 rounded-full
               bg-gradient-to-r from-purple-500 to-pink-500 shadow-lg mb-4
@@ -368,7 +369,7 @@ const Partner = () => {
           variants={glassVariants}
           initial="initial"
           animate="animate"
-          whileHover={{ scale: 1.13, transition: { type: "spring", stiffness: 340 } }}
+          whileHover={{ scale: 1.05, transition: { type: "spring", stiffness: 300 } }}
           className={`group rounded-2xl p-6 backdrop-blur-2xl
             flex flex-col items-center text-center cursor-pointer
             ${isDarkMode
@@ -377,7 +378,7 @@ const Partner = () => {
             }`}
         >
           <motion.div
-            whileHover={{ scale: 1.2, rotate: 5 }}
+            whileHover={{ scale: 1.1, rotate: 5 }}
             transition={{ type: "spring", stiffness: 300 }}
             className="flex items-center justify-center w-12 h-12 rounded-full
               bg-gradient-to-r from-pink-500 to-red-500 shadow-lg mb-4
