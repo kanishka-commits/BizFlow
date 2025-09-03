@@ -309,8 +309,8 @@ const Partner = () => {
         {/* Submit Button */}
         <motion.button
           type="submit"
-          whileTap={{ scale: 0.97 }}
-          whileHover={{ scale: 1.05, transition: { type: "spring", stiffness: 300 } }}
+          whileTap={{ scale: 0.97, transition: { duration: 0.1, ease: "easeInOut" } }}
+          whileHover={{ scale: 1.02, transition: { duration: 0.2, ease: "easeOut" } }}
           className="w-full py-3 rounded-xl font-semibold text-lg
             bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500
             text-white shadow-lg hover:opacity-90 transition-all"
