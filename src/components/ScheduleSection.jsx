@@ -173,7 +173,7 @@ const ScheduleSection = () => {
               className={`relative backdrop-blur-xl rounded-2xl p-6 shadow-xl border ${
                 isDarkMode
                   ? 'bg-slate-800/80 border-slate-700/50'
-                  : 'bg-white/80 border-white/20'
+                  : 'bg-white/80 border-green/20'
               }`}
             >
               {/* Header */}
@@ -191,7 +191,7 @@ const ScheduleSection = () => {
                     ? 'bg-green-900/50 text-green-300 border border-green-700/50'
                     : 'bg-green-100 text-green-700'
                 }`}>
-                  <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+                  <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
                   Live
                 </div>
               </div>
@@ -201,7 +201,11 @@ const ScheduleSection = () => {
                 {[
                   { time: "09:00", client: "Sarah Johnson", type: "Consultation" },
                   { time: "11:30", client: "Mike Chen", type: "Follow-up" },
-                  { time: "14:00", client: "Team Meeting", type: "Internal" }
+                  { time: "14:00", client: "Team Meeting", type: "Internal" },
+                  { time: "16:00", client: "Design Update", type: "UI Fixes" },
+                  { time: "17:30", client: "Project Review", type: "Client Feedback" },
+                  { time: "19:00", client: "Code Deployment", type: "Staging Server" },
+                  
                 ].map((appointment, index) => (
                   <motion.div
                     key={index}
