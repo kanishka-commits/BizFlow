@@ -319,17 +319,11 @@ const PricingSectionHeader = () => {
   return (
     <div ref={headerRef} className="text-center mb-10">
       <h2
-        className={`text-3xl sm:text-4xl font-bold mb-3 ${
+        className={`text-4xl md:text-6xl font-bold mb-3 ${
           isDarkMode ? headingColors.dark.heading : headingColors.light.heading
         }`}
       >
-        <span
-          className={`${
-            isDarkMode ? headingColors.dark.accent : headingColors.light.accent
-          }`}
-        >
-          Pricing Plans
-        </span>
+        Pricing Plans
       </h2>
       <p
         className={`text-lg max-w-xl mx-auto ${
