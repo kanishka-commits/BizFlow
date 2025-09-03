@@ -78,10 +78,10 @@ export default function FAQ() {
 
       <div className="relative z-10 max-w-4xl mx-auto text-center mb-16">
         <h2
-          className={`text-4xl md:text-5xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r ${
+          className={`text-3xl md:text-5xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r ${
             isDarkMode
               ? "from-white via-blue-300 to-white"
-              : "from-blue-800 via-indigo-600 to-blue-800"
+              : "from-blue-800 via-indigo-400 to-blue-800"
           }`}
         >
           Your Questions, Answered
@@ -168,8 +168,8 @@ export default function FAQ() {
         </div>
         <div className="flex gap-4 flex-col sm:flex-row">
           <button
-  onClick={() => navigate("/contact")}
-  className={`
+            onClick={() => navigate("/contact")}
+            className={`
     relative overflow-hidden px-6 py-3 rounded-xl font-semibold text-white 
     bg-gradient-to-r from-blue-600 to-blue-500
     backdrop-blur-md shadow-lg shadow-blue-500/30
@@ -177,19 +177,31 @@ export default function FAQ() {
     transition-transform duration-300 transform hover:scale-105
     hover:from-blue-500 hover:to-blue-400
   `}
->
-  {/* Animated shine effect */}
-  <span className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-50 
+          >
+            {/* Animated shine effect */}
+            <span
+              className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-50 
                    -translate-x-full group-hover:translate-x-0
-                   transition-all duration-700 pointer-events-none rounded-xl"></span>
+                   transition-all duration-700 pointer-events-none rounded-xl"
+            ></span>
 
-  <span className="relative flex items-center gap-2">
-    Contact Support
-    <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-    </svg>
-  </span>
-</button>
+            <span className="relative flex items-center gap-2">
+              Contact Support
+              <svg
+                className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
+              </svg>
+            </span>
+          </button>
 
           <button
             onClick={() => navigate("/help")}
