@@ -218,8 +218,8 @@ const Footer = () => {
                 <div>
                   <div className="flex items-center gap-2 mb-4 group">
                     <div className="relative">
-                      <div className="w-5 h-5 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full shadow-lg transform group-hover:rotate-12 transition-transform duration-300"></div>
-                      <div className="w-5 h-5 bg-gradient-to-br from-red-500 to-red-600 rounded-full -ml-2 shadow-lg transform group-hover:-rotate-12 transition-transform duration-300"></div>
+                      <div className="w-4 h-4 bg-gradient-to-br from-red-500 to-pink-600 rounded-full -ml-2 opacity-90 group-hover:opacity-100 transition-all duration-300 shadow-lg transform group-hover:scale-110 group-hover:-rotate-180"></div>
+                      <div className="w-4 h-4 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full opacity-90 group-hover:opacity-100 transition-all duration-300 shadow-lg transform group-hover:scale-110 group-hover:rotate-180"></div>
                     </div>
                     <span
                       className={`text-xl font-bold ml-2 tracking-wide bg-gradient-to-r bg-clip-text text-transparent ${
@@ -228,7 +228,7 @@ const Footer = () => {
                           : "from-gray-900 to-gray-700"
                       }`}
                     >
-                      The Next Design
+                      BizFlow
                     </span>
                   </div>
 
@@ -238,9 +238,11 @@ const Footer = () => {
                       isDarkMode ? "text-gray-400" : "text-gray-600"
                     }`}
                   >
-                    Empowering businesses with elegant, modern design and seamless
-                    user experiences. Where creativity meets technology to build
-                    exceptional digital products.
+                  Effortless task management, beautiful UI, 
+                  and seamless team collaboration — for businesses, 
+                  freelancers, and students.
+
+
                   </p>
                 </div>
 
