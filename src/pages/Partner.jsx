@@ -107,7 +107,20 @@ const Partner = () => {
   });
 
   useEffect(() => {
+    // Check if the browser supports this feature
+    if ('scrollRestoration' in window.history) {
+      // Set scroll restoration to manual
+      window.history.scrollRestoration = 'manual';
+    }
+    // Scroll to the top of the page
     window.scrollTo(0, 0);
+
+    // Optional: Return a cleanup function to restore default behavior
+    return () => {
+      if ('scrollRestoration' in window.history) {
+        window.history.scrollRestoration = 'auto';
+      }
+    };
   }, []);
 
   // Handle input change
