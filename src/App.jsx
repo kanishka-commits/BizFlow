@@ -106,9 +106,51 @@ function AppContent() {
   useScrollTracking();
   useTimeTracking();
 
-  // Track page views on route changes
   useEffect(() => {
     const currentPath = location.pathname;
+    let pageTitle = "BizFlow"; // default
+
+    switch (currentPath) {
+      case "/":
+        pageTitle = "Home | BizFlow";
+        break;
+      case "/partner":
+        pageTitle = "Partner | BizFlow";
+        break;
+      case "/about":
+        pageTitle = "About Us | BizFlow";
+        break;
+      case "/contact":
+        pageTitle = "Contact | BizFlow";
+        break;
+      case "/contributors":
+        pageTitle = "Contributors | BizFlow";
+        break;
+      case "/contributor-guide":
+        pageTitle = "Contributor Guide | BizFlow";
+        break;
+      case "/leaderboard":
+        pageTitle = "Leaderboard | BizFlow";
+        break;
+      case "/support-career":
+        pageTitle = "Support Career | BizFlow";
+        break;
+      case "/faqs":
+        pageTitle = "FAQs | BizFlow";
+        break;
+      case "/privacy-policy":
+        pageTitle = "Privacy Policy | BizFlow";
+        break;
+      case "/terms-of-use":
+        pageTitle = "Terms of Use | BizFlow";
+        break;
+      default:
+        pageTitle = "Page Not Found | BizFlow";
+    }
+
+    document.title = pageTitle;
+
+    // also keep your analytics
     const pageName =
       currentPath === "/"
         ? "Home"
