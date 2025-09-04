@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { fadeIn, textVariant } from "../utils/motion";
@@ -214,24 +216,25 @@ const AboutUs = () => {
         </div>
       </motion.section>
 
+      {/* Mission Section */}
       <motion.section
         variants={fadeIn("up", 0.6)}
         initial="hidden"
         animate="show"
         className="section-container"
       >
-        <div className="max-w-6xl mx-auto grid md:grid-cols-12 gap-10 items-center">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-12 gap-6 md:gap-10 items-start">
           {/* Left Side: Title (narrower) */}
           <motion.div
             variants={fadeIn("left", 0.4)}
-            className="col-span-12 md:col-span-4 text-center md:text-left"
+            className="col-span-12 md:col-span-4 text-center md:text-left h-full flex items-center justify-center md:justify-start"
           >
             <h2
-              className={`flex items-center text-5xl font-bold gap-4 ${
+              className={`flex items-center gap-2 sm:gap-3 text-3xl sm:text-4xl md:text-5xl font-bold ${
                 isDarkMode ? "text-white" : "text-gray-900"
               }`}
             >
-              <FiTarget className="text-5xl text-gradient-to-r from-primary-500 to-accent-500" />
+              <FiTarget className="text-3xl sm:text-4xl md:text-5xl text-gradient-to-r from-primary-500 to-accent-500" />
               Our Mission
             </h2>
           </motion.div>
@@ -242,7 +245,7 @@ const AboutUs = () => {
             className="col-span-12 md:col-span-8"
           >
             <div
-              className={`p-8 rounded-2xl transition-all duration-500
+              className={`p-4 sm:p-6 md:p-8 rounded-xl md:rounded-2xl transition-all duration-500 w-full max-w-full sm:max-w-3xl mx-auto
         ${
           isDarkMode
             ? "bg-white/10 backdrop-blur-md shadow-[0_0_10px_rgba(139,92,246,0.5)] hover:shadow-[0_0_20px_rgba(139,92,246,0.8)]"
@@ -250,7 +253,7 @@ const AboutUs = () => {
         }`}
             >
               <p
-                className={`text-xl leading-relaxed ${
+                className={`text-lg md:text-xl leading-relaxed break-words ${
                   isDarkMode ? "text-gray-200" : "text-gray-700"
                 }`}
               >
@@ -264,28 +267,30 @@ const AboutUs = () => {
           </motion.div>
         </div>
       </motion.section>
+
+      {/* Vision Section */}
       <motion.section
         variants={fadeIn("up", 0.6)}
         initial="hidden"
         animate="show"
         className="section-container"
       >
-        <div className="max-w-6xl mx-auto grid md:grid-cols-12 gap-10 items-center">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 items-start">
           {/* Left Side: Content Card (wider) */}
           <motion.div
             variants={fadeIn("left", 0.6)}
             className="col-span-12 md:col-span-8 order-2 md:order-1"
           >
             <div
-              className={`p-8 rounded-2xl transition-all duration-500
-          ${
-            isDarkMode
-              ? "bg-white shadow-[0_0_10px_rgba(139,92,246,0.5)] hover:shadow-[0_0_20px_rgba(139,92,246,0.8)]"
-              : "bg-gradient-to-br from-blue-50 to-purple-100 shadow-lg hover:shadow-2xl"
-          }`}
+              className={`p-4 sm:p-6 md:p-8 rounded-xl md:rounded-2xl transition-all duration-500 w-full max-w-full sm:max-w-3xl mx-auto
+        ${
+          isDarkMode
+            ? "bg-white/10 backdrop-blur-md shadow-[0_0_10px_rgba(139,92,246,0.5)] hover:shadow-[0_0_20px_rgba(139,92,246,0.8)]"
+            : "bg-gradient-to-br from-blue-50 to-purple-100 shadow-lg hover:shadow-2xl"
+        }`}
             >
               <p
-                className={`text-xl leading-relaxed ${
+                className={`text-lg md:text-xl leading-relaxed break-words ${
                   isDarkMode ? "text-gray-200" : "text-gray-700"
                 }`}
               >
@@ -293,7 +298,7 @@ const AboutUs = () => {
                 workflow automation, data-driven decision-making, and innovative
                 collaboration tools. Our vision is to create an environment
                 where teams can innovate freely while staying aligned with
-                organizational goals.We aim to create a collaborative ecosystem
+                organizational goals. We aim to create a collaborative ecosystem
                 where innovation thrives.
               </p>
             </div>
@@ -302,14 +307,14 @@ const AboutUs = () => {
           {/* Right Side: Title (narrower) */}
           <motion.div
             variants={fadeIn("right", 0.4)}
-            className="col-span-12 md:col-span-4 text-center md:text-left order-1 md:order-2"
+            className="col-span-12 md:col-span-4 text-center md:text-left order-1 md:order-2 h-full flex items-center justify-center md:justify-start"
           >
             <h2
-              className={`flex items-center text-5xl font-bold gap-4 ${
+              className={`flex items-center gap-2 sm:gap-3 text-3xl sm:text-4xl md:text-5xl font-bold ${
                 isDarkMode ? "text-white" : "text-gray-900"
               }`}
             >
-              <FiEye className="text-5xl text-gradient-to-r from-primary-500 to-accent-500" />
+              <FiEye className="text-3xl sm:text-4xl md:text-5xl text-gradient-to-r from-primary-500 to-accent-500" />
               Our Vision
             </h2>
           </motion.div>
@@ -473,11 +478,11 @@ const AboutUs = () => {
             className={`p-8 rounded-2xl text-center ${
               isDarkMode
                 ? "bg-gray-800 shadow-[0_0_5px_rgba(139,92,246,0.6)]"
-                : "bg-white/70 shadow-lg shadow-[0_0_20px_rgba(139,92,246,0.4)]"
+                : "bg-white/70 shadow-[0_0_20px_rgba(139,92,246,0.4)]"
             }`}
           >
             <img
-              src={projectOwner.avatar}
+              src={projectOwner.avatar || "/placeholder.svg"}
               alt={projectOwner.name}
               className="w-32 h-32 rounded-full mx-auto mb-6 object-cover ring-4 ring-blue-500/20"
             />
