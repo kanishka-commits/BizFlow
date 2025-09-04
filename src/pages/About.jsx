@@ -482,7 +482,7 @@ const AboutUs = () => {
             }`}
           >
             <img
-              src={projectOwner.avatar || "/placeholder.svg"}
+              src={projectOwner.avatar}
               alt={projectOwner.name}
               className="w-32 h-32 rounded-full mx-auto mb-6 object-cover ring-4 ring-blue-500/20"
             />
