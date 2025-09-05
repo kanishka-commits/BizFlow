@@ -350,7 +350,7 @@ const ModernNavbar = () => {
           {/* Desktop CTA + Theme Toggle */}
           <div className="hidden lg:flex items-center gap-3 xl:gap-4">
             <button
-              onClick={() => smoothScroll('newsletter')}
+              // onClick={() => smoothScroll('newsletter')}
               className={`
                 relative overflow-hidden group min-w-[120px] xl:min-w-[150px] px-4 xl:px-7 py-2.5 xl:py-3 
                 rounded-xl font-semibold text-xs xl:text-sm transition-all duration-300 transform hover:scale-105 hover:-translate-y-1
@@ -362,7 +362,9 @@ const ModernNavbar = () => {
             >
               <span className="relative z-10 flex items-center gap-1 xl:gap-2">
                 <Sparkles className="w-4 h-4" />
+                <Link to="/contact">
                 Get in Touch
+                </Link>
               </span>
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </button>
