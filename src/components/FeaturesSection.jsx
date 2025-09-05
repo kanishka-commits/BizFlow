@@ -2,6 +2,14 @@ import { Link } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 import { motion } from "framer-motion";
 import { Rocket, Settings, Search } from "lucide-react";
+import {
+  ShieldCheck,
+  Users,
+  TrendingUp,
+  Globe2,
+  Zap,
+  HeartHandshake,
+} from "lucide-react";
 
 const FeaturesSection = () => {
   const { isDarkMode } = useTheme();
@@ -27,6 +35,48 @@ const FeaturesSection = () => {
       description:
         "Launch projects quickly with efficient workflows, pricing clarity, and timely delivery.",
       bg: "from-orange-500 to-amber-500",
+    },
+    {
+      icon: <ShieldCheck size={32} />,
+      title: "Secure & Reliable",
+      description:
+        "Enterprise-grade security with compliance and built-in data protection at every step.",
+      bg: "from-emerald-500 to-teal-500",
+    },
+    {
+      icon: <Users size={32} />,
+      title: "Collaborative Approach",
+      description:
+        "We work alongside your team to ensure clarity, trust, and stronger partnerships.",
+      bg: "from-fuchsia-500 to-purple-600",
+    },
+    {
+      icon: <TrendingUp size={32} />,
+      title: "Drive Growth",
+      description:
+        "Unlock new opportunities with strategies designed for scalability and impact.",
+      bg: "from-sky-500 to-cyan-500",
+    },
+    {
+      icon: <Globe2 size={32} />,
+      title: "Global Reach",
+      description:
+        "Expand your business beyond borders with solutions tailored for international markets.",
+      bg: "from-violet-500 to-indigo-500",
+    },
+    {
+      icon: <Zap size={32} />,
+      title: "Lightning Fast",
+      description:
+        "Optimized workflows and technology that ensure speed without compromising quality.",
+      bg: "from-yellow-500 to-orange-500",
+    },
+    {
+      icon: <HeartHandshake size={32} />,
+      title: "Customer First",
+      description:
+        "Dedicated to delivering value with transparency, empathy, and long-term commitment.",
+      bg: "from-red-500 to-rose-500",
     },
   ];
 
