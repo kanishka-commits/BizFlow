@@ -96,6 +96,11 @@ const ModernNavbar = () => {
     const currentPath = location.pathname + location.hash;
     return currentPath === '/' ? '/#home' : currentPath;
   }, [location]);
+  // Check if any Community child route is active
+  const isCommunityActive = useMemo(() => {
+    return dropdownItems.some(item => location.pathname.startsWith(item.href));
+  }, [location, dropdownItems]);
+
 
   // Enhanced navigation handler
   const handleNavClick = useCallback((href) => {
@@ -270,11 +275,15 @@ const ModernNavbar = () => {
                 className={`
                   flex items-center gap-2 text-sm xl:text-base font-semibold relative overflow-hidden group 
                   transition-all duration-500 transform hover:scale-110 hover:-translate-y-1 px-3 py-2 rounded-lg
-                  ${isDarkMode 
-                    ? "text-gray-300 hover:text-blue-400 hover:shadow-lg hover:shadow-blue-900/20" 
-                    : "text-gray-600 hover:text-blue-600 hover:shadow-lg hover:shadow-blue-200/30"
+                  ${
+                    isDarkMode
+                      ? (isCommunityActive || isDropdownOpen
+                          ? "text-blue-600"   // 🔹 active = blue
+                          : "text-gray-300 hover:text-blue-400")
+                      : (isCommunityActive || isDropdownOpen
+                          ? "text-blue-600"   // 🔹 active = blue
+                          : "text-gray-600 hover:text-blue-600")
                   }
-                  ${isDropdownOpen ? "shadow-lg shadow-blue-200/50 text-blue-600" : ""}
                 `}
                 aria-expanded={isDropdownOpen}
                 aria-haspopup="true"
@@ -282,16 +291,27 @@ const ModernNavbar = () => {
                 <span className="relative z-10 transition-all duration-300 group-hover:drop-shadow-sm">
                   Community
                 </span>
-                <ChevronDown className={`w-4 h-4 relative z-10 transition-all duration-500 group-hover:scale-110 ${
-                  isDropdownOpen ? "rotate-180 text-blue-600" : "rotate-0"
-                }`} />
-                
-                {/* Enhanced effects */}
+
+                {/* Arrow rotates only when dropdown is open */}
+                <ChevronDown
+                  className={`w-4 h-4 relative z-10 transition-all duration-500 group-hover:scale-110 ${
+                    isDropdownOpen ? "rotate-180 text-blue-600" : "rotate-0"
+                  }`}
+                />
+
+                {/* Underline effect */}
                 <div className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-500 rounded-full transition-all duration-500 ease-out ${
-                  isDropdownOpen ? "w-full opacity-100" : "w-0 group-hover:w-full opacity-0 group-hover:opacity-100"
+                  (isDropdownOpen || isCommunityActive) ? "w-full opacity-100" : "w-0 opacity-0 group-hover:w-full group-hover:opacity-100"
                 }`} />
+
+                {/* Glowing background on hover */}
                 <div className={`absolute inset-0 rounded-lg bg-gradient-to-r opacity-0 group-hover:opacity-10 transition-all duration-500 ${
                   isDarkMode ? "from-blue-500/20 via-cyan-500/20 to-purple-500/20" : "from-blue-500/10 via-cyan-500/10 to-purple-500/10"
+                }`} />
+
+                {/* Border glow on hover */}
+                <div className={`absolute inset-0 rounded-lg border opacity-0 group-hover:opacity-30 transition-all duration-500 ${
+                  isDarkMode ? "border-blue-400/30" : "border-blue-500/20"
                 }`} />
               </button>
 
@@ -368,6 +388,7 @@ const ModernNavbar = () => {
               </span>
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </button>
+
 
             <button
               onClick={toggleTheme}

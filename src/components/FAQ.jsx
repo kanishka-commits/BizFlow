@@ -53,11 +53,8 @@ export default function FAQ() {
 
   return (
     <section
-      className={`relative min-h-screen py-20 px-4 sm:px-6 lg:px-8 transition-colors duration-500 ${
-        isDarkMode ? "bg-gray-900" : "bg-indigo-50"
-      }`}
+      className={`relative min-h-screen py-20 px-4 sm:px-6 lg:px-8 transition-colors duration-500 `}
     >
-      {/* Frosted Bulb Background */}
       {/* Frosted Bulb Background */}
       {bulbs.map((b, i) => (
         <div
@@ -104,46 +101,161 @@ export default function FAQ() {
         ></div>
 
         {faqs.map((faq, i) => (
-          <div key={i} className="relative flex items-start mb-10">
-            {/* Dot */}
-            <div
+          <motion.div 
+            key={i} 
+            className="relative flex items-start mb-10"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: i * 0.1 }}
+          >
+            {/* Dot with smooth animation */}
+            <motion.div
               className={`flex-shrink-0 w-10 h-10 rounded-full ${
                 isDarkMode ? "bg-blue-500" : "bg-indigo-500"
-              } flex items-center justify-center text-white font-bold`}
+              } flex items-center justify-center text-white font-bold z-10`}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              animate={{
+                backgroundColor: openIndex === i 
+                  ? (isDarkMode ? "#10B981" : "#059669")
+                  : (isDarkMode ? "#3B82F6" : "#6366F1"),
+                boxShadow: openIndex === i
+                  ? "0 0 20px rgba(16, 185, 129, 0.6)"
+                  : "0 0 10px rgba(59, 130, 246, 0.3)"
+              }}
+              transition={{ duration: 0.3 }}
             >
               {i + 1}
-            </div>
+            </motion.div>
 
-            {/* Content */}
-            <div className="ml-6 flex-1 cursor-pointer">
+            {/* Content Container */}
+            <div className="ml-6 flex-1">
+              {/* Question Card */}
               <motion.div
                 onClick={() => toggle(i)}
-                className={`p-5 rounded-2xl border transition-shadow duration-300 ${bgGlass} hover:shadow-2xl flex justify-between items-center`}
-                whileHover={{ scale: 1.03 }}
+                className={`p-5 rounded-2xl border transition-all duration-500 ${bgGlass} cursor-pointer group`}
+                whileHover={{ 
+                  scale: 1.02,
+                  boxShadow: isDarkMode 
+                    ? "0 20px 40px rgba(0,0,0,0.4)" 
+                    : "0 20px 40px rgba(0,0,0,0.15)"
+                }}
+                whileTap={{ scale: 0.98 }}
+                animate={{
+                  borderColor: openIndex === i
+                    ? (isDarkMode ? "#10B981" : "#059669")
+                    : (isDarkMode ? "rgba(75, 85, 99, 0.5)" : "rgba(229, 231, 235, 0.5)")
+                }}
+                transition={{ duration: 0.3 }}
               >
-                <h3 className="font-semibold text-lg">{faq.q}</h3>
-                <div className="ml-4">
-                  {openIndex === i ? <Minus size={24} /> : <Plus size={24} />}
+                <div className="flex justify-between items-center">
+                  <h3 className="font-semibold text-lg pr-4">{faq.q}</h3>
+                  
+                  {/* Enhanced Icon Animation */}
+                  <motion.div
+                    className="flex-shrink-0"
+                    animate={{ 
+                      rotate: openIndex === i ? 45 : 0,
+                      scale: openIndex === i ? 1.1 : 1
+                    }}
+                    transition={{ 
+                      type: "spring",
+                      stiffness: 200,
+                      damping: 15
+                    }}
+                  >
+                    <motion.div
+                      whileHover={{ scale: 1.2 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      {openIndex === i ? (
+                        <Minus size={24} className="text-green-500" />
+                      ) : (
+                        <Plus size={24} className="text-blue-500" />
+                      )}
+                    </motion.div>
+                  </motion.div>
                 </div>
               </motion.div>
 
-              <AnimatePresence>
+              {/* Answer Container with Smooth Accordion */}
+              <AnimatePresence mode="wait">
                 {openIndex === i && (
                   <motion.div
-                    initial={{ opacity: 0, x: 50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 50 }}
-                    transition={{ duration: 0.3 }}
-                    className={`mt-3 text-sm ${
-                      isDarkMode ? "text-gray-300" : "text-gray-700"
-                    }`}
+                    initial={{ 
+                      opacity: 0, 
+                      height: 0,
+                      y: -10,
+                      scale: 0.95
+                    }}
+                    animate={{ 
+                      opacity: 1, 
+                      height: "auto",
+                      y: 0,
+                      scale: 1
+                    }}
+                    exit={{ 
+                      opacity: 0, 
+                      height: 0,
+                      y: -10,
+                      scale: 0.95
+                    }}
+                    transition={{ 
+                      duration: 0.5,
+                      ease: [0.4, 0, 0.2, 1],
+                      height: {
+                        duration: 0.4
+                      },
+                      opacity: {
+                        duration: 0.3,
+                        delay: openIndex === i ? 0.1 : 0
+                      }
+                    }}
+                    className="overflow-hidden"
                   >
-                    {faq.a}
+                    <motion.div
+                      className={`mt-4 p-4 rounded-xl ${
+                        isDarkMode 
+                          ? "bg-gray-800/60 backdrop-blur-sm border border-gray-700/30" 
+                          : "bg-white/80 backdrop-blur-sm border border-gray-200/50"
+                      } shadow-lg`}
+                      initial={{ x: -20, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      exit={{ x: -20, opacity: 0 }}
+                      transition={{ 
+                        duration: 0.4,
+                        delay: 0.1,
+                        ease: "easeOut"
+                      }}
+                    >
+                      <motion.p
+                        className={`${
+                          isDarkMode ? "text-gray-300" : "text-gray-700"
+                        } leading-relaxed`}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.3, delay: 0.2 }}
+                      >
+                        {faq.a}
+                      </motion.p>
+                      
+                      {/* Subtle bottom accent */}
+                      <motion.div
+                        className={`mt-3 h-0.5 rounded-full bg-gradient-to-r ${
+                          isDarkMode 
+                            ? "from-green-400 to-blue-500" 
+                            : "from-green-500 to-blue-600"
+                        }`}
+                        initial={{ width: 0 }}
+                        animate={{ width: "100%" }}
+                        transition={{ duration: 0.6, delay: 0.3 }}
+                      />
+                    </motion.div>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
 
@@ -167,16 +279,20 @@ export default function FAQ() {
           </p>
         </div>
         <div className="flex gap-4 flex-col sm:flex-row">
-          <button
+          <motion.button
             onClick={() => navigate("/contact")}
             className={`
-    relative overflow-hidden px-6 py-3 rounded-xl font-semibold text-white 
-    bg-gradient-to-r from-blue-600 to-blue-500
-    backdrop-blur-md shadow-lg shadow-blue-500/30
-    border border-blue-400/30
-    transition-transform duration-300 transform hover:scale-105
-    hover:from-blue-500 hover:to-blue-400
-  `}
+              relative overflow-hidden px-6 py-3 rounded-xl font-semibold text-white 
+              bg-gradient-to-r from-blue-600 to-blue-500
+              backdrop-blur-md shadow-lg shadow-blue-500/30
+              border border-blue-400/30
+              transition-all duration-300 group
+            `}
+            whileHover={{ 
+              scale: 1.05,
+              boxShadow: "0 10px 30px rgba(59, 130, 246, 0.4)"
+            }}
+            whileTap={{ scale: 0.98 }}
           >
             {/* Animated shine effect */}
             <span
@@ -187,11 +303,14 @@ export default function FAQ() {
 
             <span className="relative flex items-center gap-2">
               Contact Support
-              <svg
-                className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+              <motion.svg
+                className="w-4 h-4"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
+                animate={{ x: 0 }}
+                whileHover={{ x: 4 }}
+                transition={{ duration: 0.2 }}
               >
                 <path
                   strokeLinecap="round"
@@ -199,20 +318,25 @@ export default function FAQ() {
                   strokeWidth={2}
                   d="M17 8l4 4m0 0l-4 4m4-4H3"
                 />
-              </svg>
+              </motion.svg>
             </span>
-          </button>
+          </motion.button>
 
-          <button
+          <motion.button
             onClick={() => navigate("/help")}
-            className={`px-6 py-3 rounded-xl border font-semibold transition-transform duration-300 transform hover:scale-105 ${
+            className={`px-6 py-3 rounded-xl border font-semibold transition-all duration-300 ${
               isDarkMode
                 ? "border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white"
                 : "border-gray-300 text-gray-600 hover:bg-gray-100 hover:text-gray-900"
             }`}
+            whileHover={{ 
+              scale: 1.05,
+              borderColor: isDarkMode ? "#4B5563" : "#D1D5DB"
+            }}
+            whileTap={{ scale: 0.98 }}
           >
             Browse Help Center
-          </button>
+          </motion.button>
         </div>
       </motion.div>
     </section>

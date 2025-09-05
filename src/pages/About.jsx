@@ -142,7 +142,7 @@ const AboutUs = () => {
       >
         <motion.div variants={textVariant(0.3)} className="max-w-4xl mx-auto">
           <h1
-            className={`text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mt-40 relative inline-block ${
+            className={`text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mt-8 relative inline-block ${
               isDarkMode ? "text-white" : "text-gray-900"
             }`}
           >
@@ -159,7 +159,7 @@ const AboutUs = () => {
           </h1>
 
           <p
-            className={`text-lg max-w-3xl mt-10 mb-50 text-center mx-auto ${
+            className={`text-lg max-w-3xl mt-10 text-center mx-auto ${
               isDarkMode ? "text-gray-300" : "text-gray-700"
             }`}
           >
@@ -177,9 +177,9 @@ const AboutUs = () => {
         animate="show"
         className="section-container"
       >
-        <div>
+       
           <div
-            className={`p-8 rounded-3xl transition-all duration-500
+            className={`p-8 mt-20 rounded-3xl transition-all duration-500
         ${
           isDarkMode
             ? "bg-gray-700/20 backdrop-blur-md shadow-[0_0_2px_rgba(139,92,246,0.6)] animate-glow"
@@ -187,7 +187,7 @@ const AboutUs = () => {
         }`}
           >
             <h2
-              className={`inline-block text-xl font-semibold px-6 py-3 rounded-full tracking-wide mb-5
+              className={`inline-block text-xl font-semibold px-6 py-3 rounded-full tracking-wide mb-4
           ${
             isDarkMode
               ? "bg-gradient-to-r from-primary-500 to-accent-500 text-white shadow-[0_0_20px_rgba(139,92,246,0.7)] animate-glow"
@@ -213,7 +213,7 @@ const AboutUs = () => {
               enterprise.
             </p>
           </div>
-        </div>
+       
       </motion.section>
 
       {/* Mission Section */}

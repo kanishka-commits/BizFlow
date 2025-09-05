@@ -147,7 +147,7 @@ const ScheduleSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
               onClick={handleUpcomingFeature}
-              className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-2xl shadow-lg hover:text-gray-300 hover:shadow-xl transition-all duration-300 hover:scale-105"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
             >
