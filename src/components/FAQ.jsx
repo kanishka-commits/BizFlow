@@ -185,7 +185,7 @@ export default function FAQ() {
                    transition-all duration-700 pointer-events-none rounded-xl"
             ></span>
 
-            <span className="relative flex items-center gap-2">
+            <span className="relative flex items-center gap-2 hover:text-gray-700">
               Contact Support
               <svg
                 className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"

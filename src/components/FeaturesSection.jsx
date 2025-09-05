@@ -90,7 +90,7 @@ const FeaturesSection = () => {
         <Link
           to="/partner"
           className={`inline-block cursor-pointer px-8 py-3 rounded-full font-medium transition-all duration-300 ease-in-out relative
-            focus:outline-none focus-visible:ring-2 hover:translate-y-[-2px] ${
+            focus:outline-none focus-visible:ring-2 hover:text-gray-500 hover:translate-y-[-2px]  ${
               isDarkMode
                 ? "bg-blue-500 text-white hover:bg-blue-400 focus-visible:ring-blue-300"
                 : "bg-gray-900 text-white hover:brightness-110 focus-visible:ring-gray-300"
