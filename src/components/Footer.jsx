@@ -167,25 +167,25 @@ const Footer = () => {
     {
       href: "https://github.com/adityadomle",
       icon: <FaGithub className="w-4 h-4" />,
-      hover: "hover:bg-gray-800 hover:text-white hover:scale-110",
+      hover: "hover:bg-gradient-to-r from-blue-600 to-blue-500 hover:text-white hover:scale-110",
       name: "GitHub",
     },
     {
       href: "#",
       icon: <FaFacebookF className="w-4 h-4" />,
-      hover: "hover:bg-blue-600 hover:text-white hover:scale-110",
+      hover: "hover:bg-gradient-to-r from-blue-600 to-blue-500 hover:text-white hover:scale-110",
       name: "Facebook",
     },
     {
       href: "https://x.com/domleaditya",
       icon: <FaTwitter className="w-4 h-4" />,
-      hover: "hover:bg-sky-500 hover:text-white hover:scale-110",
+      hover: "hover:bg-gradient-to-r from-blue-600 to-blue-500 hover:text-white hover:scale-110",
       name: "Twitter",
     },
     {
       href: "https://www.linkedin.com/in/adityadomle",
       icon: <FaLinkedinIn className="w-4 h-4" />,
-      hover: "hover:bg-blue-700 hover:text-white hover:scale-110",
+      hover: "hover:bg-gradient-to-r from-blue-600 to-blue-500 hover:text-white hover:scale-110",
       name: "LinkedIn",
     },
   ];
@@ -383,7 +383,7 @@ const Footer = () => {
                     className={`w-full py-2 rounded-lg text-sm font-semibold transition-all duration-200 transform hover:text-gray-300 hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 ${
                       isSubmitting
                         ? "bg-gray-400 cursor-not-allowed text-gray-600"
-                        : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-md hover:shadow-lg"
+                        : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-md hover:shadow-lg cursor-pointer"
                     } ${
                       isDarkMode
                         ? "focus:ring-offset-gray-800"
