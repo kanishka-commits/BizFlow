@@ -124,7 +124,7 @@ const NewsletterSection = () => {
           {/* Features list */}
           <div className="flex flex-wrap gap-4 justify-center mb-12">
             {['🍕 Exclusive recipes', '⚡ Fast delivery', '🎯 Personalized offers'].map((feature, index) => (
-              <div key={index} className={`flex items-center gap-2 px-2 py-3 ${isDarkMode ? 'bg-white/5 border-white/10' : 'bg-gray-100/80 border-gray-200/50'} backdrop-blur-sm border rounded-full`}>
+              <div key={index} className={`flex items-center gap-2 px-6 py-3 ${isDarkMode ? 'bg-white/5 border-white/10' : 'bg-gray-100/80 border-gray-200/50'} backdrop-blur-sm border rounded-full`}>
                 <span className={`text-base ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} font-medium`}>{feature}</span>
               </div>
             ))}
@@ -141,7 +141,7 @@ const NewsletterSection = () => {
                 
                 {/* Email Form Container */}
                 <div className={`relative ${isDarkMode ? 'bg-white/10 border-white/20' : 'bg-white/90 border-gray-200/50'} backdrop-blur-xl border rounded-2xl p-3 shadow-2xl`}>
-                  <div className="flex flex-col sm:flex-row gap-3">
+                  <div className="flex flex-col sm:items-center sm:flex-row gap-3">
                     {/* Email Input Container */}
                     <div className="relative flex-1">
                       <div className="absolute left-6 top-1/2 transform -translate-y-1/2 pointer-events-none">
@@ -175,7 +175,7 @@ const NewsletterSection = () => {
                       className={`h-[60px] px-8 bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:from-violet-600 hover:to-fuchsia-600
                         rounded-xl text-white text-lg font-semibold
                         flex items-center justify-center gap-3 whitespace-nowrap
-                        transform transition-all duration-200 
+                        transform transition-all duration-200 cursor-pointer 
                         ${isHovered ? 'scale-105 shadow-lg' : 'shadow-md'}
                         hover:shadow-purple-500/25`}
                     >
