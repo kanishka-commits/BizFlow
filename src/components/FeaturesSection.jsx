@@ -82,7 +82,7 @@ const FeaturesSection = () => {
 
   return (
     <section
-      className={`relative max-w-7xl mx-auto px-6 py-20 overflow-hidden transition-colors duration-500 ${
+      className={`relative w-full px-6 py-20 overflow-hidden transition-colors duration-500 ${
         isDarkMode ? "text-gray-100" : "text-gray-900"
       }`}
     >
@@ -102,15 +102,16 @@ const FeaturesSection = () => {
         transition={{ duration: 0.8, ease: "easeOut" }}
         viewport={{ once: true }}
       >
-        <h2 className="text-4xl md:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-blue-400 to-indigo-600">
+        <h2 className="text-4xl md:text-5xl font-extrabold leading-tight bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-blue-400 to-indigo-600">
           How can we help your business?
         </h2>
+
         <p
           className={`mt-8 text-lg ${
             isDarkMode ? "text-gray-300/80" : "text-gray-600"
           }`}
         >
-          Empowering your growth with innovation, speed, and reliability.
+          "Empowering your growth with innovation, speed, and reliability."
         </p>
       </motion.div>
 
