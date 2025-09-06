@@ -370,24 +370,21 @@ const ModernNavbar = () => {
           {/* Desktop CTA + Theme Toggle */}
           <div className="hidden lg:flex items-center gap-3 xl:gap-4">
             <button
-              // onClick={() => smoothScroll('newsletter')}
-              className={`
-                relative overflow-hidden group min-w-[120px] xl:min-w-[150px] px-4 xl:px-7 py-2.5 xl:py-3 
-                rounded-xl font-semibold text-xs xl:text-sm transition-all duration-300 transform hover:scale-105 hover:-translate-y-1
-                ${isDarkMode
-                  ? "bg-gradient-to-r from-blue-600 via-blue-700 to-cyan-600 text-white shadow-lg shadow-blue-900/30 hover:shadow-xl hover:shadow-blue-900/40"
-                  : "bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg shadow-blue-200/50 hover:shadow-xl hover:shadow-blue-300/60"
-                }
-              `}
-            >
-              <span className="relative z-10 flex items-center gap-1 xl:gap-2">
-                <Sparkles className="w-4 h-4" />
-                <Link to="/contact">
-                Get in Touch
-                </Link>
-              </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </button>
+            className={`
+              relative overflow-hidden group min-w-[100px] xl:min-w-[130px] px-3 xl:px-5 py-2 xl:py-2.5 
+              rounded-lg font-medium text-[10px] sm:text-xs xl:text-sm transition-all duration-300 transform hover:scale-105 hover:-translate-y-1
+              ${isDarkMode
+                ? "bg-gradient-to-r from-blue-600 via-blue-700 to-cyan-600 text-white shadow-md shadow-blue-900/30 hover:shadow-lg hover:shadow-blue-900/40"
+                : "bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-md shadow-blue-200/50 hover:shadow-lg hover:shadow-blue-300/60"
+              }
+            `}
+          >
+            <span className="relative z-10 flex items-center gap-1 xl:gap-2 whitespace-nowrap">
+              <Sparkles className="w-4 h-4" />
+              <Link to="/contact">Get in Touch</Link>
+            </span>
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          </button>
 
 
             <button
